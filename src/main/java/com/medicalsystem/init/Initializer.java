@@ -1,7 +1,8 @@
 package com.medicalsystem.init;
 
 import com.medicalsystem.model.StringField;
-import com.medicalsystem.model.repository.StringFieldRepository;
+import com.medicalsystem.service.StringFieldService;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -13,10 +14,10 @@ import java.util.Map;
 
 @Component
 @Log
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class Initializer implements ApplicationRunner {
 
-    @Autowired
-    private StringFieldRepository stringFieldRepository;
+    private final StringFieldService stringFieldService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -33,6 +34,6 @@ public class Initializer implements ApplicationRunner {
         smokingField.setExcelColumn(17);
         smokingField.setPossibleValues(smokingValues);
 
-        stringFieldRepository.save(smokingField);
+        stringFieldService.saveOrUpdate(smokingField);
     }
 }
