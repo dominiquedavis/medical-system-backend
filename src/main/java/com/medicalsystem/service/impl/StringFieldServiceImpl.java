@@ -1,7 +1,7 @@
 package com.medicalsystem.service.impl;
 
-import com.medicalsystem.model.StringField;
-import com.medicalsystem.model.repository.StringFieldRepository;
+import com.medicalsystem.model.field.StringField;
+import com.medicalsystem.repository.StringFieldRepository;
 import com.medicalsystem.service.StringFieldService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

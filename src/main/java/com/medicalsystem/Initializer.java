@@ -1,6 +1,6 @@
-package com.medicalsystem.init;
+package com.medicalsystem;
 
-import com.medicalsystem.model.StringField;
+import com.medicalsystem.model.field.StringField;
 import com.medicalsystem.service.StringFieldService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -32,7 +32,7 @@ public class Initializer implements ApplicationRunner {
         StringField smokingField = new StringField();
         smokingField.setName("Smoking");
         smokingField.setExcelColumn(17);
-        smokingField.setPossibleValues(smokingValues);
+        smokingField.setOptions(smokingValues);
 
         stringFieldService.saveOrUpdate(smokingField);
     }

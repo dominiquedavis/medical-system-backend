@@ -1,4 +1,4 @@
-package com.medicalsystem.model;
+package com.medicalsystem.model.field;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Map;
 
 @MappedSuperclass
-public abstract class FormField<K, V> {
+public abstract class Field<T> {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,10 +22,19 @@ public abstract class FormField<K, V> {
     @Getter @Setter
     private int excelColumn;
 
-    public abstract Map<K, V> getPossibleValues();
+    @Transient
+    private Map<String, T> options;
 
-    public abstract void setPossibleValues(Map<K, V> values);
+    public Map<String, T> getOptions() {
+        return options;
+    }
 
-    public abstract void addPossibleValue(K key, V value);
+    public void setOptions(Map<String, T> options) {
+        this.options = options;
+    }
+
+    public void addOption(String key, T value) {
+        options.put(key, value);
+    }
 
 }
