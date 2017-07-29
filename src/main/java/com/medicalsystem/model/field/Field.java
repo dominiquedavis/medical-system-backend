@@ -1,15 +1,24 @@
 package com.medicalsystem.model.field;
 
+import com.medicalsystem.model.Section;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@MappedSuperclass
+/**
+ * Super class for every type of the field.
+ * Subclasses must override "options" getter providing JPA annotations for the join table.
+ * @param <T> - the type of the value stored in the field
+ */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Field<T> {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     @Getter @Setter
     private int id;
@@ -22,16 +31,14 @@ public abstract class Field<T> {
     @Getter @Setter
     private int excelColumn;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "FIELD_SECTION")
+    @Getter @Setter
+    private List<Section> sections;
+
     @Transient
-    private Map<String, T> options;
-
-    public Map<String, T> getOptions() {
-        return options;
-    }
-
-    public void setOptions(Map<String, T> options) {
-        this.options = options;
-    }
+    @Getter @Setter
+    private Map<String, T> options = new HashMap<>();
 
     public void addOption(String key, T value) {
         options.put(key, value);

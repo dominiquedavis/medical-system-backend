@@ -1,20 +1,21 @@
 package com.medicalsystem.model.field;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Map;
 
 @Entity
-@Table(name = "STRING_FIELDS")
+@Table(name = "DATE_FIELDS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class StringField extends Field<String> {
+public class DateField extends Field<Date> {
 
     @ElementCollection
-    @JoinTable(name = "STRING_FIELDS_OPTIONS")
+    @JoinTable(name = "DATE_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")
-    @Column(name = "string_value")
+    @Column(name = "date_value")
     @Access(AccessType.PROPERTY)
     @Override
-    public Map<String, String> getOptions() {
+    public Map<String, Date> getOptions() {
         return super.getOptions();
     }
 
