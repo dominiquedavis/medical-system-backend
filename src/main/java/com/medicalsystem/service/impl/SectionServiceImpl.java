@@ -18,13 +18,11 @@ public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Section> findAll() {
         return sectionRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Section findById(Integer id) {
         return sectionRepository.findOne(id);
     }

@@ -18,24 +18,22 @@ public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Field<?>> findAll() {
+    public List<Field> findAll() {
         return fieldRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Field<?> findById(Integer id) {
+    public Field findById(Integer id) {
         return fieldRepository.findOne(id);
     }
 
     @Override
-    public Field<?> saveOrUpdate(Field<?> field) {
+    public Field saveOrUpdate(Field field) {
         return fieldRepository.save(field);
     }
 
     @Override
-    public void delete(Field<?> field) {
+    public void delete(Field field) {
         fieldRepository.delete(field);
     }
 
