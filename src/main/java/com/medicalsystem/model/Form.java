@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An entity representing a single form (a single sheet in an excel file - OPEN, EVAR and possibly other).
+ * An entity representing a single form (a single sheet in an excel file - OPEN, EVAR and possibly others).
  */
 @Entity
 @Table(name = "FORMS")

@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- * An abstract entity representing a specific value for the specific field.
+ * An abstract entity representing a specific value for the specific field for the specific patient.
  * @param <T> - the type of the field
  * @param <U> - the type of the values stored by the field
  */
