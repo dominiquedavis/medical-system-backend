@@ -8,5 +8,4 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "STRING_FIELD_VALUES")
 public class StringFieldValue extends FieldValue<StringField, String> {
-
 }

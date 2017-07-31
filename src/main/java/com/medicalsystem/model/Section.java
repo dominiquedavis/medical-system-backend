@@ -7,27 +7,39 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An entity representing a single section in the form.
+ * Examples: personal data, admission, operation...
+ */
 @Entity
 @Table(name = "SECTIONS")
 public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @Getter @Setter
     private int id;
 
-    @Column(name = "name")
     @Getter @Setter
     private String name;
 
+    /**
+     * A list of forms that contain the section (could be more than one).
+     */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "FORM_SECTION")
     @Getter @Setter
     private List<Form> forms = new ArrayList<>();
 
+    /**
+     * A list of fields that make up the section.
+     */
     @ManyToMany(mappedBy = "sections", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @Getter @Setter
     private List<Field<?>> fields = new ArrayList<>();
+
+    public void addForm(Form form) {
+        forms.add(form);
+    }
 
     public void addField(Field<?> field) {
         fields.add(field);

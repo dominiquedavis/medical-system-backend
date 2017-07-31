@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Super class for every type of the field.
+ * A superclass for every type of field.
  * Subclasses must override "options" getter providing JPA annotations for the join table.
  * @param <T> - the type of the value stored in the field
  */
@@ -20,23 +20,35 @@ import java.util.Map;
 public abstract class Field<T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id")
     @Getter @Setter
     private int id;
 
-    @Column(name = "name")
     @Getter @Setter
     private String name;
 
-    @Column(name = "excel_column")
+    /**
+     * An index of the column in the excel file corresponding to the field.
+     */
     @Getter @Setter
     private int excelColumn;
 
+    /**
+     * A list of sections that contain the field (could be more than one).
+     */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "FIELD_SECTION")
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
 
+    /**
+     * A map describing values that the field can acquire.
+     * Key   - value of the cell in the excel file (e.g. "0", "1", "2", "x")
+     * Value - a 'literal' value for the corresponding key (e.g. "smoker", "non-smoker", "n/a")
+     *
+     * The map remains empty if the field has no restrictions on the possible values.
+     *
+     * This field has the @Transient annotation, since its getter is annotated in subclasses (handling generics).
+     */
     @Transient
     @Getter @Setter
     private Map<String, T> options = new HashMap<>();

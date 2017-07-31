@@ -6,20 +6,36 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * An abstract entity representing a specific value for the specific field.
+ * @param <T> - the type of the field
+ * @param <U> - the type of the values stored by the field
+ */
 @MappedSuperclass
 public abstract class FieldValue<T extends Field<U>, U> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @Getter @Setter
     private int id;
 
+    /**
+     * An ID of the patient this value belongs to.
+     */
+    @Getter @Setter
+    private int patientId;
+
+    /**
+     * A reference to the field which this value is relevant to.
+     */
     @OneToOne
-    @JoinColumn(name = "field_id")
+    @JoinColumn
     @Getter @Setter
     private T field;
 
-    @Column(name = "value")
+    /**
+     * An actual value of the field.
+     */
+    @Column
     @Getter @Setter
     private U value;
 
