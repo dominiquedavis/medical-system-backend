@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
 import com.medicalsystem.repository.FieldValueRepository;
 import com.medicalsystem.service.FieldValueService;
@@ -16,6 +17,16 @@ import java.util.List;
 public class FieldValueServiceImpl implements FieldValueService {
 
     private final FieldValueRepository fieldValueRepository;
+
+    @Override
+    public List<FieldValue> findAllByPatientId(int patientId) {
+        return fieldValueRepository.findAllByPatientId(patientId);
+    }
+
+    @Override
+    public FieldValue findByFieldAndPatientId(Field field, int patientId) {
+        return fieldValueRepository.findByFieldAndPatientId(field, patientId);
+    }
 
     @Override
     public List<FieldValue> findAll() {

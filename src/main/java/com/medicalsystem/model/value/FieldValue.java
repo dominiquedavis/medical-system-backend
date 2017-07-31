@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 /**
  * An abstract entity representing a specific value for the specific field for the specific patient.
- * @param <T> - the type of the field
- * @param <U> - the type of the values stored by the field
+ * @param <T> - the type of the value
  */
-@MappedSuperclass
-public abstract class FieldValue<T extends Field<U>, U> extends IdComparableEntity {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class FieldValue<T> extends IdComparableEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.TABLE)
     @Getter @Setter
     private int id;
 
@@ -30,13 +30,15 @@ public abstract class FieldValue<T extends Field<U>, U> extends IdComparableEnti
     @OneToOne
     @JoinColumn
     @Getter @Setter
-    private T field;
+    private Field field;
 
     /**
      * An actual value of the field.
+     *
+     * This field has the @Transient annotation, since its getter is annotated in subclasses (handling generics).
      */
-    @Column
+    @Transient
     @Getter @Setter
-    private U value;
+    private T value;
 
 }
