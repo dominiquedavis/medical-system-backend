@@ -1,13 +1,13 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.field.Field;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class FieldValue<T extends Field<U>, U> {
+public abstract class FieldValue<T extends Field<U>, U> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,10 +1,11 @@
 package com.medicalsystem.model.field;
 
+import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Section;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Field<T> {
+public abstract class Field<T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
@@ -31,10 +32,10 @@ public abstract class Field<T> {
     @Getter @Setter
     private int excelColumn;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "FIELD_SECTION")
     @Getter @Setter
-    private List<Section> sections;
+    private List<Section> sections = new ArrayList<>();
 
     @Transient
     @Getter @Setter
@@ -42,6 +43,10 @@ public abstract class Field<T> {
 
     public void addOption(String key, T value) {
         options.put(key, value);
+    }
+
+    public void addSection(Section section) {
+        sections.add(section);
     }
 
 }
