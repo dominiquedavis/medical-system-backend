@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "SECTIONS")
+@NoArgsConstructor
 public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +34,13 @@ public class Section extends IdComparableEntity {
     /**
      * A list of fields that make up the section.
      */
-    @ManyToMany(mappedBy = "sections", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "sections", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @Getter @Setter
-    private List<Field<?>> fields = new ArrayList<>();
+    private List<Field> fields = new ArrayList<>();
+
+    public Section(String name) {
+        this.name = name;
+    }
 
     public void addForm(Form form) {
         forms.add(form);

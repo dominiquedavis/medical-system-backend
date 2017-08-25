@@ -17,6 +17,7 @@ import java.util.Map;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@NoArgsConstructor
 public abstract class Field<T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
@@ -47,11 +48,17 @@ public abstract class Field<T> extends IdComparableEntity {
      *
      * The map remains empty if the field has no restrictions on the possible values.
      *
-     * This field has the @Transient annotation, since its getter is annotated in subclasses (handling generics).
+     * This field has the @Transient annotation, since its JPA mapping is handled by annotating getter in subclasses.
      */
     @Transient
     @Getter @Setter
     private Map<String, T> options = new HashMap<>();
+
+    public Field(String name, int excelColumn, Map<String, T> options) {
+        this.name = name;
+        this.excelColumn = excelColumn;
+        this.options = (options == null) ? new HashMap<>() : options;
+    }
 
     public void addOption(String key, T value) {
         options.put(key, value);

@@ -1,17 +1,24 @@
 package com.medicalsystem.model.field;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Map;
 
 @Entity
-@Table(name = "STRING_FIELDS")
+@Table(name = "TEXT_FIELDS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class StringField extends Field<String> {
+@NoArgsConstructor
+public class TextField extends Field<String> {
+
+    public TextField(String name, int excelColumn, Map<String, String> options) {
+        super(name, excelColumn, options);
+    }
 
     @ElementCollection
-    @JoinTable(name = "STRING_FIELDS_OPTIONS")
+    @JoinTable(name = "TEXT_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")
-    @Column(name = "string_value")
+    @Column(name = "text_value")
     @Access(AccessType.PROPERTY)
     @Override
     public Map<String, String> getOptions() {

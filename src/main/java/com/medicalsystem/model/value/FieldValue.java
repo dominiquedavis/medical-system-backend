@@ -35,7 +35,7 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     /**
      * An actual value of the field.
      *
-     * This field has the @Transient annotation, since its getter is annotated in subclasses (handling generics).
+     * This field has the @Transient annotation, since its JPA mapping is handled by annotating getter in subclasses.
      */
     @Transient
     @Getter @Setter
