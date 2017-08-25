@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "FORMS")
+@NoArgsConstructor
 public class Form extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +28,11 @@ public class Form extends IdComparableEntity {
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
 
+    public Form(String name) {
+        this.name = name;
+    }
+
+    public void addSection(Section section) {
+        this.sections.add(section);
+    }
 }

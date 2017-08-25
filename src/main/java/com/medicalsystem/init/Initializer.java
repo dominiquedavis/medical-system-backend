@@ -1,6 +1,6 @@
 package com.medicalsystem.init;
 
-public interface FormInitializer {
+public interface Initializer {
 
     void execute();
 

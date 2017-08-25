@@ -5,4 +5,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FieldRepository extends JpaRepository<Field, Integer> {
+
+    Field findByName(String name);
+
 }

@@ -41,4 +41,9 @@ public class FieldServiceImpl implements FieldService {
     public void deleteById(Integer id) {
         fieldRepository.delete(id);
     }
+
+    @Override
+    public Field findByName(String name) {
+        return fieldRepository.findByName(name);
+    }
 }

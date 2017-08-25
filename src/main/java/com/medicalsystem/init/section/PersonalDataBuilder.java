@@ -19,7 +19,7 @@ public class PersonalDataBuilder implements SectionBuilder {
     private final SectionService sectionService;
 
     @Override
-    public void build() {
+    public Section build() {
         // Personal data section
         Section personalData = new Section("Personal data");
 
@@ -51,6 +51,8 @@ public class PersonalDataBuilder implements SectionBuilder {
         fieldService.saveOrUpdate(firstName);
         fieldService.saveOrUpdate(sex);
         fieldService.saveOrUpdate(age);
+
+        return personalData;
     }
 
 }
