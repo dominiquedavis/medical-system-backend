@@ -27,7 +27,7 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     /**
      * A reference to the field which this value is relevant to.
      */
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @Getter @Setter
     private Field field;

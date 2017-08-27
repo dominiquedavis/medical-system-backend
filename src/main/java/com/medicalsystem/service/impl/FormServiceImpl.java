@@ -41,4 +41,9 @@ public class FormServiceImpl implements FormService {
     public void deleteById(Integer id) {
         formRepository.delete(id);
     }
+
+    @Override
+    public Form findByPatientId(int patientId) {
+        return null;
+    }
 }

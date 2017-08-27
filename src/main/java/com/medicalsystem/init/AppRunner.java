@@ -56,5 +56,13 @@ public class AppRunner implements ApplicationRunner {
         age.setField(fieldService.findByName("Age"));
         age.setValue(65);
         fieldValueService.saveOrUpdate(age);
+
+        //---------------------------------
+        lastName = new TextFieldValue();
+        lastName.setPatientId(patientId + 1);
+        lastName.setField(fieldService.findByName("Last name"));
+        lastName.setValue("Sieniawski");
+        fieldValueService.saveOrUpdate(lastName);
+
     }
 }
