@@ -34,14 +34,6 @@ public abstract class Field<T> extends IdComparableEntity {
     private int excelColumn;
 
     /**
-     * A list of sections that contain the field (could be more than one).
-     */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "FIELD_SECTION")
-    @Getter @Setter
-    private List<Section> sections = new ArrayList<>();
-
-    /**
      * A map describing values that the field can acquire.
      * Key   - value of the cell in the excel file (e.g. "0", "1", "2", "x")
      * Value - a 'literal' value for the corresponding key (e.g. "smoker", "non-smoker", "n/a")
@@ -62,10 +54,6 @@ public abstract class Field<T> extends IdComparableEntity {
 
     public void addOption(String key, T value) {
         options.put(key, value);
-    }
-
-    public void addSection(Section section) {
-        sections.add(section);
     }
 
 }

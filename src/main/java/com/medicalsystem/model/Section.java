@@ -24,26 +24,15 @@ public class Section extends IdComparableEntity {
     private String name;
 
     /**
-     * A list of forms that contain the section (could be more than one).
-     */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "FORM_SECTION")
-    @Getter @Setter
-    private List<Form> forms = new ArrayList<>();
-
-    /**
      * A list of fields that make up the section.
      */
-    @ManyToMany(mappedBy = "sections", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "FIELD_SECTION")
     @Getter @Setter
     private List<Field> fields = new ArrayList<>();
 
     public Section(String name) {
         this.name = name;
-    }
-
-    public void addForm(Form form) {
-        forms.add(form);
     }
 
     public void addField(Field<?> field) {

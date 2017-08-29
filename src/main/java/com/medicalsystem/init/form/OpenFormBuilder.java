@@ -24,7 +24,6 @@ public class OpenFormBuilder implements FormBuilder {
 
         sectionBuilders.forEach(builder -> {
             Section section = builder.build();
-            section.addForm(open);
             open.addSection(section);
         });
 

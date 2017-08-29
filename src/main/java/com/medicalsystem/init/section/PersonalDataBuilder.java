@@ -35,22 +35,17 @@ public class PersonalDataBuilder implements SectionBuilder {
         // Age
         Field age = new IntegerField("Age", 4, null);
 
-        lastName.addSection(personalData);
-        firstName.addSection(personalData);
-        sex.addSection(personalData);
-        age.addSection(personalData);
-
         personalData.addField(lastName);
         personalData.addField(firstName);
         personalData.addField(sex);
         personalData.addField(age);
 
-        sectionService.saveOrUpdate(personalData);
-
         fieldService.saveOrUpdate(lastName);
         fieldService.saveOrUpdate(firstName);
         fieldService.saveOrUpdate(sex);
         fieldService.saveOrUpdate(age);
+
+        sectionService.saveOrUpdate(personalData);
 
         return personalData;
     }

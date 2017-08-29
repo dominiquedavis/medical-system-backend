@@ -24,7 +24,8 @@ public class Form extends IdComparableEntity {
     /**
      * A list of sections that make up the form.
      */
-    @ManyToMany(mappedBy = "forms", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "FORM_SECTION")
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
 
