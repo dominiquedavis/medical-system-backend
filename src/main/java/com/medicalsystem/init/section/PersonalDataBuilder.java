@@ -24,16 +24,16 @@ public class PersonalDataBuilder implements SectionBuilder {
         Section personalData = new Section("Personal data");
 
         // Last name
-        Field lastName = new TextField("Last name", 1, null);
+        Field lastName = new TextField("Nazwisko", 1, null);
 
         // First name
-        Field firstName = new TextField("First name", 2, null);
+        Field firstName = new TextField("Imię", 2, null);
 
         // Sex
-        Field sex = new TextField("Sex", 3, MapUtils.of("M", "M", "K", "K"));
+        Field sex = new TextField("Płeć", 3, MapUtils.of("M", "M", "K", "K"));
 
         // Age
-        Field age = new IntegerField("Age", 4, null);
+        Field age = new IntegerField("Wiek", 4, null);
 
         personalData.addField(lastName);
         personalData.addField(firstName);
