@@ -25,7 +25,7 @@ public class DiseaseBuilder implements SectionBuilder {
 
         Section diseases = new Section("Diseases");
 
-//        Map<String, String> values = MapUtils.of("0", "nie", "1", "tak", "bd", "bd");
+//        Map<String, String> values = MapUtils.ofStrings("0", "nie", "1", "tak", "bd", "bd");
 
         Field ht = new DoubleField("HT", 21, null);
 

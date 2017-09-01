@@ -11,7 +11,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class IntegerField extends Field<Integer> {
 
-    public IntegerField(String name, int excelColumn, Map<String, Integer> options) {
+    public IntegerField(String name, int excelColumn, Map<Integer, String> options) {
         super(name, excelColumn, options);
     }
 
@@ -21,7 +21,7 @@ public class IntegerField extends Field<Integer> {
     @Column(name = "text_value")
     @Access(AccessType.PROPERTY)
     @Override
-    public Map<String, Integer> getOptions() {
+    public Map<Integer, String> getOptions() {
         return super.getOptions();
     }
 

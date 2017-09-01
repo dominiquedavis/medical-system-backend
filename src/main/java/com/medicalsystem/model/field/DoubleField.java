@@ -11,7 +11,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class DoubleField extends Field<Double> {
 
-    public DoubleField(String name, int excelColumn, Map<String, Double> options) {
+    public DoubleField(String name, int excelColumn, Map<Double, String> options) {
         super(name, excelColumn, options);
     }
 
@@ -21,7 +21,7 @@ public class DoubleField extends Field<Double> {
     @Column(name = "text_value")
     @Access(AccessType.PROPERTY)
     @Override
-    public Map<String, Double> getOptions() {
+    public Map<Double, String> getOptions() {
         return super.getOptions();
     }
 

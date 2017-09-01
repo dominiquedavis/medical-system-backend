@@ -30,7 +30,7 @@ public class PersonalDataBuilder implements SectionBuilder {
         Field firstName = new TextField("Imię", 2, null);
 
         // Sex
-        Field sex = new TextField("Płeć", 3, MapUtils.of("M", "M", "K", "K"));
+        Field sex = new TextField("Płeć", 3, MapUtils.ofStrings("M", "M", "K", "K"));
 
         // Age
         Field age = new IntegerField("Wiek", 4, null);

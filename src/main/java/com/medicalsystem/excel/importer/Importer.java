@@ -70,7 +70,7 @@ public class Importer {
 
         /* Iterate over rows and put each to the DB */
         while (rowIterator.hasNext()) {
-            if (rows++ > 20)
+            if (rows++ > 6)
                 break;
             Row row = rowIterator.next();
             rowImporter.importToDB(row, columnIndexes);

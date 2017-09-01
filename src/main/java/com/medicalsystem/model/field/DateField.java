@@ -12,13 +12,17 @@ import java.util.Map;
 @NoArgsConstructor
 public class DateField extends Field<Date> {
 
+    public DateField(String name, int excelColumn, Map<Date, String> options) {
+        super(name, excelColumn, options);
+    }
+
     @ElementCollection
     @JoinTable(name = "DATE_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")
     @Column(name = "date_value")
     @Access(AccessType.PROPERTY)
     @Override
-    public Map<String, Date> getOptions() {
+    public Map<Date, String> getOptions() {
         return super.getOptions();
     }
 
