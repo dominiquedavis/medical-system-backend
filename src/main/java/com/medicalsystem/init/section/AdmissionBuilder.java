@@ -56,6 +56,26 @@ public class AdmissionBuilder implements SectionBuilder {
 
         Field aaSize = new DoubleField("Wymiary AA [mm]", 12, null);
 
+        Field maxAneurysmSize = new DoubleField("Maks. Wymiary tętniaka tt. biodrowych [mm]", 13, null);
+
+        Field imageExamination = new DoubleField("Badanie obrazowe", 14, null);
+
+        Field aneurysmLocation = new DoubleField("Lokalizacja tętniaka", 15, null);
+
+        Field pad = new DoubleField("PAD", 16, null);
+
+        Map<Double, String> smokingValues = MapUtils.ofDoubles(Arrays.asList(0.0, 1.0, 2.0), Arrays.asList("nie palący",
+                "palący", "palący w przeszłości"));
+        Field smoking = new DoubleField("Palenie tytoniu", 17, smokingValues);
+
+        Field asaScale = new DoubleField("Skala ASA", 18, null);
+
+        Field faint = new DoubleField("Utrata przytomności", 19, commonValues);
+
+        Field shock = new DoubleField("Wstrząs", 20, smokingValues);
+
+
+
 
 
         admission.addField(admissionDate);
@@ -66,6 +86,14 @@ public class AdmissionBuilder implements SectionBuilder {
         admission.addField(operationMode);
         admission.addField(aaSymptoms);
         admission.addField(aaSize);
+        admission.addField(maxAneurysmSize);
+        admission.addField(imageExamination);
+        admission.addField(aneurysmLocation);
+        admission.addField(pad);
+        admission.addField(smoking);
+        admission.addField(asaScale);
+        admission.addField(faint);
+        admission.addField(shock);
 
 
         fieldService.saveOrUpdate(admissionDate);
@@ -76,6 +104,14 @@ public class AdmissionBuilder implements SectionBuilder {
         fieldService.saveOrUpdate(operationMode);
         fieldService.saveOrUpdate(aaSymptoms);
         fieldService.saveOrUpdate(aaSize);
+        fieldService.saveOrUpdate(maxAneurysmSize);
+        fieldService.saveOrUpdate(imageExamination);
+        fieldService.saveOrUpdate(aneurysmLocation);
+        fieldService.saveOrUpdate(pad);
+        fieldService.saveOrUpdate(smoking);
+        fieldService.saveOrUpdate(asaScale);
+        fieldService.saveOrUpdate(faint);
+        fieldService.saveOrUpdate(shock);
 
         sectionService.saveOrUpdate(admission);
 
