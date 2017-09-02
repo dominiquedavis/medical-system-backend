@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -75,43 +76,13 @@ public class AdmissionBuilder implements SectionBuilder {
         Field shock = new DoubleField("Wstrząs", 20, smokingValues);
 
 
+        List<Field> fields = Arrays.asList(admissionDate, operationDate, operationTypes, anesthesia, anesthetic, operationMode,
+                aaSymptoms, aaSize, maxAneurysmSize, imageExamination, aneurysmLocation, pad, smoking, asaScale, faint, shock);
 
-
-
-        admission.addField(admissionDate);
-        admission.addField(operationDate);
-        admission.addField(operationTypes);
-        admission.addField(anesthesia);
-        admission.addField(anesthetic);
-        admission.addField(operationMode);
-        admission.addField(aaSymptoms);
-        admission.addField(aaSize);
-        admission.addField(maxAneurysmSize);
-        admission.addField(imageExamination);
-        admission.addField(aneurysmLocation);
-        admission.addField(pad);
-        admission.addField(smoking);
-        admission.addField(asaScale);
-        admission.addField(faint);
-        admission.addField(shock);
-
-
-        fieldService.saveOrUpdate(admissionDate);
-        fieldService.saveOrUpdate(operationDate);
-        fieldService.saveOrUpdate(operationTypes);
-        fieldService.saveOrUpdate(anesthesia);
-        fieldService.saveOrUpdate(anesthetic);
-        fieldService.saveOrUpdate(operationMode);
-        fieldService.saveOrUpdate(aaSymptoms);
-        fieldService.saveOrUpdate(aaSize);
-        fieldService.saveOrUpdate(maxAneurysmSize);
-        fieldService.saveOrUpdate(imageExamination);
-        fieldService.saveOrUpdate(aneurysmLocation);
-        fieldService.saveOrUpdate(pad);
-        fieldService.saveOrUpdate(smoking);
-        fieldService.saveOrUpdate(asaScale);
-        fieldService.saveOrUpdate(faint);
-        fieldService.saveOrUpdate(shock);
+        fields.forEach(field -> {
+            admission.addField(field);
+            fieldService.saveOrUpdate(field);
+        });
 
         sectionService.saveOrUpdate(admission);
 

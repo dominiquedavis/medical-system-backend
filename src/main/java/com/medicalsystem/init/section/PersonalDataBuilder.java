@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonalDataBuilder implements SectionBuilder {
@@ -35,15 +38,13 @@ public class PersonalDataBuilder implements SectionBuilder {
         // Age
         Field age = new IntegerField("Wiek", 4, null);
 
-        personalData.addField(lastName);
-        personalData.addField(firstName);
-        personalData.addField(sex);
-        personalData.addField(age);
 
-        fieldService.saveOrUpdate(lastName);
-        fieldService.saveOrUpdate(firstName);
-        fieldService.saveOrUpdate(sex);
-        fieldService.saveOrUpdate(age);
+        List<Field> fields = Arrays.asList(lastName, firstName, sex, age);
+
+        fields.forEach(field -> {
+            personalData.addField(field);
+            fieldService.saveOrUpdate(field);
+        });
 
         sectionService.saveOrUpdate(personalData);
 

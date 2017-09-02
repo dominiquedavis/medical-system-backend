@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -46,26 +48,12 @@ public class DiseaseBuilder implements SectionBuilder {
         Field copd = new DoubleField("COPD", 29, null);
 
 
-        diseases.addField(ht);
-        diseases.addField(cad);
-        diseases.addField(cadHigh);
-        diseases.addField(mi);
-        diseases.addField(stenosis);
-        diseases.addField(cve);
-        diseases.addField(chf);
-        diseases.addField(dm);
-        diseases.addField(copd);
+        List<Field> fields = Arrays.asList(ht, cad, cadHigh, mi, stenosis, cve, chf, dm, copd);
 
-
-        fieldService.saveOrUpdate(ht);
-        fieldService.saveOrUpdate(cad);
-        fieldService.saveOrUpdate(cadHigh);
-        fieldService.saveOrUpdate(mi);
-        fieldService.saveOrUpdate(stenosis);
-        fieldService.saveOrUpdate(cve);
-        fieldService.saveOrUpdate(chf);
-        fieldService.saveOrUpdate(dm);
-        fieldService.saveOrUpdate(copd);
+        fields.forEach(field -> {
+            diseases.addField(field);
+            fieldService.saveOrUpdate(field);
+        });
 
         sectionService.saveOrUpdate(diseases);
 
