@@ -40,10 +40,6 @@ public class RowImporter {
                     saveNumericValue(cell, patientId, columnIndexes);
                     break;
             }
-            if (cell.getCellType() == 0) {
-                saveNumericValue(cell, patientId, columnIndexes);
-            } else {
-            }
         }
 
         log.info("ROW PERSISTED: " + row.getRowNum());
