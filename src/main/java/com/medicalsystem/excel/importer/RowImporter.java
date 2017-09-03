@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -34,7 +34,7 @@ public class RowImporter {
             Cell cell = cellIterator.next();
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_STRING:
-                    saveStringValue(cell, patientId, columnIndexes);
+                    saveValue(cell, patientId, columnIndexes, TextFieldValue::new, cell.getStringCellValue());
                     break;
                 case Cell.CELL_TYPE_NUMERIC:
                     saveNumericValue(cell, patientId, columnIndexes);
@@ -45,71 +45,30 @@ public class RowImporter {
         log.info("ROW PERSISTED: " + row.getRowNum());
     }
 
-
-
-    //TO-DO remove the repeating code
-
-    private void saveStringValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
-        FieldValue<String> field = new TextFieldValue();
+    private <T> void  saveValue(Cell cell, int patientId, Map<Integer, String> columnIndexes, Supplier supplier,
+                                   T value) {
+        FieldValue<T> field = (FieldValue<T>) supplier.get();
         field.setPatientId(patientId);
         Field fieldByName = fieldService.findByName(columnIndexes.get(cell.getColumnIndex()));
         if (fieldByName == null) {
             return;
         }
         field.setField(fieldByName);
-        field.setValue(cell.getStringCellValue());
+        field.setValue(value);
         fieldValueService.saveOrUpdate(field);
-    }
 
+    }
     private void saveNumericValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
 
         if (DateUtil.isCellDateFormatted(cell)) {
-            saveDateValue(cell, patientId, columnIndexes);
+            saveValue(cell, patientId, columnIndexes, DateFieldValue::new, cell.getDateCellValue());
         } else {
             Double numericCellValue = cell.getNumericCellValue();
             if(Math.floor(numericCellValue) == numericCellValue){
-                saveIntegerValue(cell, patientId, columnIndexes);
+                saveValue(cell, patientId, columnIndexes, IntegerFieldValue::new, (int) cell.getNumericCellValue());
             } else {
-                saveDoubleValue(cell, patientId, columnIndexes);
+                saveValue(cell, patientId, columnIndexes, DoubleFieldValue::new, cell.getNumericCellValue());
             }
         }
-    }
-
-    private void saveIntegerValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
-        FieldValue<Integer> field = new IntegerFieldValue();
-        field.setPatientId(patientId);
-        Field fieldByName = fieldService.findByName(columnIndexes.get(cell.getColumnIndex()));
-        if (fieldByName == null) {
-            return;
-        }
-        field.setField(fieldByName);
-        field.setValue((int) cell.getNumericCellValue());
-        fieldValueService.saveOrUpdate(field);
-    }
-
-    //TO-DO create a date parser
-    private void saveDateValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
-        FieldValue<Date> field = new DateFieldValue();
-        field.setPatientId(patientId);
-        Field fieldByName = fieldService.findByName(columnIndexes.get(cell.getColumnIndex()));
-        if (fieldByName == null) {
-            return;
-        }
-        field.setField(fieldByName);
-        field.setValue(cell.getDateCellValue());
-        fieldValueService.saveOrUpdate(field);
-
-    }
-
-    private void saveDoubleValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
-        FieldValue<Double> field = new DoubleFieldValue();
-        field.setPatientId(patientId);
-        Field fieldByName = fieldService.findByName(columnIndexes.get(cell.getColumnIndex()));
-        if (fieldByName == null) {
-            return;
-        }
-        field.setField(fieldByName);
-        field.setValue(cell.getNumericCellValue());
-        fieldValueService.saveOrUpdate(field);
     }
 }
