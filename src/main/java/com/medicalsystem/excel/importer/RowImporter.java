@@ -32,12 +32,13 @@ public class RowImporter {
         cellIterator.next();
         while (cellIterator.hasNext()) {
             Cell cell = cellIterator.next();
+            String fieldName = columnIndexes.get(cell.getColumnIndex());
             switch (cell.getCellType()) {
-                case Cell.CELL_TYPE_STRING:
-                    saveValue(cell, patientId, columnIndexes, TextFieldValue::new, cell.getStringCellValue());
-                    break;
                 case Cell.CELL_TYPE_NUMERIC:
-                    saveNumericValue(cell, patientId, columnIndexes);
+                    saveNumericValue(fieldName, patientId, cell);
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                    saveValue(fieldName, patientId, TextFieldValue::new, cell.getStringCellValue());
                     break;
             }
         }
@@ -45,11 +46,23 @@ public class RowImporter {
         log.info("ROW PERSISTED: " + row.getRowNum());
     }
 
-    private <T> void  saveValue(Cell cell, int patientId, Map<Integer, String> columnIndexes, Supplier supplier,
-                                   T value) {
-        FieldValue<T> field = (FieldValue<T>) supplier.get();
+    private void saveNumericValue(String fieldName, int patientId, Cell cell) {
+        if (DateUtil.isCellDateFormatted(cell)) {
+            saveValue(fieldName, patientId, DateFieldValue::new, cell.getDateCellValue());
+        } else {
+            Double numericCellValue = cell.getNumericCellValue();
+            if(Math.floor(numericCellValue) == numericCellValue){
+                saveValue(fieldName, patientId, IntegerFieldValue::new, (int) cell.getNumericCellValue());
+            } else {
+                saveValue(fieldName, patientId, DoubleFieldValue::new, cell.getNumericCellValue());
+            }
+        }
+    }
+
+    private <S, T extends FieldValue<S>> void  saveValue(String fieldName, int patientId, Supplier<T> supplier, S value) {
+        T field = supplier.get();
         field.setPatientId(patientId);
-        Field fieldByName = fieldService.findByName(columnIndexes.get(cell.getColumnIndex()));
+        Field fieldByName = fieldService.findByName(fieldName);
         if (fieldByName == null) {
             return;
         }
@@ -58,17 +71,5 @@ public class RowImporter {
         fieldValueService.saveOrUpdate(field);
 
     }
-    private void saveNumericValue(Cell cell, int patientId, Map<Integer, String> columnIndexes) {
 
-        if (DateUtil.isCellDateFormatted(cell)) {
-            saveValue(cell, patientId, columnIndexes, DateFieldValue::new, cell.getDateCellValue());
-        } else {
-            Double numericCellValue = cell.getNumericCellValue();
-            if(Math.floor(numericCellValue) == numericCellValue){
-                saveValue(cell, patientId, columnIndexes, IntegerFieldValue::new, (int) cell.getNumericCellValue());
-            } else {
-                saveValue(cell, patientId, columnIndexes, DoubleFieldValue::new, cell.getNumericCellValue());
-            }
-        }
-    }
 }
