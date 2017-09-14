@@ -3,6 +3,7 @@ package com.medicalsystem.init.section;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.model.field.DoubleField;
 import com.medicalsystem.model.field.Field;
+import com.medicalsystem.model.field.IntegerField;
 import com.medicalsystem.model.field.TextField;
 import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.SectionService;
@@ -27,28 +28,48 @@ public class DiseaseBuilder implements SectionBuilder {
 
         Section diseases = new Section("Diseases");
 
-//        Map<String, String> values = MapUtils.ofStrings("0", "nie", "1", "tak", "bd", "bd");
+        Map<Integer, String> yesOrNoValues = MapUtils.ofIntegers(Arrays.asList(0, 1),
+                Arrays.asList("nie", "tak"));
 
-        Field ht = new DoubleField("HT", 21, null);
+        // 19: Faint
+        Field faint = new IntegerField("Utrata przytomności", 19, yesOrNoValues);
 
-        Field cad = new DoubleField("CAD", 22, null);
+        // 20: Shock
+        Field shock = new IntegerField("Wstrząs", 20, yesOrNoValues);
 
-        Field cadHigh = new DoubleField("CAD wysokiego ryzyka", 23, null);
+        // 21: HT
+        Field ht = new IntegerField("HT", 21, yesOrNoValues);
 
-        Field mi = new DoubleField("MI/ACS przebyty", 24, null);
+        // 22: CAD
+        Field cad = new IntegerField("CAD", 22, yesOrNoValues);
 
-        Field stenosis = new DoubleField("Stenoza aortalna", 25, null);
+        // 23: High CAD
+        Field cadHigh = new IntegerField("CAD wysokiego ryzyka", 23, yesOrNoValues);
 
-        Field cve = new DoubleField("CVE przebyty", 26, null);
+        // 24: MI
+        Field mi = new IntegerField("MI/ACS przebyty", 24, yesOrNoValues);
 
-        Field chf = new DoubleField("CHF", 27, null);
+        // 25: Stenosis
+        Map<Integer, String> stenosisValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2, 3, 4),
+                Arrays.asList("brak", "łagodna", "umiarkowana", "ciężka", "sztuczna zastawka"));
+        Field stenosis = new IntegerField("Stenoza aortalna", 25, stenosisValues);
 
-        Field dm = new DoubleField("DM", 28, null);
+        // 26: CVE
+        Field cve = new IntegerField("CVE przebyty", 26, yesOrNoValues);
 
-        Field copd = new DoubleField("COPD", 29, null);
+        // 27: CHF
+        Field chf = new IntegerField("CHF", 27, yesOrNoValues);
+
+        // 28: DM
+        Map<Integer, String> dmValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2),
+                Arrays.asList("nie", "tak", "w trakcie insulinoterapii"));
+        Field dm = new IntegerField("DM", 28, dmValues);
+
+        // 29: COPD
+        Field copd = new IntegerField("COPD", 29, yesOrNoValues);
 
 
-        List<Field> fields = Arrays.asList(ht, cad, cadHigh, mi, stenosis, cve, chf, dm, copd);
+        List<Field> fields = Arrays.asList(faint, shock, ht, cad, cadHigh, mi, stenosis, cve, chf, dm, copd);
 
         fields.forEach(field -> {
             diseases.addField(field);

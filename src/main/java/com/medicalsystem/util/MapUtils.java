@@ -17,8 +17,23 @@ public class MapUtils {
 
         return map;
     }
+
     public static Map<Double, String> ofDoubles(List<Double> keys, List<String> values) {
         Map<Double, String> map = new HashMap<>();
+
+        if (keys.size() != values.size()) {
+            throw new IllegalArgumentException("Odd number of arguments");
+        }
+
+        for (int i = 0; i < keys.size(); i++) {
+            map.put(keys.get(i), values.get(i));
+        }
+
+        return map;
+    }
+
+    public static Map<Integer, String> ofIntegers(List<Integer> keys, List<String> values) {
+        Map<Integer, String> map = new HashMap<>();
 
         if (keys.size() != values.size()) {
             throw new IllegalArgumentException("Odd number of arguments");
