@@ -29,7 +29,7 @@ public class AdmissionBuilder implements SectionBuilder {
 
         Section admission = new Section("Parametry przyjęciowe");
 
-        Map<Integer, String> commonValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2),
+        Map<Integer, String> commonValues = MapUtils.of(Arrays.asList(0, 1, 2),
                 Arrays.asList("nie", "tak", "brak danych"));
 
         // 5: Admission date
@@ -39,24 +39,24 @@ public class AdmissionBuilder implements SectionBuilder {
         Field operationDate = new DateField("Data Zabiegu", 6, null);
 
         // 7: Operation type
-        Map<Integer, String> operationTypesValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4, 5, 6, 7), Arrays.asList(
+        Map<Integer, String> operationTypesValues = MapUtils.of(Arrays.asList(1, 2, 3, 4, 5, 6, 7), Arrays.asList(
                 "Otwarta operacja wycięcia tętniaka aorty brzusznej","Endowaskularne zaopatrzenie tętniaka aorty (EVAR)",
                 "Przęsło aortalno dwuudowe (ABF)","Przęsło aortalno-udowe","Przęsło aortalno-biodrowe",
                 "Przęsło aortalno-dwubiodrowe","Plastyka aorty"));
         Field operationTypes = new IntegerField("Rodzaj zabiegu", 7, operationTypesValues);
 
         // 8: Anesthesia
-        Map<Integer, String> anesthesiaValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("Ogólne",
+        Map<Integer, String> anesthesiaValues = MapUtils.of(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("Ogólne",
                 "Miejscowe", "Podpajęczynówkowe", "Ogólne plus zewnątrzoponowe", "Ogólne plus podpajęczynówkowe"));
         Field anesthesia = new IntegerField("Znieczulenie", 8, anesthesiaValues);
 
         // 9: Anesthestic
-        Map<Integer, String> anesthesicValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("Propofol",
+        Map<Integer, String> anesthesicValues = MapUtils.of(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("Propofol",
                 "Etomidat", "Tiopental", "Ketamina", "brak danych/nic"));
         Field anesthetic = new IntegerField("Lek znieczulający", 9, anesthesicValues);
 
         // 10: Operation mode
-        Map<Integer, String> operationModeValues = MapUtils.ofIntegers(Arrays.asList(1, 2), Arrays.asList("Planowy",
+        Map<Integer, String> operationModeValues = MapUtils.of(Arrays.asList(1, 2), Arrays.asList("Planowy",
                 "Pilny/Naglący"));
         Field operationMode = new IntegerField("Tryb zabiegu", 10, operationModeValues);
 
@@ -70,12 +70,12 @@ public class AdmissionBuilder implements SectionBuilder {
         Field maxAneurysmSize = new DoubleField("Maks. Wymiary tętniaka tt. biodrowych [mm]", 13, null);
 
         // 14: Image examination
-        Map<Integer, String> imageExaminationValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3), Arrays.asList("angio-TK",
+        Map<Integer, String> imageExaminationValues = MapUtils.of(Arrays.asList(1, 2, 3), Arrays.asList("angio-TK",
                 "USG", "z protokołu operacyjnego"));
         Field imageExamination = new IntegerField("Badanie obrazowe", 14, imageExaminationValues);
 
         // 15: Aneurysm location
-        Map<Integer, String> aneurysmLocationValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4), Arrays.asList("Suprarenal",
+        Map<Integer, String> aneurysmLocationValues = MapUtils.of(Arrays.asList(1, 2, 3, 4), Arrays.asList("Suprarenal",
                 "Pararenal", "Juxtarenal", "Infrarenal"));
         Field aneurysmLocation = new IntegerField("Lokalizacja tętniaka", 15, aneurysmLocationValues);
 
@@ -83,12 +83,12 @@ public class AdmissionBuilder implements SectionBuilder {
         Field pad = new IntegerField("PAD", 16, commonValues);
 
         // 17: Smoking
-        Map<Integer, String> smokingValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2), Arrays.asList("nie palący",
+        Map<Integer, String> smokingValues = MapUtils.of(Arrays.asList(0, 1, 2), Arrays.asList("nie palący",
                 "palący", "palący w przeszłości"));
         Field smoking = new IntegerField("Palenie tytoniu", 17, smokingValues);
 
         // 18: ASA Scale
-        Map<Integer, String> asaValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("ASA 1",
+        Map<Integer, String> asaValues = MapUtils.of(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList("ASA 1",
                 "ASA 2", "ASA 3", "ASA 4", "ASA 5"));
         Field asaScale = new IntegerField("Skala ASA", 18, asaValues);
 

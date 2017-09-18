@@ -4,7 +4,6 @@ import com.medicalsystem.model.Section;
 import com.medicalsystem.model.field.DoubleField;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.field.IntegerField;
-import com.medicalsystem.model.field.TextField;
 import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.SectionService;
 import com.medicalsystem.util.MapUtils;
@@ -29,7 +28,7 @@ public class ExaminationBuilder implements SectionBuilder {
         Section examination = new Section("Wyniki badań przy przyjęciu do szpitala");
 
         // 30: EKG
-        Map<Integer, String> ekgValues = MapUtils.ofIntegers(Arrays.asList(1, 2, 3, 4, 5, 6),
+        Map<Integer, String> ekgValues = MapUtils.of(Arrays.asList(1, 2, 3, 4, 5, 6),
                 Arrays.asList("rytm zatokowy", "AF", "rytm zatokowy plus obecność VE", "AF plus obecność VE",
                         "rytm z rozrusznika", "AF plus rytm z rozrusznika"));
         Field ekg = new IntegerField("EKG przyjeciowe", 30, ekgValues);

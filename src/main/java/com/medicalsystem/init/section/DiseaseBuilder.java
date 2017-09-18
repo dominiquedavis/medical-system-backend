@@ -1,10 +1,8 @@
 package com.medicalsystem.init.section;
 
 import com.medicalsystem.model.Section;
-import com.medicalsystem.model.field.DoubleField;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.field.IntegerField;
-import com.medicalsystem.model.field.TextField;
 import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.SectionService;
 import com.medicalsystem.util.MapUtils;
@@ -28,7 +26,7 @@ public class DiseaseBuilder implements SectionBuilder {
 
         Section diseases = new Section("Diseases");
 
-        Map<Integer, String> yesOrNoValues = MapUtils.ofIntegers(Arrays.asList(0, 1),
+        Map<Integer, String> yesOrNoValues = MapUtils.of(Arrays.asList(0, 1),
                 Arrays.asList("nie", "tak"));
 
         // 19: Faint
@@ -50,7 +48,7 @@ public class DiseaseBuilder implements SectionBuilder {
         Field mi = new IntegerField("MI/ACS przebyty", 24, yesOrNoValues);
 
         // 25: Stenosis
-        Map<Integer, String> stenosisValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2, 3, 4),
+        Map<Integer, String> stenosisValues = MapUtils.of(Arrays.asList(0, 1, 2, 3, 4),
                 Arrays.asList("brak", "łagodna", "umiarkowana", "ciężka", "sztuczna zastawka"));
         Field stenosis = new IntegerField("Stenoza aortalna", 25, stenosisValues);
 
@@ -61,7 +59,7 @@ public class DiseaseBuilder implements SectionBuilder {
         Field chf = new IntegerField("CHF", 27, yesOrNoValues);
 
         // 28: DM
-        Map<Integer, String> dmValues = MapUtils.ofIntegers(Arrays.asList(0, 1, 2),
+        Map<Integer, String> dmValues = MapUtils.of(Arrays.asList(0, 1, 2),
                 Arrays.asList("nie", "tak", "w trakcie insulinoterapii"));
         Field dm = new IntegerField("DM", 28, dmValues);
 

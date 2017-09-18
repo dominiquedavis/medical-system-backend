@@ -31,7 +31,7 @@ public class AppRunner implements ApplicationRunner {
         initializer.execute();
 
         // Add some fake data
-        int patientId = 13;
+        /*int patientId = 13;
 
         FieldValue<String> lastName = new TextFieldValue();
         lastName.setPatientId(patientId);
@@ -65,6 +65,6 @@ public class AppRunner implements ApplicationRunner {
         fieldValueService.saveOrUpdate(lastName);
 
         fieldValueService.findAll().forEach(v -> System.out.println(v.getValue()));
-
+*/
     }
 }
