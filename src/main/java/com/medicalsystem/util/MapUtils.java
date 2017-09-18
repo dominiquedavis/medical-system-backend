@@ -18,8 +18,8 @@ public class MapUtils {
         return map;
     }
 
-    public static <T> Map<T, String> of(List<T> keys, List<String> values) {
-        Map<T, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> of(List<K> keys, List<V> values) {
+        Map<K, V> map = new HashMap<>();
 
         if (keys.size() != values.size()) {
             throw new IllegalArgumentException("Odd number of arguments");
