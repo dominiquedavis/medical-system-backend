@@ -4,13 +4,12 @@ import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
 import com.medicalsystem.repository.*;
 import com.medicalsystem.service.FieldValueService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -37,22 +36,10 @@ public class FieldValueServiceImpl implements FieldValueService {
 
     @Override
     public List<FieldValue> findAll() {
-        /*return Stream.of(
-                dateFieldValueRepository.findAll(),
-                doubleFieldValueRepository.findAll(),
-                integerFieldValueRepository.findAll(),
-                textFieldValueRepository.findAll())
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());*/
+        List<FieldValue> fieldValues = new LinkedList<>();
 
-        List<FieldValue> fieldValues = new ArrayList<>();
-
-
-        System.out.println("XXXXXXXXXXXXXXXXX: " + fieldValueRepositories.size());
-
-        for (FieldValueRepository<? extends FieldValue> r : fieldValueRepositories) {
-
-            List<? extends FieldValue> fv = r.findAll();
+        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
+            List<? extends FieldValue> fv = repository.findAll();
             fieldValues.addAll(fv);
         }
 
@@ -61,20 +48,36 @@ public class FieldValueServiceImpl implements FieldValueService {
 
     @Override
     public List<FieldValue> findAllByPatientId(int patientId) {
-        //return fieldValueRepository.findAllByPatientId(patientId);
-        return null;
+        List<FieldValue> fieldValues = new LinkedList<>();
+
+        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
+            List<? extends FieldValue> fv = repository.findAllByPatientId(patientId);
+            fieldValues.addAll(fv);
+        }
+
+        return fieldValues;
     }
 
     @Override
     public FieldValue findByFieldAndPatientId(Field field, int patientId) {
-        //return fieldValueRepository.findByFieldAndPatientId(field, patientId);
-        return null;
+        FieldValue fieldValue = null;
+
+        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories)
+            if ((fieldValue = repository.findByFieldAndPatientId(field, patientId)) != null)
+                break;
+
+        return fieldValue;
     }
 
     @Override
     public FieldValue findById(Integer id) {
-        //return fieldValueRepository.findOne(id);
-        return null;
+        FieldValue fieldValue = null;
+
+        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories)
+            if ((fieldValue = repository.findOne(id)) != null)
+                break;
+
+        return fieldValue;
     }
 
     @Override
@@ -84,11 +87,15 @@ public class FieldValueServiceImpl implements FieldValueService {
 
     @Override
     public void delete(FieldValue fieldValue) {
-        //fieldValueRepository.delete(fieldValue);
+        this.deleteById(fieldValue.getId());
     }
 
     @Override
     public void deleteById(Integer id) {
-        //fieldValueRepository.delete(id);
+        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
+            if (repository.exists(id)) {
+                repository.delete(id);
+            }
+        }
     }
 }
