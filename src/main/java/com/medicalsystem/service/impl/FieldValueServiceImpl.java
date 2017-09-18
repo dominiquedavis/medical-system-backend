@@ -10,15 +10,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Transactional
 public class FieldValueServiceImpl implements FieldValueService {
 
-    private final FieldValueRepository fieldValueRepository;
-    private final List<? extends FieldValueQueryable<? extends FieldValue>> fieldValueRepositories;
+    private final FieldValueRepository<FieldValue> fieldValueRepository;
+    private final List<FieldValueRepository<? extends FieldValue>> fieldValueRepositories;
+
+    @Autowired
+    public FieldValueServiceImpl(FieldValueRepository<FieldValue> fieldValueRepository,
+                                 DateFieldValueRepository dateFieldValueRepository,
+                                 DoubleFieldValueRepository doubleFieldValueRepository,
+                                 IntegerFieldValueRepository integerFieldValueRepository,
+                                 TextFieldValueRepository textFieldValueRepository) {
+        this.fieldValueRepository = fieldValueRepository;
+        this.fieldValueRepositories = Arrays.asList(
+                dateFieldValueRepository,
+                doubleFieldValueRepository,
+                integerFieldValueRepository,
+                textFieldValueRepository
+        );
+    }
 
     @Override
     public List<FieldValue> findAll() {
@@ -35,8 +50,8 @@ public class FieldValueServiceImpl implements FieldValueService {
 
         System.out.println("XXXXXXXXXXXXXXXXX: " + fieldValueRepositories.size());
 
-        for (FieldValueQueryable<? extends FieldValue> r : fieldValueRepositories) {
-            System.out.println(r.getClass().getName());
+        for (FieldValueRepository<? extends FieldValue> r : fieldValueRepositories) {
+
             List<? extends FieldValue> fv = r.findAll();
             fieldValues.addAll(fv);
         }
