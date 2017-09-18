@@ -1,8 +1,9 @@
 package com.medicalsystem.init;
 
-import com.medicalsystem.model.value.FieldValue;
-import com.medicalsystem.model.value.IntegerFieldValue;
-import com.medicalsystem.model.value.TextFieldValue;
+import com.medicalsystem.model.field.DateField;
+import com.medicalsystem.model.field.Field;
+import com.medicalsystem.model.field.TextField;
+import com.medicalsystem.model.value.*;
 import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.FieldValueService;
 import com.medicalsystem.service.SectionService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -31,7 +34,7 @@ public class AppRunner implements ApplicationRunner {
         initializer.execute();
 
         // Add some fake data
-        /*int patientId = 13;
+        int patientId = 13;
 
         FieldValue<String> lastName = new TextFieldValue();
         lastName.setPatientId(patientId);
@@ -64,7 +67,7 @@ public class AppRunner implements ApplicationRunner {
         lastName.setValue("Sieniawski");
         fieldValueService.saveOrUpdate(lastName);
 
-        fieldValueService.findAll().forEach(v -> System.out.println(v.getValue()));
-*/
+        fieldValueService.findAll();
+
     }
 }
