@@ -1,7 +1,9 @@
 package com.medicalsystem.model.field;
 
 import com.medicalsystem.model.IdComparableEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashMap;
@@ -43,14 +45,18 @@ public abstract class Field<T> extends IdComparableEntity {
     @Getter @Setter
     private Map<T, String> options = new HashMap<>();
 
+
+    /**
+     * Constructor
+     *
+     * @param name        name of the field
+     * @param excelColumn index of the corresponding excel column
+     * @param options     a map of possible options (null if none)
+     */
     public Field(String name, int excelColumn, Map<T, String> options) {
         this.name = name;
         this.excelColumn = excelColumn;
         this.options = (options == null) ? new HashMap<>() : options;
-    }
-
-    public void addOption(T key, String value) {
-        options.put(key, value);
     }
 
 }

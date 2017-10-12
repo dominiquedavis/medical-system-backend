@@ -1,54 +1,32 @@
 package com.medicalsystem.init.section;
 
+import com.medicalsystem.factory.FieldFactory;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.model.field.Field;
-import com.medicalsystem.model.field.IntegerField;
 import com.medicalsystem.model.field.TextField;
-import com.medicalsystem.service.FieldService;
-import com.medicalsystem.service.SectionService;
-import com.medicalsystem.util.MapUtils;
+import com.medicalsystem.properties.StringProperties;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Log
 public class PersonalDataBuilder implements SectionBuilder {
 
-    private final FieldService fieldService;
-    private final SectionService sectionService;
+    private final StringProperties props;
 
     @Override
     public Section build() {
-        // Personal data section
-        Section personalData = new Section("Personal data");
+        Section section = new Section(props.get("section.personaldata"));
 
-        // 1: Last name
-        Field lastName = new TextField("Nazwisko", 1, null);
+        Field lastName = FieldFactory.create(TextField::new, "field.lastname.name", "field.lastname.index", null);
+        Field firstName = FieldFactory.create(TextField::new, "field.firstname.name", "field.firstname.index", null);
+        Field sex = FieldFactory.create(TextField::new, "field.sex.name", "field.sex.index", null);
 
-        // 2: First name
-        Field firstName = new TextField("Imię", 2, null);
+        log.info(String.format("Section created: '%s'", section.getName()));
 
-        // 3: Sex
-        Field sex = new TextField("Płeć", 3, MapUtils.of("M", "M", "K", "K"));
-
-        // 4: Age
-        Field age = new IntegerField("Wiek", 4, null);
-
-
-        List<Field> fields = Arrays.asList(lastName, firstName, sex, age);
-
-        fields.forEach(field -> {
-            personalData.addField(field);
-            fieldService.saveOrUpdate(field);
-        });
-
-        sectionService.saveOrUpdate(personalData);
-
-        return personalData;
+        return section;
     }
-
 }
