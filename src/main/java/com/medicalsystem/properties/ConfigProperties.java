@@ -3,6 +3,7 @@ package com.medicalsystem.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  * Loads automaticaly on startup.
  */
 @Component
+@PropertySource("classpath:config.properties")
 @ConfigurationProperties("")
 public class ConfigProperties {
 
