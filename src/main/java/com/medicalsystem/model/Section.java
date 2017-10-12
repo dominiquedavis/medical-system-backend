@@ -28,7 +28,7 @@ public class Section extends IdComparableEntity {
      */
     // TODO: Fix LAZY loading
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "FIELD_SECTION")
+    @JoinTable(name = "SECTION_FIELD")
     @Getter @Setter
     private List<Field> fields = new ArrayList<>();
 

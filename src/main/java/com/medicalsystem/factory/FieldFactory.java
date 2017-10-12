@@ -2,15 +2,27 @@ package com.medicalsystem.factory;
 
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.properties.ConfigProperties;
+import com.medicalsystem.service.FieldService;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @Log
 public class FieldFactory {
 
     private static final String FIELD_PACKAGE = "com.medicalsystem.model.field";
     private static final String FIELD_SUFFIX = "Field";
+
+    private static FieldService fieldService;
+
+    @Autowired
+    public FieldFactory(FieldService fieldService) {
+        FieldFactory.fieldService = fieldService;
+    }
 
     /**
      * Creates a Field object from the config file
@@ -31,6 +43,9 @@ public class FieldFactory {
         if (options != null) {
             options.forEach(option -> field.addOption(option.getKey(), option.getVal()));
         }
+
+        // Persist created field
+        fieldService.saveOrUpdate(field);
 
         log.info(String.format("Field created: '%s'", field.getName()));
 
