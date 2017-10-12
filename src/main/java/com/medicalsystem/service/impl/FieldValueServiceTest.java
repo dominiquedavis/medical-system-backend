@@ -14,13 +14,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class FieldValueServiceImpl implements FieldValueService {
+public class FieldValueServiceTest implements FieldValueService {
 
     private final FieldValueRepository<FieldValue> fieldValueRepository;
     private final List<FieldValueRepository<? extends FieldValue>> fieldValueRepositories;
 
     @Autowired
-    public FieldValueServiceImpl(FieldValueRepository<FieldValue> fieldValueRepository,
+    public FieldValueServiceTest(FieldValueRepository<FieldValue> fieldValueRepository,
                                  DateFieldValueRepository dateFieldValueRepository,
                                  DoubleFieldValueRepository doubleFieldValueRepository,
                                  IntegerFieldValueRepository integerFieldValueRepository,

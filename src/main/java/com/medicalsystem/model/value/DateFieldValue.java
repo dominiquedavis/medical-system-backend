@@ -2,6 +2,7 @@ package com.medicalsystem.model.value;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "DATE_FIELDS_VALUES")
@@ -9,8 +10,9 @@ import java.util.Date;
 public class DateFieldValue extends FieldValue<Date> {
 
     @Access(AccessType.PROPERTY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Override
-    public Date getValue() {
-        return super.getValue();
+    public List<Date> getValues() {
+        return super.getValues();
     }
 }

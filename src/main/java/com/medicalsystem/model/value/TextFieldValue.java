@@ -1,6 +1,7 @@
 package com.medicalsystem.model.value;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "TEXT_FIELDS_VALUES")
@@ -8,8 +9,9 @@ import javax.persistence.*;
 public class TextFieldValue extends FieldValue<String> {
 
     @Access(AccessType.PROPERTY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Override
-    public String getValue() {
-        return super.getValue();
+    public List<String> getValues() {
+        return super.getValues();
     }
 }
