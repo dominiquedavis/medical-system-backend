@@ -22,7 +22,6 @@ public class FieldFactory {
                                                        String excelColumnProperty, Map<T, String> options) {
         String name = props.get(nameProperty);
         int excelColumn = props.getAsInt(excelColumnProperty);
-
         T field = supplier.get();
 
         field.setName(name);

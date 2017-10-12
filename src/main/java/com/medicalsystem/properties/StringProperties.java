@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@PropertySource("classpath:strings.properties")
+@PropertySource(value = "classpath:strings.properties", encoding = "UTF-8")
 public class StringProperties {
 
     private final Environment env;
