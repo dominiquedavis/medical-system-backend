@@ -25,4 +25,8 @@ public class TextField extends Field<String> {
         return super.getOptions();
     }
 
+    @Override
+    public void addOption(String key, String value) {
+        super.addOption(key, value);
+    }
 }

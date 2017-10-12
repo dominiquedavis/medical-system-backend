@@ -1,6 +1,7 @@
 package com.medicalsystem.model.field;
 
 import lombok.NoArgsConstructor;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,4 +27,8 @@ public class DateField extends Field<Date> {
         return super.getOptions();
     }
 
+    @Override
+    public void addOption(String key, String value) {
+        throw new NotImplementedException();
+    }
 }

@@ -25,4 +25,10 @@ public class DoubleField extends Field<Double> {
         return super.getOptions();
     }
 
+    @Override
+    public void addOption(String key, String value) {
+        double d = Double.parseDouble(key);
+        super.addOption(d, value);
+    }
+
 }

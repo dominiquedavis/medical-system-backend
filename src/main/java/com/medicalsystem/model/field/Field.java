@@ -59,4 +59,17 @@ public abstract class Field<T> extends IdComparableEntity {
         this.options = (options == null) ? new HashMap<>() : options;
     }
 
+    public void addOption(T key, String value) {
+        this.options.put(key, value);
+    }
+
+    /**
+     * Abstract method for adding option with a String representation of the key.
+     * The key should be converted to a proper type in subclasses.
+     *
+     * @param key   a String representation of the key
+     * @param value value
+     */
+    public abstract void addOption(String key, String value);
+
 }

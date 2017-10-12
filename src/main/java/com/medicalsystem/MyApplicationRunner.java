@@ -18,6 +18,6 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("Running initialization...");
-        //initializer.prepareInitialConfiguration();
+        initializer.prepareInitialConfiguration();
     }
 }

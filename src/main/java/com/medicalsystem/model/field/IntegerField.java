@@ -25,4 +25,9 @@ public class IntegerField extends Field<Integer> {
         return super.getOptions();
     }
 
+    @Override
+    public void addOption(String key, String value) {
+        int i = Integer.parseInt(key);
+        super.addOption(i, value);
+    }
 }

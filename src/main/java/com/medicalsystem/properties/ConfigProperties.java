@@ -25,6 +25,9 @@ public class ConfigProperties {
     public static class Form {
 
         @Getter @Setter
+        private String name;
+
+        @Getter @Setter
         private List<Section> sections = new ArrayList<>();
 
         public static class Section {
