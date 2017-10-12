@@ -33,6 +33,9 @@ public class ConfigProperties {
         public static class Section {
 
             @Getter @Setter
+            private String name;
+
+            @Getter @Setter
             private List<Field> fields = new ArrayList<>();
 
             public static class Field {

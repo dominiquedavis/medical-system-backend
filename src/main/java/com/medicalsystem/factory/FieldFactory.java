@@ -3,20 +3,19 @@ package com.medicalsystem.factory;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.properties.ConfigProperties;
 import lombok.extern.java.Log;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 @Log
 public class FieldFactory {
 
-    private static final String fieldPackage = "com.medicalsystem.model.field";
+    private static final String FIELD_PACKAGE = "com.medicalsystem.model.field";
+    private static final String FIELD_SUFFIX = "Field";
 
     /**
      * Creates a Field object from the config file
-     * @param _field an object representing field loaded from config
-     * @return a Field object
+     * @param _field an object representing a field loaded from config
+     * @return created Field object
      */
     public static Field<?> fromConfig(ConfigProperties.Form.Section.Field _field) {
         Field<?> field = getFieldObject(_field.getType());
@@ -33,6 +32,8 @@ public class FieldFactory {
             options.forEach(option -> field.addOption(option.getKey(), option.getVal()));
         }
 
+        log.info(String.format("Field created: '%s'", field.getName()));
+
         return field;
     }
 
@@ -44,7 +45,7 @@ public class FieldFactory {
      */
     private static Field<?> getFieldObject(String type) {
         Field<?> field = null;
-        String className = fieldPackage + "." + type + "Field";
+        String className = FIELD_PACKAGE + "." + type + FIELD_SUFFIX;
         try {
             Class<?> c = Class.forName(className);
             field = (Field<?>) c.newInstance();
