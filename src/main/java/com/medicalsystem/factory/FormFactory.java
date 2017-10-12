@@ -33,7 +33,7 @@ public class FormFactory {
         // Set name
         open.setName(_open.getName());
 
-        // Add sections
+        // Create and add sections
         _open.getSections().forEach(_section -> {
             Section section = SectionFactory.fromConfig(_section);
             open.addSection(section);

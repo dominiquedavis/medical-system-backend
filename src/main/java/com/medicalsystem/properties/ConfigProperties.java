@@ -14,7 +14,7 @@ import java.util.List;
  * Loads automaticaly on startup.
  */
 @Component
-@PropertySource("classpath:config.properties")
+@PropertySource(value = "classpath:config.properties", encoding = "UTF-8")
 @ConfigurationProperties("")
 public class ConfigProperties {
 
