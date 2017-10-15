@@ -18,10 +18,12 @@ public class FieldFactory {
     private static final String FIELD_SUFFIX = "Field";
 
     private static FieldService fieldService;
+    private static ConfigProperties props;
 
     @Autowired
-    public FieldFactory(FieldService fieldService) {
+    public FieldFactory(FieldService fieldService, ConfigProperties props) {
         FieldFactory.fieldService = fieldService;
+        FieldFactory.props = props;
     }
 
     /**
@@ -37,6 +39,9 @@ public class FieldFactory {
 
         // Set excel column
         field.setExcelColumn(_field.getIndex());
+
+        // Set if multiple
+        field.setMultiple(props.getMultipleFields().contains(field.getName()));
 
         // Add options
         List<ConfigProperties.Form.Section.Field.Option> options = _field.getOptions();

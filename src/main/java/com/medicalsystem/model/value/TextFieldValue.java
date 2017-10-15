@@ -9,7 +9,12 @@ public class TextFieldValue extends FieldValue<String> {
 
     @Access(AccessType.PROPERTY)
     @Override
-    public String getValues() {
-        return super.getValues();
+    public String getValue() {
+        return super.getValue();
+    }
+
+    @Override
+    public void setStringValue(String value) {
+        super.setValue(value);
     }
 }

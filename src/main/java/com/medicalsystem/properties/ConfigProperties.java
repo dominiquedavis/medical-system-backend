@@ -30,6 +30,9 @@ public class ConfigProperties {
     @Getter @Setter
     private List<String> additionalEvarFields;
 
+    @Getter @Setter
+    private List<String> multipleFields;
+
     public static class Form {
 
         @Getter @Setter

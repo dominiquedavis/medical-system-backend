@@ -33,6 +33,12 @@ public abstract class Field<T> extends IdComparableEntity {
     private int excelColumn;
 
     /**
+     * Indicates if the field can contain multiple values
+     */
+    @Getter @Setter
+    private boolean multiple = false;
+
+    /**
      * A map describing values that the field can acquire.
      * Key   - values of the cell in the excel file (e.g. "0", "1", "2", "x")
      * Value - a 'literal' values for the corresponding key (e.g. "smoker", "non-smoker", "n/a")

@@ -1,5 +1,7 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.util.DateUtils;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,7 +12,12 @@ public class DateFieldValue extends FieldValue<Date> {
 
     @Access(AccessType.PROPERTY)
     @Override
-    public Date getValues() {
-        return super.getValues();
+    public Date getValue() {
+        return super.getValue();
+    }
+
+    @Override
+    public void setStringValue(String value) {
+        super.setValue(DateUtils.fromString(value));
     }
 }

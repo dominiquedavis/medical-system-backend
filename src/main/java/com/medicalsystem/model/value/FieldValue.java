@@ -41,6 +41,8 @@ public abstract class FieldValue<T> extends IdComparableEntity {
      */
     @Transient
     @Getter @Setter
-    private T values;
+    private T value;
+
+    public abstract void setStringValue(String value);
 
 }

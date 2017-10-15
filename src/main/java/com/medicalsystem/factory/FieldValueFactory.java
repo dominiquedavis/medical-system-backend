@@ -2,6 +2,8 @@ package com.medicalsystem.factory;
 
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
+import com.medicalsystem.model.value.MultipleFieldValue;
+import com.medicalsystem.util.CellUtils;
 import lombok.extern.java.Log;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -17,13 +19,15 @@ public class FieldValueFactory {
 
         fieldValue.setPatientId(patientId);
         fieldValue.setField(field);
-
-        System.out.println(fieldValue.getClass().getName());
+        fieldValue.setStringValue(CellUtils.getStringValue(cell));
 
         return fieldValue;
     }
 
     private static FieldValue<?> createBlankObject(Field<?> field) {
+        if (field.isMultiple())
+            return new MultipleFieldValue();
+
         String fieldClassName = field.getClass().getSimpleName();
         String fieldValueClassName = FIELD_VALUE_PACKAGE + "." + fieldClassName.replaceAll(FIELD_SUFFIX, "") + FIELD_VALUE_SUFFIX;
         FieldValue<?> fieldValue = null;
