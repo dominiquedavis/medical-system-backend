@@ -24,13 +24,15 @@ public class FieldValueServiceImpl implements FieldValueService {
                                  DateFieldValueRepository dateFieldValueRepository,
                                  DoubleFieldValueRepository doubleFieldValueRepository,
                                  IntegerFieldValueRepository integerFieldValueRepository,
-                                 TextFieldValueRepository textFieldValueRepository) {
+                                 TextFieldValueRepository textFieldValueRepository,
+                                 MultipleFieldValueRepository multipleFieldValueRepository) {
         this.fieldValueRepository = fieldValueRepository;
         this.fieldValueRepositories = Arrays.asList(
                 dateFieldValueRepository,
                 doubleFieldValueRepository,
                 integerFieldValueRepository,
-                textFieldValueRepository
+                textFieldValueRepository,
+                multipleFieldValueRepository
         );
     }
 
