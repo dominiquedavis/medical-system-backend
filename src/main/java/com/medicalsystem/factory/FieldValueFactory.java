@@ -17,7 +17,9 @@ public class FieldValueFactory {
 
         fieldValue.setPatientId(patientId);
         fieldValue.setField(field);
-        
+
+        System.out.println(fieldValue.getClass().getName());
+
         return fieldValue;
     }
 

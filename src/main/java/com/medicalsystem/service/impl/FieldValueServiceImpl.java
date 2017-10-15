@@ -14,13 +14,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class FieldValueServiceTest implements FieldValueService {
+public class FieldValueServiceImpl implements FieldValueService {
 
-    private final FieldValueRepository<FieldValue> fieldValueRepository;
+    private final FieldValueRepository<FieldValue<?>> fieldValueRepository;
     private final List<FieldValueRepository<? extends FieldValue>> fieldValueRepositories;
 
     @Autowired
-    public FieldValueServiceTest(FieldValueRepository<FieldValue> fieldValueRepository,
+    public FieldValueServiceImpl(FieldValueRepository<FieldValue<?>> fieldValueRepository,
                                  DateFieldValueRepository dateFieldValueRepository,
                                  DoubleFieldValueRepository doubleFieldValueRepository,
                                  IntegerFieldValueRepository integerFieldValueRepository,
@@ -35,11 +35,11 @@ public class FieldValueServiceTest implements FieldValueService {
     }
 
     @Override
-    public List<FieldValue> findAll() {
-        List<FieldValue> fieldValues = new LinkedList<>();
+    public List<FieldValue<?>> findAll() {
+        List<FieldValue<?>> fieldValues = new LinkedList<>();
 
         for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
-            List<? extends FieldValue> fv = repository.findAll();
+            List<? extends FieldValue<?>> fv = repository.findAll();
             fieldValues.addAll(fv);
         }
 
@@ -47,11 +47,11 @@ public class FieldValueServiceTest implements FieldValueService {
     }
 
     @Override
-    public List<FieldValue> findAllByPatientId(int patientId) {
-        List<FieldValue> fieldValues = new LinkedList<>();
+    public List<FieldValue<?>> findAllByPatientId(int patientId) {
+        List<FieldValue<?>> fieldValues = new LinkedList<>();
 
-        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
-            List<? extends FieldValue> fv = repository.findAllByPatientId(patientId);
+        for (FieldValueRepository<? extends FieldValue<?>> repository : fieldValueRepositories) {
+            List<? extends FieldValue<?>> fv = repository.findAllByPatientId(patientId);
             fieldValues.addAll(fv);
         }
 
@@ -59,10 +59,10 @@ public class FieldValueServiceTest implements FieldValueService {
     }
 
     @Override
-    public FieldValue findByFieldAndPatientId(Field field, int patientId) {
+    public FieldValue<?> findByFieldAndPatientId(Field<?> field, int patientId) {
         FieldValue fieldValue = null;
 
-        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories)
+        for (FieldValueRepository<? extends FieldValue<?>> repository : fieldValueRepositories)
             if ((fieldValue = repository.findByFieldAndPatientId(field, patientId)) != null)
                 break;
 
@@ -70,10 +70,10 @@ public class FieldValueServiceTest implements FieldValueService {
     }
 
     @Override
-    public FieldValue findById(Integer id) {
+    public FieldValue<?> findById(Integer id) {
         FieldValue fieldValue = null;
 
-        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories)
+        for (FieldValueRepository<? extends FieldValue<?>> repository : fieldValueRepositories)
             if ((fieldValue = repository.findOne(id)) != null)
                 break;
 
@@ -81,18 +81,18 @@ public class FieldValueServiceTest implements FieldValueService {
     }
 
     @Override
-    public FieldValue saveOrUpdate(FieldValue fieldValue) {
+    public FieldValue<?> saveOrUpdate(FieldValue<?> fieldValue) {
         return fieldValueRepository.save(fieldValue);
     }
 
     @Override
-    public void delete(FieldValue fieldValue) {
+    public void delete(FieldValue<?> fieldValue) {
         this.deleteById(fieldValue.getId());
     }
 
     @Override
     public void deleteById(Integer id) {
-        for (FieldValueRepository<? extends FieldValue> repository : fieldValueRepositories) {
+        for (FieldValueRepository<? extends FieldValue<?>> repository : fieldValueRepositories) {
             if (repository.exists(id)) {
                 repository.delete(id);
             }
