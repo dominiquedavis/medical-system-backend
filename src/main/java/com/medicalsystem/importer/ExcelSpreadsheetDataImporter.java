@@ -1,17 +1,25 @@
 package com.medicalsystem.importer;
 
+import com.medicalsystem.service.FieldService;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Iterator;
 
 @Component
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Log
 public class ExcelSpreadsheetDataImporter implements DataImporter {
+
+    private final RowImporter rowImporter;
 
     @Override
     public void importToDatabase(FileInputStream excelFile) {
@@ -49,15 +57,24 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
     }
 
     private void importOpenSheet(Sheet openSheet) {
+        Iterator<Row> iterator = openSheet.rowIterator();
 
+        // Skip headers
+        if (openSheet.getPhysicalNumberOfRows() < 3) {
+            log.info("Open sheet contains no data rows");
+            return;
+        }
+
+        iterator.next();
+        iterator.next();
+
+        // Process the rest of the rows
+        iterator.forEachRemaining(rowImporter::importRow);
     }
 
     private void importEvarSheet(Sheet evarSheet) {
-
+        // TODO: Implement
     }
 
-    private void importSheet(Sheet sheet) {
-
-    }
 
 }

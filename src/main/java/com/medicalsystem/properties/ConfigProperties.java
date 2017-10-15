@@ -24,6 +24,12 @@ public class ConfigProperties {
     @Getter @Setter
     private Form evar;
 
+    @Getter @Setter
+    private List<String> additionalOpenFields;
+
+    @Getter @Setter
+    private List<String> additionalEvarFields;
+
     public static class Form {
 
         @Getter @Setter

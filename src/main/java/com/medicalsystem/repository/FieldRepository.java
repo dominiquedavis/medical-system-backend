@@ -3,8 +3,10 @@ package com.medicalsystem.repository;
 import com.medicalsystem.model.field.Field;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FieldRepository extends JpaRepository<Field, Integer> {
+public interface FieldRepository extends JpaRepository<Field<?>, Integer> {
 
-    Field findByName(String name);
+    Field<?> findByName(String name);
+
+    Field<?> findByExcelColumn(int excelColumn);
 
 }
