@@ -23,6 +23,11 @@ public class RowImporter {
     private final FieldService fieldService;
     private final FieldValueService fieldValueService;
 
+    /**
+     * Processes a single row and imports its content to the database
+     *
+     * @param row an excel row
+     */
     public void importRow(Row row) {
         Iterator<Cell> iterator = row.cellIterator();
 
@@ -53,6 +58,12 @@ public class RowImporter {
         });
     }
 
+    /**
+     * Retrieves patient id as an integer from cell object
+     *
+     * @param idCell an excel cell
+     * @return       patient id as an integer
+     */
     private int getPatientId(Cell idCell) {
         String patientIdStr = CellUtils.getStringValue(idCell);
         int patientId;

@@ -14,6 +14,14 @@ public class FieldValueFactory {
     private static final String FIELD_SUFFIX = "Field";
     private static final String FIELD_VALUE_SUFFIX = "FieldValue";
 
+    /**
+     * Creates a proper field value object
+     *
+     * @param field     a field which created value represents
+     * @param cell      an excel cell to get value from
+     * @param patientId patient id
+     * @return          a proper field value object
+     */
     public static FieldValue<?> createFieldValue(Field<?> field, Cell cell, int patientId) {
         FieldValue<?> fieldValue = createBlankObject(field);
 
@@ -24,6 +32,13 @@ public class FieldValueFactory {
         return fieldValue;
     }
 
+    /**
+     * Creates a field value object with proper extension based on a given field object
+     * E.g. for 'DateField' will create 'DateFieldValue', etc.
+     *
+     * @param field field object
+     * @return      a proper field value object
+     */
     private static FieldValue<?> createBlankObject(Field<?> field) {
         if (field.isMultiple())
             return new MultipleFieldValue();

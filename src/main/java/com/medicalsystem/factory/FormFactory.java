@@ -24,6 +24,7 @@ public class FormFactory {
 
     /**
      * Creates a Form object representing the OPEN form
+     *
      * @return created Form object
      */
     public static Form openFromConfig() {

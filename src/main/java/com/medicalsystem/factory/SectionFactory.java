@@ -21,8 +21,9 @@ public class SectionFactory {
 
     /**
      * Creates a Section object from the config file
+     *
      * @param _section an object representing a section loaded from config
-     * @return created Section object
+     * @return         created Section object
      */
     public static Section fromConfig(ConfigProperties.Form.Section _section) {
         Section section = new Section();

@@ -28,8 +28,9 @@ public class FieldFactory {
 
     /**
      * Creates a Field object from the config file
+     *
      * @param _field an object representing a field loaded from config
-     * @return created Field object
+     * @return       created Field object
      */
     public static Field<?> fromConfig(ConfigProperties.Form.Section.Field _field) {
         Field<?> field = getFieldObject(_field.getType());
@@ -61,7 +62,7 @@ public class FieldFactory {
      * Creates a Field object upon the type of the class
      *
      * @param type type of the class, e.g. "Text" or "Date"
-     * @return a proper extension of the Field class, eg. "TextField" or "DateField"
+     * @return     a proper extension of the Field class, eg. "TextField" or "DateField"
      */
     private static Field<?> getFieldObject(String type) {
         Field<?> field = null;
