@@ -17,7 +17,7 @@ import java.util.List;
 public class FieldValueServiceImpl implements FieldValueService {
 
     private final FieldValueRepository<FieldValue<?>> fieldValueRepository;
-    private final List<FieldValueRepository<? extends FieldValue>> fieldValueRepositories;
+    private final List<FieldValueRepository<? extends FieldValue<?>>> fieldValueRepositories;
 
     @Autowired
     public FieldValueServiceImpl(FieldValueRepository<FieldValue<?>> fieldValueRepository,

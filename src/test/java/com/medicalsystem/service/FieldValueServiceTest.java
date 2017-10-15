@@ -31,7 +31,7 @@ public class FieldValueServiceTest {
         TextFieldValue fieldValue = new TextFieldValue();
         fieldValue.setPatientId(13);
         fieldValue.setField(field);
-        fieldValue.setValues(Arrays.asList("abc", "def"));
+        //fieldValue.setValues(Arrays.asList("abc", "def"));
 
         fieldService.saveOrUpdate(field);
         fieldValueService.saveOrUpdate(fieldValue);

@@ -41,6 +41,6 @@ public abstract class FieldValue<T> extends IdComparableEntity {
      */
     @Transient
     @Getter @Setter
-    private List<T> values;
+    private T values;
 
 }

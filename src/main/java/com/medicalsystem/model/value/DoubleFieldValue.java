@@ -1,7 +1,6 @@
 package com.medicalsystem.model.value;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "DOUBLE_FIELDS_VALUES")
@@ -9,9 +8,8 @@ import java.util.List;
 public class DoubleFieldValue extends FieldValue<Double> {
 
     @Access(AccessType.PROPERTY)
-    @ElementCollection(fetch = FetchType.EAGER)
     @Override
-    public List<Double> getValues() {
+    public Double getValues() {
         return super.getValues();
     }
 
