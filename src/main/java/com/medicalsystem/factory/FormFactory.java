@@ -34,10 +34,21 @@ public class FormFactory {
         return createForm(FormType.OPEN);
     }
 
+    /**
+     * Creates and persists a Form object representing the EVAR form
+     *
+     * @return created Form object
+     */
     public static Form createEvar() {
         return createForm(FormType.EVAR);
     }
 
+    /**
+     * Creates and persists a Form object upon form type
+     *
+     * @param formType either OPEN or EVAR
+     * @return         a created Form object
+     */
     private static Form createForm(FormType formType) {
         Form form = new Form();
 

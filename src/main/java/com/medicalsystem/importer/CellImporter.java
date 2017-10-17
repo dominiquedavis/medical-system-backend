@@ -20,6 +20,13 @@ public class CellImporter {
     private final FieldService fieldService;
     private final FieldValueService fieldValueService;
 
+    /**
+     * Constructs and persists a FieldValue object upon single excel cell
+     *
+     * @param cell      an excel cell
+     * @param patientId ID of the patient whose value it is
+     * @param formType  either OPEN or EVAR
+     */
     public void importCell(Cell cell, int patientId, FormType formType) {
         // TODO: Optimize with prequeried map: index -> field object
         int excelColumn = cell.getColumnIndex();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
+import java.util.stream.IntStream;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -21,7 +22,9 @@ public class RowImporter {
     /**
      * Processes a single row and imports its content to the database
      *
-     * @param row an excel row
+     * @param row              an excel row
+     * @param formType         either OPEN or EVAR
+     * @param maxNumberOfCells number of cells in the header row
      */
     public void importRow(Row row, FormType formType, int maxNumberOfCells) {
         Iterator<Cell> iterator = row.iterator();
@@ -37,14 +40,10 @@ public class RowImporter {
         }
 
         // Process the rest of the cells handling empty cells
-        for (int i = 1; i < maxNumberOfCells; i++) {
-            Cell cell;
-            if (row.getCell(i) == null)
-                cell = row.createCell(i);
-            else
-                cell = row.getCell(i);
+        IntStream.range(1, maxNumberOfCells).forEach(i -> {
+            Cell cell = (row.getCell(i) == null) ? row.createCell(i) : row.getCell(i);
             cellImporter.importCell(cell, patientId, formType);
-        }
+        });
 
     }
 

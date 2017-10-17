@@ -25,6 +25,7 @@ public class SectionFactory {
      * Creates a Section object from the config file
      *
      * @param _section an object representing a section loaded from config
+     * @param form     a Form object to which the section belongs
      * @return         created Section object
      */
     public static Section fromConfig(ConfigProperties.Section _section, Form form) {
@@ -56,6 +57,13 @@ public class SectionFactory {
         return section;
     }
 
+    /**
+     * Checks if the given field is of the given form type
+     *
+     * @param field    a field object (from ConfigProperty)
+     * @param formType a form type
+     * @return true or false
+     */
     private static boolean fieldIsRelevant(ConfigProperties.Section.Field field, FormType formType) {
 
         if (formType == FormType.OPEN)

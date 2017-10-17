@@ -24,6 +24,11 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
     // For testing purposes: set -1 to import all rows
     private final int ROWS_TO_IMPORT = 5;
 
+    /**
+     * Imports given excel file to the database
+     *
+     * @param excelFile a FileInputStream object representing a .xlsx file
+     */
     @Override
     public void importToDatabase(FileInputStream excelFile) {
         Workbook workbook = loadWorkbook(excelFile);
@@ -49,6 +54,12 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
         }
     }
 
+    /**
+     * Loads an excel file into memory
+     *
+     * @param excelFile a FileInputStream object representing a .xlsx file
+     * @return          a Workbook object
+     */
     private Workbook loadWorkbook(FileInputStream excelFile) {
         Workbook workbook = null;
         try {
@@ -59,14 +70,30 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
         return workbook;
     }
 
+    /**
+     * Imports the sheet with OPEN operations
+     *
+     * @param openSheet a Sheet object
+     */
     private void importOpenSheet(Sheet openSheet) {
         importSheet(openSheet, FormType.OPEN);
     }
 
+    /**
+     * Imports the sheet with EVAR operations
+     *
+     * @param evarSheet a Sheet object
+     */
     private void importEvarSheet(Sheet evarSheet) {
         importSheet(evarSheet, FormType.EVAR);
     }
 
+    /**
+     * Imports any sheet object
+     *
+     * @param sheet    a Sheet object
+     * @param formType either OPEN or EVAR
+     */
     private void importSheet(Sheet sheet, FormType formType) {
         Iterator<Row> iterator = sheet.rowIterator();
 

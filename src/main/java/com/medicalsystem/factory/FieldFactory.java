@@ -1,10 +1,7 @@
 package com.medicalsystem.factory;
 
-import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.properties.ConfigProperties;
-import com.medicalsystem.service.FieldService;
-import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,12 +15,10 @@ public class FieldFactory {
     private static final String FIELD_PACKAGE = "com.medicalsystem.model.field";
     private static final String FIELD_SUFFIX = "Field";
 
-    private static FieldService fieldService;
     private static ConfigProperties props;
 
     @Autowired
-    public FieldFactory(FieldService fieldService, ConfigProperties props) {
-        FieldFactory.fieldService = fieldService;
+    public FieldFactory(ConfigProperties props) {
         FieldFactory.props = props;
     }
 
