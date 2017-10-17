@@ -11,10 +11,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class IntegerField extends Field<Integer> {
 
-    public IntegerField(String name, int excelColumn, Map<Integer, String> options) {
-        super(name, excelColumn, options);
-    }
-
     @ElementCollection
     @JoinTable(name = "INTEGER_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")

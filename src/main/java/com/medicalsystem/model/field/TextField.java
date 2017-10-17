@@ -11,10 +11,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class TextField extends Field<String> {
 
-    public TextField(String name, int excelColumn, Map<String, String> options) {
-        super(name, excelColumn, options);
-    }
-
     @ElementCollection
     @JoinTable(name = "TEXT_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")

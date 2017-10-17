@@ -7,6 +7,8 @@ public interface FieldRepository extends JpaRepository<Field<?>, Integer> {
 
     Field<?> findByName(String name);
 
-    Field<?> findByExcelColumn(int excelColumn);
+    Field<?> findByOpenExcelColumn(int openExcelColumn);
+
+    Field<?> findByEvarExcelColumn(int evarExcelColumn);
 
 }

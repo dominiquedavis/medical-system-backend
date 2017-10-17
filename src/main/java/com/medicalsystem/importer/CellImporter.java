@@ -1,6 +1,7 @@
 package com.medicalsystem.importer;
 
 import com.medicalsystem.factory.FieldValueFactory;
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
 import com.medicalsystem.service.FieldService;
@@ -19,13 +20,13 @@ public class CellImporter {
     private final FieldService fieldService;
     private final FieldValueService fieldValueService;
 
-    public void importCell(Cell cell, int patientId) {
+    public void importCell(Cell cell, int patientId, FormType formType) {
         // TODO: Optimize with prequeried map: index -> field object
         int excelColumn = cell.getColumnIndex();
-        Field<?> field = fieldService.findByExcelColumn(excelColumn);
+        Field<?> field = fieldService.findByExcelColumn(excelColumn, formType);
 
         if (field == null) {
-            log.severe("Field not found with column index: " + excelColumn);
+            log.severe(String.format("Field not found with column index '%d' and form type '%s'", excelColumn, formType));
             return;
         }
 
@@ -34,7 +35,8 @@ public class CellImporter {
         // Persist created field value
         fieldValueService.saveOrUpdate(fieldValue);
 
-        log.info(String.format("Field value created for field '%s' and patient id '%d'", field.getName(), patientId));
+        log.info(String.format("Field value created for field '%s', patient id '%d' and form type '%s': %s",
+                field.getName(), patientId, formType, fieldValue.getValue()));
     }
 
 }

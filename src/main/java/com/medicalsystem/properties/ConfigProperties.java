@@ -19,58 +19,49 @@ import java.util.List;
 public class ConfigProperties {
 
     @Getter @Setter
-    private Form open;
+    private String openName;
 
     @Getter @Setter
-    private Form evar;
+    private String evarName;
 
     @Getter @Setter
-    private List<String> additionalOpenFields;
-
-    @Getter @Setter
-    private List<String> additionalEvarFields;
+    private List<Section> sections;
 
     @Getter @Setter
     private List<String> multipleFields;
 
-    public static class Form {
+    public static class Section {
 
         @Getter @Setter
         private String name;
 
         @Getter @Setter
-        private List<Section> sections = new ArrayList<>();
+        private List<Field> fields = new ArrayList<>();
 
-        public static class Section {
+        public static class Field {
 
             @Getter @Setter
             private String name;
 
             @Getter @Setter
-            private List<Field> fields = new ArrayList<>();
+            private int openIndex;
 
-            public static class Field {
+            @Getter @Setter
+            private int evarIndex;
+
+            @Getter @Setter
+            private String type;
+
+            @Getter @Setter
+            private List<Option> options = new ArrayList<>();
+
+            public static class Option {
 
                 @Getter @Setter
-                private String name;
+                private String key;
 
                 @Getter @Setter
-                private int index;
-
-                @Getter @Setter
-                private String type;
-
-                @Getter @Setter
-                private List<Option> options = new ArrayList<>();
-
-                public static class Option {
-
-                    @Getter @Setter
-                    private String key;
-
-                    @Getter @Setter
-                    private String val;
-                }
+                private String val;
             }
         }
     }

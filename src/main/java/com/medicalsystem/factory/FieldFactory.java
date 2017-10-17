@@ -1,5 +1,6 @@
 package com.medicalsystem.factory;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.properties.ConfigProperties;
 import com.medicalsystem.service.FieldService;
@@ -32,26 +33,24 @@ public class FieldFactory {
      * @param _field an object representing a field loaded from config
      * @return       created Field object
      */
-    public static Field<?> fromConfig(ConfigProperties.Form.Section.Field _field) {
+    public static Field<?> fromConfig(ConfigProperties.Section.Field _field) {
         Field<?> field = getFieldObject(_field.getType());
 
         // Set name
         field.setName(_field.getName());
 
-        // Set excel column
-        field.setExcelColumn(_field.getIndex());
+        // Set excel columns
+        field.setOpenExcelColumn(_field.getOpenIndex());
+        field.setEvarExcelColumn(_field.getEvarIndex());
 
         // Set if multiple
         field.setMultiple(props.getMultipleFields().contains(field.getName()));
 
         // Add options
-        List<ConfigProperties.Form.Section.Field.Option> options = _field.getOptions();
+        List<ConfigProperties.Section.Field.Option> options = _field.getOptions();
         if (options != null) {
             options.forEach(option -> field.addOption(option.getKey(), option.getVal()));
         }
-
-        // Persist created field
-        fieldService.saveOrUpdate(field);
 
         log.info(String.format("Field created: '%s'", field.getName()));
 

@@ -1,5 +1,6 @@
 package com.medicalsystem.importer;
 
+import com.medicalsystem.model.FormType;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.poi.ss.usermodel.Row;
@@ -56,10 +57,18 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
     }
 
     private void importOpenSheet(Sheet openSheet) {
-        Iterator<Row> iterator = openSheet.rowIterator();
+        importSheet(openSheet, FormType.OPEN);
+    }
+
+    private void importEvarSheet(Sheet evarSheet) {
+        importSheet(evarSheet, FormType.EVAR);
+    }
+
+    private void importSheet(Sheet sheet, FormType formType) {
+        Iterator<Row> iterator = sheet.rowIterator();
 
         // Skip headers
-        if (openSheet.getPhysicalNumberOfRows() < 3) {
+        if (sheet.getPhysicalNumberOfRows() < 3) {
             log.info("Open sheet contains no data rows");
             return;
         }
@@ -68,12 +77,7 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
         iterator.next();
 
         // Process the rest of the rows
-        iterator.forEachRemaining(rowImporter::importRow);
+        iterator.forEachRemaining(row -> rowImporter.importRow(row, formType));
     }
-
-    private void importEvarSheet(Sheet evarSheet) {
-        // TODO: Implement
-    }
-
 
 }

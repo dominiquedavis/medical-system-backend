@@ -27,10 +27,16 @@ public abstract class Field<T> extends IdComparableEntity {
     private String name;
 
     /**
-     * An index of the column in the excel file corresponding to the field.
+     * An index of the column in the excel file corresponding to the field in OPEN sheet.
      */
     @Getter @Setter
-    private int excelColumn;
+    private int openExcelColumn;
+
+    /**
+     * An index of the column in the excel file corresponding to the field in EVAR sheet.
+     */
+    @Getter @Setter
+    private int evarExcelColumn;
 
     /**
      * Indicates if the field can contain multiple values
@@ -55,13 +61,15 @@ public abstract class Field<T> extends IdComparableEntity {
     /**
      * Constructor
      *
-     * @param name        name of the field
-     * @param excelColumn index of the corresponding excel column
-     * @param options     a map of possible options (null if none)
+     * @param name            name of the field
+     * @param openExcelColumn index of the corresponding excel column in OPEN sheet
+     * @param evarExcelColumn index of the corresponding excel column in EVAR sheet
+     * @param options         a map of possible options (null if none)
      */
-    public Field(String name, int excelColumn, Map<T, String> options) {
+    public Field(String name, int openExcelColumn, int evarExcelColumn, Map<T, String> options) {
         this.name = name;
-        this.excelColumn = excelColumn;
+        this.openExcelColumn = openExcelColumn;
+        this.evarExcelColumn = evarExcelColumn;
         this.options = (options == null) ? new HashMap<>() : options;
     }
 

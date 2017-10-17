@@ -2,10 +2,6 @@ package com.medicalsystem;
 
 import com.medicalsystem.importer.DataImporter;
 import com.medicalsystem.init.Initializer;
-import com.medicalsystem.model.field.Field;
-import com.medicalsystem.model.value.FieldValue;
-import com.medicalsystem.service.FieldService;
-import com.medicalsystem.service.FieldValueService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +18,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     private final Initializer initializer;
     private final DataImporter dataImporter;
-
-    private final FieldService fieldService;
-    private final FieldValueService fieldValueService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

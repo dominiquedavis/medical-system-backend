@@ -16,11 +16,7 @@ public class ConfigPropertiesTest {
 
     @Test
     public void propertiesShouldLoadCorrectly() {
-        ConfigProperties.Form open = configProperties.getOpen();
-        ConfigProperties.Form evar = configProperties.getEvar();
 
-        Assert.assertNotNull(open);
-        Assert.assertNotNull(evar);
     }
 
 }

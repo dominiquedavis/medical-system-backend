@@ -13,7 +13,7 @@ public class FormFactoryTest {
 
     @Test
     public void shouldCreateFormsCorrectly() {
-        Form form = FormFactory.openFromConfig();
+        Form form = FormFactory.createOpen();
 
         Assert.assertNotNull(form);
     }

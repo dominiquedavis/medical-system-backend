@@ -1,5 +1,6 @@
 package com.medicalsystem.importer;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.util.CellUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -22,7 +23,7 @@ public class RowImporter {
      *
      * @param row an excel row
      */
-    public void importRow(Row row) {
+    public void importRow(Row row, FormType formType) {
         Iterator<Cell> iterator = row.cellIterator();
 
         // Retrieve patient ID from the first cell
@@ -36,7 +37,7 @@ public class RowImporter {
         }
 
         // Process the rest of the cells
-        iterator.forEachRemaining(cell -> cellImporter.importCell(cell, patientId));
+        iterator.forEachRemaining(cell -> cellImporter.importCell(cell, patientId, formType));
     }
 
 }

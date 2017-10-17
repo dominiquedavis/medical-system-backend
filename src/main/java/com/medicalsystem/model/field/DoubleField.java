@@ -11,10 +11,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class DoubleField extends Field<Double> {
 
-    public DoubleField(String name, int excelColumn, Map<Double, String> options) {
-        super(name, excelColumn, options);
-    }
-
     @ElementCollection
     @JoinTable(name = "DOUBLE_FIELDS_OPTIONS")
     @MapKeyColumn(name = "excel_value")

@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.repository.FieldRepository;
 import com.medicalsystem.service.FieldService;
@@ -49,8 +50,10 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public Field findByExcelColumn(int excelColumn) {
-        return fieldRepository.findByExcelColumn(excelColumn);
+    public Field findByExcelColumn(int excelColumn, FormType formType) {
+        return formType == FormType.OPEN ?
+                fieldRepository.findByOpenExcelColumn(excelColumn) :
+                fieldRepository.findByEvarExcelColumn(excelColumn);
     }
 
     @Override

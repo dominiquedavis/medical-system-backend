@@ -41,4 +41,9 @@ public class SectionServiceImpl implements SectionService {
     public void deleteById(Integer id) {
         sectionRepository.delete(id);
     }
+
+    @Override
+    public Section findByName(String name) {
+        return sectionRepository.findByName(name);
+    }
 }
