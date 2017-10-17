@@ -21,6 +21,9 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
 
     private final RowImporter rowImporter;
 
+    // For testing purposes: set -1 to import all rows
+    private final int ROWS_TO_IMPORT = -1;
+
     @Override
     public void importToDatabase(FileInputStream excelFile) {
         Workbook workbook = loadWorkbook(excelFile);
@@ -76,8 +79,19 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
         iterator.next();
         iterator.next();
 
+        // TESTING PURPOSES
+        if (ROWS_TO_IMPORT != -1) {
+            int i = 0;
+            while (i < ROWS_TO_IMPORT && iterator.hasNext()) {
+                rowImporter.importRow(iterator.next(), formType);
+                i++;
+            }
+            return;
+        }
+
         // Process the rest of the rows
         iterator.forEachRemaining(row -> rowImporter.importRow(row, formType));
+
     }
 
 }

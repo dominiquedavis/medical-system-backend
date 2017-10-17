@@ -3,16 +3,16 @@ package com.medicalsystem.model.value;
 import com.medicalsystem.util.DateUtils;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "DATE_FIELDS_VALUES")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class DateFieldValue extends FieldValue<Date> {
+public class DateFieldValue extends FieldValue<LocalDate> {
 
     @Access(AccessType.PROPERTY)
     @Override
-    public Date getValue() {
+    public LocalDate getValue() {
         return super.getValue();
     }
 

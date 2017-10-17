@@ -35,7 +35,7 @@ public class CellImporter {
         // Persist created field value
         fieldValueService.saveOrUpdate(fieldValue);
 
-        log.info(String.format("Field value created for field '%s', patient id '%d' and form type '%s': %s",
+        log.info(String.format("Value created for field: '%s'\tpatient id: '%d'\tform type: '%s' - %s",
                 field.getName(), patientId, formType, fieldValue.getValue()));
     }
 

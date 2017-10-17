@@ -4,14 +4,14 @@ import lombok.NoArgsConstructor;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
 @Table(name = "DATE_FIELDS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
-public class DateField extends Field<Date> {
+public class DateField extends Field<LocalDate> {
 
     @ElementCollection
     @JoinTable(name = "DATE_FIELDS_OPTIONS")
@@ -19,7 +19,7 @@ public class DateField extends Field<Date> {
     @Column(name = "date_value")
     @Access(AccessType.PROPERTY)
     @Override
-    public Map<Date, String> getOptions() {
+    public Map<LocalDate, String> getOptions() {
         return super.getOptions();
     }
 
