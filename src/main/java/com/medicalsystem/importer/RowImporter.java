@@ -23,8 +23,8 @@ public class RowImporter {
      *
      * @param row an excel row
      */
-    public void importRow(Row row, FormType formType) {
-        Iterator<Cell> iterator = row.cellIterator();
+    public void importRow(Row row, FormType formType, int maxNumberOfCells) {
+        Iterator<Cell> iterator = row.iterator();
 
         // Retrieve patient ID from the first cell
         String patientIdStr = CellUtils.getStringValue(iterator.next());
@@ -36,8 +36,16 @@ public class RowImporter {
             return;
         }
 
-        // Process the rest of the cells
-        iterator.forEachRemaining(cell -> cellImporter.importCell(cell, patientId, formType));
+        // Process the rest of the cells handling empty cells
+        for (int i = 1; i < maxNumberOfCells; i++) {
+            Cell cell;
+            if (row.getCell(i) == null)
+                cell = row.createCell(i);
+            else
+                cell = row.getCell(i);
+            cellImporter.importCell(cell, patientId, formType);
+        }
+
     }
 
 }

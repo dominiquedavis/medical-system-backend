@@ -11,6 +11,6 @@ public interface FieldService extends CRUDService<Field<?>, Integer> {
 
     Field<?> findByExcelColumn(int excelColumn, FormType formType);
 
-    List<Field<?>> findAllOpenFields();
+    List<Field<?>> findAllByFormType(FormType formType);
 }
 

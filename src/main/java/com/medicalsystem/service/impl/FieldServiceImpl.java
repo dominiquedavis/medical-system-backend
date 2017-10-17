@@ -57,7 +57,9 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
-    public List<Field<?>> findAllOpenFields() {
-        return new ArrayList<>();
+    public List<Field<?>> findAllByFormType(FormType formType) {
+        return formType == FormType.OPEN ?
+                fieldRepository.findAllByOpenExcelColumnIsNot(-1) :
+                fieldRepository.findAllByEvarExcelColumnIsNot(-1);
     }
 }

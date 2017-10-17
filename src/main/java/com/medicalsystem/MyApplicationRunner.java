@@ -22,7 +22,11 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("Running initialization...");
+
+        // Create fields
         initializer.prepareInitialConfiguration();
+
+        // Run import
         dataImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"));
     }
 }

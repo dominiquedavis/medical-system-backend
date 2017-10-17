@@ -22,7 +22,7 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
     private final RowImporter rowImporter;
 
     // For testing purposes: set -1 to import all rows
-    private final int ROWS_TO_IMPORT = -1;
+    private final int ROWS_TO_IMPORT = 5;
 
     @Override
     public void importToDatabase(FileInputStream excelFile) {
@@ -77,20 +77,23 @@ public class ExcelSpreadsheetDataImporter implements DataImporter {
         }
 
         iterator.next();
-        iterator.next();
+
+        Row header = iterator.next();
+        int maxNumberOfCells = header.getLastCellNum();
 
         // TESTING PURPOSES
         if (ROWS_TO_IMPORT != -1) {
             int i = 0;
             while (i < ROWS_TO_IMPORT && iterator.hasNext()) {
-                rowImporter.importRow(iterator.next(), formType);
+                rowImporter.importRow(iterator.next(), formType, maxNumberOfCells);
                 i++;
             }
             return;
         }
+        //
 
         // Process the rest of the rows
-        iterator.forEachRemaining(row -> rowImporter.importRow(row, formType));
+        iterator.forEachRemaining(row -> rowImporter.importRow(row, formType, maxNumberOfCells));
 
     }
 
