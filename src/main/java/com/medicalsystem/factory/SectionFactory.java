@@ -1,5 +1,6 @@
 package com.medicalsystem.factory;
 
+import com.medicalsystem.model.Form;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.model.field.Field;
@@ -26,18 +27,27 @@ public class SectionFactory {
      * @param _section an object representing a section loaded from config
      * @return         created Section object
      */
-    public static Section fromConfig(ConfigProperties.Section _section, FormType formType) {
+    public static Section fromConfig(ConfigProperties.Section _section, Form form) {
         Section section = new Section();
 
         // Set name
         section.setName(_section.getName());
 
+        // Set form
+        section.setForm(form);
+
         // Create and add fields
         _section.getFields().stream()
-                .filter(_field -> fieldIsRelevant(_field, formType))
+                .filter(_field -> fieldIsRelevant(_field, form.getType()))
                 .forEach(_field -> {
-                    Field field = FieldFactory.fromConfig(_field);
-                    fieldService.saveOrUpdate(field);
+                    // Check if field exists, if not, create and persist
+                    Field field = fieldService.findByName(_field.getName());
+
+                    if (field == null) {
+                        field = FieldFactory.fromConfig(_field);
+                        fieldService.saveOrUpdate(field);
+                    }
+
                     section.addField(field);
                 });
 

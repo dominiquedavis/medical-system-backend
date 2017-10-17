@@ -4,6 +4,7 @@ import com.medicalsystem.model.Form;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.properties.ConfigProperties;
+import com.medicalsystem.service.FormService;
 import com.medicalsystem.service.SectionService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import org.springframework.stereotype.Component;
 public class FormFactory {
 
     private static ConfigProperties props;
+    private static FormService formService;
     private static SectionService sectionService;
 
     @Autowired
-    public FormFactory(ConfigProperties props, SectionService sectionService) {
+    public FormFactory(ConfigProperties props, FormService formService, SectionService sectionService) {
         FormFactory.props = props;
+        FormFactory.formService = formService;
         FormFactory.sectionService = sectionService;
     }
 
@@ -41,18 +44,16 @@ public class FormFactory {
         // Set name
         form.setName(formType == FormType.OPEN ? props.getOpenName() : props.getEvarName());
 
+        // Set type
+        form.setType(formType);
+
+        // Persist incomplete form (needed for persisting section)
+        formService.saveOrUpdate(form);
+
         // Create and add sections
         props.getSections().forEach(_section -> {
-
-            // Check if section was already created
-            // If not, create and persist
-            Section section = sectionService.findByName(_section.getName());
-
-            if (section == null) {
-                section = SectionFactory.fromConfig(_section, formType);
-                sectionService.saveOrUpdate(section);
-            }
-
+            Section section = SectionFactory.fromConfig(_section, form);
+            sectionService.saveOrUpdate(section);
             form.addSection(section);
         });
 

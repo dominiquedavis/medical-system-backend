@@ -1,13 +1,15 @@
 package com.medicalsystem.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An entity representing a single form (a single sheet in an excel file - OPEN, EVAR and possibly others).
+ * An entity representing a single form (a single sheet in an excel file - OPEN, EVAR).
  */
 @Entity
 @Table(name = "FORMS")
@@ -21,17 +23,16 @@ public class Form extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Getter @Setter
+    private FormType type;
+
     /**
      * A list of sections that make up the form.
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "FORM_SECTION")
+    @OneToMany(mappedBy = "form")
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
-
-    public Form(String name) {
-        this.name = name;
-    }
 
     public void addSection(Section section) {
         this.sections.add(section);

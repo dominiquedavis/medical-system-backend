@@ -23,6 +23,10 @@ public class Section extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter @Setter
+    private Form form;
+
     /**
      * A list of fields that make up the section.
      */

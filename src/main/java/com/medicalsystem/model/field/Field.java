@@ -1,5 +1,6 @@
 package com.medicalsystem.model.field;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -85,5 +86,13 @@ public abstract class Field<T> extends IdComparableEntity {
      * @param value values
      */
     public abstract void addOption(String key, String value);
+
+    public boolean isOpen() {
+        return this.openExcelColumn != -1;
+    }
+
+    public boolean isEvar() {
+        return this.evarExcelColumn != -1;
+    }
 
 }
