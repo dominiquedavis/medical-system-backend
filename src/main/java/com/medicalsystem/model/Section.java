@@ -1,5 +1,6 @@
 package com.medicalsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.medicalsystem.model.field.Field;
 import lombok.*;
 
@@ -23,7 +24,8 @@ public class Section extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @Getter @Setter
     private Form form;
 

@@ -26,6 +26,7 @@ public class UserController {
         // Check if no user with the given username
         ApplicationUser _user = applicationUserService.findByUsername(user.getUsername());
         if (_user != null) {
+            // Log and return reponse
             String message = "User already exists: " + user.getUsername();
             log.info(message);
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -37,6 +38,7 @@ public class UserController {
         // Persist user
         applicationUserService.saveOrUpdate(user);
 
+        // Log and return reponse
         String message = "User registered: " + user.getUsername();
         log.info(message);
         return new ResponseEntity<>(message, HttpStatus.OK);

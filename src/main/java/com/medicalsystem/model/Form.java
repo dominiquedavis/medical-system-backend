@@ -1,5 +1,6 @@
 package com.medicalsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class Form extends IdComparableEntity {
     @Getter @Setter
     private int id;
 
+    @JsonIgnore
     @Getter @Setter
     private String name;
 
