@@ -1,6 +1,8 @@
 package com.medicalsystem.security;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
+import lombok.extern.java.Log;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import static com.medicalsystem.security.SecurityConstants.HEADER_STRING;
 import static com.medicalsystem.security.SecurityConstants.SECRET;
 import static com.medicalsystem.security.SecurityConstants.TOKEN_PREFIX;
 
+@Log
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -45,11 +48,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return null;
 
         // Parse the token
-        String user = Jwts.parser()
-                .setSigningKey(SECRET.getBytes())
-                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                .getBody()
-                .getSubject();
+        String user = null;
+        try {
+            user = Jwts.parser()
+                    .setSigningKey(SECRET.getBytes())
+                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .getBody()
+                    .getSubject();
+        } catch (SignatureException e) {
+            log.severe(e.getMessage());
+        }
 
         return user == null ? null : new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
     }

@@ -27,7 +27,6 @@ import static com.medicalsystem.security.SecurityConstants.*;
 /**
  * This class is responsible for the authentication process. It checks user credentials and generates JWTs.
  */
-@Component
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;

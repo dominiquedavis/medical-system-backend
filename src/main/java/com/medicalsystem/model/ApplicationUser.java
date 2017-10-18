@@ -3,11 +3,13 @@ package com.medicalsystem.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "USERS")
 public class ApplicationUser {
 
+    @Id @GeneratedValue
     @Getter @Setter
     private long id;
 
@@ -17,6 +19,7 @@ public class ApplicationUser {
     @Getter @Setter
     private String email;
 
+    @Column(unique = true)
     @Getter @Setter
     private String username;
 
