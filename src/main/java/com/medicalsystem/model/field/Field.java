@@ -1,9 +1,8 @@
 package com.medicalsystem.model.field;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
-import com.medicalsystem.serializer.FieldSerializer;
+import com.medicalsystem.json.serializer.FieldSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

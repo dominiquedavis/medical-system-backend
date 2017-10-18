@@ -1,9 +1,11 @@
 package com.medicalsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.medicalsystem.json.deserializer.SectionDeserializer;
 import com.medicalsystem.model.field.Field;
-import com.medicalsystem.serializer.SectionSerializer;
+import com.medicalsystem.json.serializer.SectionSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @Table(name = "SECTIONS")
 @NoArgsConstructor
 @JsonSerialize(using = SectionSerializer.class)
+@JsonDeserialize(using = SectionDeserializer.class)
 public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
