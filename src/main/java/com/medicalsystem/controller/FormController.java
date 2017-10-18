@@ -20,8 +20,7 @@ public class FormController {
 
     @GetMapping("api/forms")
     public List<Form> getForms() throws JsonProcessingException {
-        List<Form> forms = formService.findAll();
-        return forms;
+        return formService.findAll();
     }
 
 }

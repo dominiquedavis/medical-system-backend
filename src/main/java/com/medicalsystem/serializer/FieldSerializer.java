@@ -22,7 +22,7 @@ public class FieldSerializer extends StdSerializer<Field<?>> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", field.getId());
         jgen.writeStringField("name", field.getName());
-        jgen.writeStringField("type", field.getClass().getSimpleName());
+        jgen.writeStringField("type", field.getType());
         jgen.writeObjectField("values", null);
         jgen.writeObjectField("possibleValues", null);
         jgen.writeEndObject();

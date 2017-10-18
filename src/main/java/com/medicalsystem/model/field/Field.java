@@ -98,4 +98,20 @@ public abstract class Field<T> extends IdComparableEntity {
         return this.evarExcelColumn != -1;
     }
 
+    public String getType() {
+
+        if (multiple)
+            return "MULTIPLE_SELECT";
+
+        if (!options.isEmpty())
+            return "SELECT";
+
+        String className = this.getClass().getSimpleName().replace("Field", "");
+
+        if (className.equals("Integer") || className.equals("Double"))
+            return "NUMBER";
+
+        return className.toUpperCase();
+    }
+
 }
