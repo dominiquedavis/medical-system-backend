@@ -2,6 +2,7 @@ package com.medicalsystem.controller;
 
 import com.medicalsystem.model.Form;
 import com.medicalsystem.model.Section;
+import com.medicalsystem.model.field.Field;
 import com.medicalsystem.service.FormService;
 import com.medicalsystem.service.SectionService;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,14 @@ public class FormController {
         // TODO: check if section name exists for given form
         Form form = formService.findById(formId);
         section.setForm(form);
+        sectionService.saveOrUpdate(section);
+    }
+
+    @PostMapping("api/forms/{formId}/sections/{sectionId}")
+    public void addField(@PathVariable int formId, @PathVariable int sectionId, @RequestBody Field<?> field) {
+        // TODO: check if field exists
+        Section section = sectionService.findById(sectionId);
+        section.addField(field);
         sectionService.saveOrUpdate(section);
     }
 

@@ -5,22 +5,15 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.medicalsystem.model.Section;
-import com.medicalsystem.service.FieldService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
 
 @Component
 public class SectionDeserializer extends StdDeserializer<Section> {
 
-    @Autowired
-    private FieldService fieldService;
-
     public SectionDeserializer() {
         this(null);
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
     private SectionDeserializer(Class<?> vc) {

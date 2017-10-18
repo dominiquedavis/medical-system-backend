@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.Form;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.repository.SectionRepository;
 import com.medicalsystem.service.SectionService;
@@ -43,7 +44,7 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public Section findByName(String name) {
-        return sectionRepository.findByName(name);
+    public Section findByNameAndForm(String name, Form form) {
+        return sectionRepository.findByNameAndForm(name, form);
     }
 }
