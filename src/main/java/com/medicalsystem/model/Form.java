@@ -1,6 +1,7 @@
 package com.medicalsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.medicalsystem.serializer.FormSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,13 +16,13 @@ import java.util.List;
 @Entity
 @Table(name = "FORMS")
 @NoArgsConstructor
+@JsonSerialize(using = FormSerializer.class)
 public class Form extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private int id;
 
-    @JsonIgnore
     @Getter @Setter
     private String name;
 

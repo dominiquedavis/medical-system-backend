@@ -1,5 +1,6 @@
 package com.medicalsystem.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.medicalsystem.model.Form;
 import com.medicalsystem.service.FormService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class FormController {
     private final FormService formService;
 
     @GetMapping("api/forms")
-    public List<Form> getForms() {
+    public List<Form> getForms() throws JsonProcessingException {
         List<Form> forms = formService.findAll();
         return forms;
     }

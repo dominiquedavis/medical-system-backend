@@ -32,6 +32,7 @@ public class MyApplicationRunner implements ApplicationRunner {
         ApplicationUser testingAccount = new ApplicationUser();
         testingAccount.setUsername("admin");
         testingAccount.setPassword(passwordEncoder.encode("admin"));
+        testingAccount.setAdmin(true);
         applicationUserService.saveOrUpdate(testingAccount);
 
         // Create fields

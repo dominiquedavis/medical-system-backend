@@ -1,7 +1,9 @@
 package com.medicalsystem.model.field;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
+import com.medicalsystem.serializer.FieldSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +20,7 @@ import java.util.Map;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
+@JsonSerialize(using = FieldSerializer.class)
 public abstract class Field<T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)

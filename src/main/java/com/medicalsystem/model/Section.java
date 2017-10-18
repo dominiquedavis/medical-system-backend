@@ -1,7 +1,9 @@
 package com.medicalsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.medicalsystem.model.field.Field;
+import com.medicalsystem.serializer.SectionSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "SECTIONS")
 @NoArgsConstructor
+@JsonSerialize(using = SectionSerializer.class)
 public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +39,7 @@ public class Section extends IdComparableEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "SECTION_FIELD")
     @Getter @Setter
-    private List<Field> fields = new ArrayList<>();
+    private List<Field<?>> fields = new ArrayList<>();
 
     public Section(String name) {
         this.name = name;
