@@ -19,8 +19,6 @@ import java.util.List;
 @Entity
 @Table(name = "SECTIONS")
 @NoArgsConstructor
-@JsonSerialize(using = SectionSerializer.class)
-@JsonDeserialize(using = SectionDeserializer.class)
 public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +28,6 @@ public class Section extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @Getter @Setter
     private Form form;

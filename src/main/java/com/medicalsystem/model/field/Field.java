@@ -22,8 +22,6 @@ import java.util.Map;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
-@JsonSerialize(using = FieldSerializer.class)
-@JsonDeserialize(using = FieldDeserializer.class)
 public abstract class Field<T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)

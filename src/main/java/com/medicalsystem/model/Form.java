@@ -16,7 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "FORMS")
 @NoArgsConstructor
-@JsonSerialize(using = FormSerializer.class)
 public class Form extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
