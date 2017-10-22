@@ -1,7 +1,5 @@
 package com.medicalsystem.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.medicalsystem.json.serializer.FormSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

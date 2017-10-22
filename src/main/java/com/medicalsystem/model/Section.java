@@ -1,12 +1,9 @@
 package com.medicalsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.medicalsystem.json.deserializer.SectionDeserializer;
 import com.medicalsystem.model.field.Field;
-import com.medicalsystem.json.serializer.SectionSerializer;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;

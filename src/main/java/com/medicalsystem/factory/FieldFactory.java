@@ -53,7 +53,7 @@ public class FieldFactory {
     }
 
     /**
-     * Creates a Field object upon the type of the class
+     * Creates a Field object upon the type of the class. Case sensitive.
      *
      * @param type type of the class, e.g. "Text" or "Date"
      * @return     a proper extension of the Field class, eg. "TextField" or "DateField"
