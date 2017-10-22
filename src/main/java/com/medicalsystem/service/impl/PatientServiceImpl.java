@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.Patient;
 import com.medicalsystem.repository.PatientRepository;
 import com.medicalsystem.service.PatientService;
@@ -40,6 +41,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteById(Integer id) {
         patientRepository.delete(id);
+    }
+
+    @Override
+    public List<Patient> findAllByFormType(FormType formType) {
+        return patientRepository.findAllByFormType(formType);
     }
 
 }

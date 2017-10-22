@@ -1,18 +1,31 @@
 package com.medicalsystem.factory;
 
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
 import com.medicalsystem.model.value.MultipleFieldValue;
+import com.medicalsystem.service.PatientService;
 import com.medicalsystem.util.CellUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 @Log
 public class FieldValueFactory {
 
     private static final String FIELD_VALUE_PACKAGE = "com.medicalsystem.model.value";
     private static final String FIELD_SUFFIX = "Field";
     private static final String FIELD_VALUE_SUFFIX = "FieldValue";
+
+    private static PatientService patientService;
+
+    @Autowired
+    public FieldValueFactory(PatientService patientService) {
+        FieldValueFactory.patientService = patientService;
+    }
 
     /**
      * Creates a proper field value object
@@ -25,7 +38,9 @@ public class FieldValueFactory {
     public static FieldValue<?> createFieldValue(Field<?> field, Cell cell, int patientId) {
         FieldValue<?> fieldValue = createBlankObject(field);
 
-        fieldValue.setPatientId(patientId);
+        Patient patient = patientService.findById(patientId);
+
+        fieldValue.setPatient(patient);
         fieldValue.setField(field);
         fieldValue.setStringValue(CellUtils.getStringValue(cell));
 

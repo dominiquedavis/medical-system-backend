@@ -1,6 +1,7 @@
 package com.medicalsystem.model.value;
 
 import com.medicalsystem.model.IdComparableEntity;
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.field.Field;
 import lombok.*;
 
@@ -20,10 +21,11 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     private int id;
 
     /**
-     * An ID of the patient this values belongs to.
+     * Patient to whom this value belongs to.
      */
+    @ManyToOne(fetch = FetchType.EAGER)
     @Getter @Setter
-    private int patientId;
+    private Patient patient;
 
     /**
      * A reference to the field which this values is relevant to.

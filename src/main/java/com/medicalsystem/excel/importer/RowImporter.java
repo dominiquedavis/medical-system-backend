@@ -39,7 +39,7 @@ public class RowImporter {
             patientId = Integer.parseInt(patientIdStr);
 
             // Persist patient ID
-            patientService.saveOrUpdate(new Patient(patientId));
+            patientService.saveOrUpdate(new Patient(patientId, formType));
 
         } catch (NumberFormatException e) {
             log.warning(String.format("Patient ID is not an integer in row: '%d', value: '%s' - PATIENT NOT SAVED", row.getRowNum(), patientIdStr));

@@ -14,15 +14,23 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Patient {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+     * Patient's hospital ID
+     */
+    @Id
     @Getter @Setter
     private int id;
 
+    /**
+     * Type of the form this patient applies to
+     */
+    @Enumerated(EnumType.STRING)
     @Getter @Setter
-    private int patientId;
+    private FormType formType;
 
-    public Patient(int patientId) {
-        this.patientId = patientId;
+    public Patient(int id, FormType formType) {
+        this.id = id;
+        this.formType = formType;
     }
 
 }
