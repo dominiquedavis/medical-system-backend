@@ -1,6 +1,8 @@
 package com.medicalsystem.excel.importer;
 
 import com.medicalsystem.model.FormType;
+import com.medicalsystem.model.Patient;
+import com.medicalsystem.service.PatientService;
 import com.medicalsystem.util.CellUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -18,6 +20,7 @@ import java.util.stream.IntStream;
 public class RowImporter {
 
     private final CellImporter cellImporter;
+    private final PatientService patientService;
 
     /**
      * Processes a single row and imports its content to the database
@@ -34,6 +37,10 @@ public class RowImporter {
         int patientId;
         try {
             patientId = Integer.parseInt(patientIdStr);
+
+            // Persist patient ID
+            patientService.saveOrUpdate(new Patient(patientId));
+
         } catch (NumberFormatException e) {
             log.warning(String.format("Patient ID is not an integer in row: '%d', value: '%s' - PATIENT NOT SAVED", row.getRowNum(), patientIdStr));
             return;
