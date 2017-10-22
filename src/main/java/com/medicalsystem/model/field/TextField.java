@@ -25,4 +25,9 @@ public class TextField extends Field<String> {
     public void addOption(String key, String value) {
         super.addOption(key, value);
     }
+
+    @Override
+    protected String getTypeSub() {
+        return "TEXT";
+    }
 }

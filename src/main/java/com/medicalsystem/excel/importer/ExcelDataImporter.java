@@ -1,4 +1,4 @@
-package com.medicalsystem.importer;
+package com.medicalsystem.excel.importer;
 
 import com.medicalsystem.model.FormType;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.Iterator;
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Log
-public class ExcelSpreadsheetDataImporter implements DataImporter {
+public class ExcelDataImporter implements DataImporter {
 
     private final RowImporter rowImporter;
 

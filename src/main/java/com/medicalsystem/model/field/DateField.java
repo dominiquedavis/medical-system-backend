@@ -28,4 +28,10 @@ public class DateField extends Field<LocalDate> {
         // TODO: Implement
         throw new NotImplementedException();
     }
+
+    @Override
+    protected String getTypeSub() {
+        return "DATE";
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.medicalsystem.importer;
+package com.medicalsystem.excel.importer;
 
 import com.medicalsystem.factory.FieldValueFactory;
 import com.medicalsystem.model.FormType;

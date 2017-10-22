@@ -1,4 +1,4 @@
-package com.medicalsystem.importer;
+package com.medicalsystem.excel.importer;
 
 import java.io.FileInputStream;
 

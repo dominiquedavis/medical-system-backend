@@ -3,6 +3,7 @@ package com.medicalsystem.model.field;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.medicalsystem.json.deserializer.FieldDeserializer;
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.json.serializer.FieldSerializer;
 import lombok.Getter;
@@ -100,20 +101,20 @@ public abstract class Field<T> extends IdComparableEntity {
         return this.evarExcelColumn != -1;
     }
 
-    public String getType() {
+    public int getExcelColumnByType(FormType formType) {
+        return formType == FormType.OPEN ? openExcelColumn : evarExcelColumn;
+    }
 
+    public String getType() {
         if (multiple)
             return "MULTIPLE_SELECT";
 
         if (!options.isEmpty())
             return "SELECT";
 
-        String className = this.getClass().getSimpleName().replace("Field", "");
-
-        if (className.equals("Integer") || className.equals("Double"))
-            return "NUMBER";
-
-        return className.toUpperCase();
+        return this.getTypeSub();
     }
+
+    protected abstract String getTypeSub();
 
 }

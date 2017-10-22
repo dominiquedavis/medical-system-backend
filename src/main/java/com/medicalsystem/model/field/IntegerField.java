@@ -26,4 +26,9 @@ public class IntegerField extends Field<Integer> {
         int i = Integer.parseInt(key);
         super.addOption(i, value);
     }
+
+    @Override
+    protected String getTypeSub() {
+        return "NUMBER";
+    }
 }

@@ -27,4 +27,8 @@ public class DoubleField extends Field<Double> {
         super.addOption(d, value);
     }
 
+    @Override
+    protected String getTypeSub() {
+        return "NUMBER";
+    }
 }

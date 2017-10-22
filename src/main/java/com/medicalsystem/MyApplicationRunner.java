@@ -1,6 +1,6 @@
 package com.medicalsystem;
 
-import com.medicalsystem.importer.DataImporter;
+import com.medicalsystem.excel.importer.DataImporter;
 import com.medicalsystem.init.Initializer;
 import com.medicalsystem.model.ApplicationUser;
 import com.medicalsystem.service.ApplicationUserService;
