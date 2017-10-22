@@ -1,7 +1,10 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.model.FormType;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
 
@@ -28,4 +31,12 @@ public class IntegerFieldValue extends FieldValue<Integer> {
         }
         super.setValue(val);
     }
+
+    @Override
+    public void createValueCell(Row row, FormType formType) {
+        int columnIndex = super.getField().getExcelColumnByType(formType);
+        Cell cell = row.createCell(columnIndex);
+        cell.setCellValue(super.getValue());
+    }
+
 }

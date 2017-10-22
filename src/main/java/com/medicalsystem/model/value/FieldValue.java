@@ -1,12 +1,14 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.field.Field;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * An abstract entity representing a specific values for the specific field for the specific patient.
@@ -46,5 +48,7 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     private T value;
 
     public abstract void setStringValue(String value);
+
+    public abstract void createValueCell(Row row, FormType formType);
 
 }

@@ -3,8 +3,10 @@ package com.medicalsystem.util;
 import lombok.extern.java.Log;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 @Log
 public class DateUtils {
@@ -32,6 +34,14 @@ public class DateUtils {
         }
 
         return date;
+    }
+
+    public static Date fromLocalDate(LocalDate localDate) {
+        if (localDate == null) {
+            log.severe("Passed date is null");
+            return new Date();
+        }
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
 }

@@ -1,8 +1,13 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.model.FormType;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "MULTIPLE_FIELDS_VALUES")
@@ -32,4 +37,14 @@ public class MultipleFieldValue extends FieldValue<List<Integer>> {
 
         super.setValue(values);
     }
+
+    @Override
+    public void createValueCell(Row row, FormType formType) {
+        int columnIndex = super.getField().getExcelColumnByType(formType);
+        Cell cell = row.createCell(columnIndex);
+        List<Integer> values = super.getValue();
+        String valuesAsString = values.stream().map(i -> Integer.toString(i)).collect(Collectors.joining());
+        cell.setCellValue(Integer.parseInt(valuesAsString));
+    }
+
 }

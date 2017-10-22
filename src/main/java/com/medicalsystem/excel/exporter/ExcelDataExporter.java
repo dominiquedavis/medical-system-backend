@@ -86,19 +86,7 @@ public class ExcelDataExporter implements DataExporter {
         List<FieldValue<?>> fieldValues = fieldValueService.findAllByPatientId(patient.getId());
 
         for (FieldValue<?> fieldValue : fieldValues) {
-            int columnIndex = fieldValue.getField().getExcelColumnByType(formType);
-            Cell cell = row.createCell(columnIndex);
-
-            if (fieldValue instanceof DateFieldValue)
-                cell.setCellValue("NOT YET SUPPORTED");
-            else if (fieldValue instanceof DoubleFieldValue)
-                cell.setCellValue(((DoubleFieldValue)fieldValue).getValue());
-            else if (fieldValue instanceof IntegerFieldValue)
-                cell.setCellValue(((IntegerFieldValue)fieldValue).getValue());
-            else if (fieldValue instanceof MultipleFieldValue)
-                cell.setCellValue("NOT YET SUPPORTED");
-            else
-                cell.setCellValue(((TextFieldValue)fieldValue).getValue());
+            fieldValue.createValueCell(row, formType);
         }
     }
 
