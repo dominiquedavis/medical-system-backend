@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.json.model.JSONForm;
 import com.medicalsystem.model.Form;
 import com.medicalsystem.repository.FormRepository;
 import com.medicalsystem.service.FormService;
@@ -44,6 +45,16 @@ public class FormServiceImpl implements FormService {
 
     @Override
     public Form findByPatientId(int patientId) {
+        return null;
+    }
+
+    @Override
+    public JSONForm getForm(int patientId) {
+        return null;
+    }
+
+    @Override
+    public JSONForm updateForm(int patientId, JSONForm jsonForm) {
         return null;
     }
 }

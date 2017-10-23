@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface PatientService extends CRUDService<Patient, Integer> {
 
+    boolean exists(int patientId);
+
     List<Patient> findAllByFormType(FormType formType);
+
+    boolean createPatient(int patientId);
 
 }

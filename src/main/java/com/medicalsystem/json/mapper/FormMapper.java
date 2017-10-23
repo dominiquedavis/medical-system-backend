@@ -9,4 +9,6 @@ public interface FormMapper {
 
     JSONForm toJSON(Form form);
 
+    JSONForm toJSON(int patientId);
+
 }

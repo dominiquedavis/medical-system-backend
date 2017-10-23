@@ -44,8 +44,17 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public boolean exists(int patientId) {
+        return patientRepository.exists(patientId);
+    }
+
+    @Override
     public List<Patient> findAllByFormType(FormType formType) {
         return patientRepository.findAllByFormType(formType);
     }
 
+    @Override
+    public boolean createPatient(int patientId) {
+        return false;
+    }
 }

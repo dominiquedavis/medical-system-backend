@@ -28,6 +28,10 @@ public class Patient {
     @Getter @Setter
     private FormType formType;
 
+    public Patient(int id) {
+        this.id = id;
+    }
+
     public Patient(int id, FormType formType) {
         this.id = id;
         this.formType = formType;

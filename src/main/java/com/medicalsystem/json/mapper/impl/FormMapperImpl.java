@@ -48,4 +48,8 @@ public class FormMapperImpl implements FormMapper {
         return null;
     }
 
+    @Override
+    public JSONForm toJSON(int patientId) {
+        return null;
+    }
 }
