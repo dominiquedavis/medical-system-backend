@@ -5,6 +5,7 @@ import com.medicalsystem.repository.ApplicationUserRepository;
 import com.medicalsystem.service.ApplicationUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     private final ApplicationUserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<ApplicationUser> findAll() {
@@ -46,4 +48,20 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public ApplicationUser findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    @Override
+    public boolean register(ApplicationUser user) {
+        if (findByUsername(user.getUsername()) != null) {
+            return false;
+        }
+
+        // Encode password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Persist user
+        saveOrUpdate(user);
+
+        return true;
+    }
+
 }

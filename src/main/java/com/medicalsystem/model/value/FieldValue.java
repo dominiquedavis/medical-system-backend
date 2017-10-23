@@ -38,7 +38,7 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     @Getter @Setter
-    private Field field;
+    private Field<?> field;
 
     /**
      * An actual values of the field.
@@ -49,7 +49,7 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     @Getter @Setter
     private T value;
 
-    public JSONField createJSONField(Field<?> field) {
+    public JSONField createJSONField() {
         JSONField jsonField = new JSONField();
 
         jsonField.setId(field.getId());

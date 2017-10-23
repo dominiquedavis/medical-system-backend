@@ -32,6 +32,6 @@ public class FieldMapperImpl implements FieldMapper {
     @Override
     public JSONField toJSON(Field<?> field, int patientId) {
         FieldValue<?> fieldValue = fieldValueService.findByFieldAndPatientId(field, patientId);
-        return fieldValue.createJSONField(field);
+        return fieldValue.createJSONField();
     }
 }

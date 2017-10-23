@@ -6,4 +6,6 @@ public interface ApplicationUserService extends CRUDService<ApplicationUser, Lon
 
     ApplicationUser findByUsername(String username);
 
+    boolean register(ApplicationUser user);
+
 }
