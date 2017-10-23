@@ -3,7 +3,9 @@ package com.medicalsystem.controller;
 import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.json.model.JSONForm;
 import com.medicalsystem.json.model.JSONSection;
+import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.FormService;
+import com.medicalsystem.service.SectionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import java.util.List;
 public class FormController {
 
     private final FormService formService;
+    private final SectionService sectionService;
+    private final FieldService fieldService;
 
     @GetMapping("api/forms")
     public List<JSONForm> getForms() {
@@ -28,12 +32,12 @@ public class FormController {
 
     @PostMapping("api/forms/{formId}/sections")
     public void addSection(@PathVariable int formId, JSONSection jsonSection) {
-        formService.addSection(formId, jsonSection);
+        sectionService.addSection(formId, jsonSection);
     }
 
     @PostMapping("api/forms/{formId}/sections/{sectionId}")
     public void addField(@PathVariable int formId, @PathVariable int sectionId, JSONField jsonField) {
-        formService.addField(formId, sectionId, jsonField);
+        fieldService.addField(formId, sectionId, jsonField);
     }
 
 }

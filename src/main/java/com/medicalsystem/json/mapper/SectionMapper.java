@@ -1,7 +1,6 @@
 package com.medicalsystem.json.mapper;
 
 import com.medicalsystem.json.model.JSONSection;
-import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.Section;
 
 public interface SectionMapper {

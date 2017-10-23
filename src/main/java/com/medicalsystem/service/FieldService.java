@@ -1,5 +1,6 @@
 package com.medicalsystem.service;
 
+import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
 
@@ -12,5 +13,8 @@ public interface FieldService extends CRUDService<Field<?>, Integer> {
     Field<?> findByExcelColumn(int excelColumn, FormType formType);
 
     List<Field<?>> findAllByFormType(FormType formType);
+
+    void addField(int formId, int sectionId, JSONField jsonField);
+
 }
 

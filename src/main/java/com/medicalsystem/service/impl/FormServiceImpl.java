@@ -86,14 +86,4 @@ public class FormServiceImpl implements FormService {
         return findAll().stream().map(formMapper::toJSON).collect(Collectors.toList());
     }
 
-    @Override
-    public void addSection(int formId, JSONSection jsonSection) {
-
-    }
-
-    @Override
-    public void addField(int formId, int sectionId, JSONField jsonField) {
-
-    }
-
 }

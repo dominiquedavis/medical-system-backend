@@ -19,9 +19,7 @@ public class FieldMapperImpl implements FieldMapper {
 
     @Override
     public Field<?> fromJSON(JSONField jsonField) {
-        Field<?> field = fieldService.findById(jsonField.getId());
-        // TODO: Implement
-        return field;
+        throw new UnsupportedOperationException("Method not implemented");
     }
 
     @Override
