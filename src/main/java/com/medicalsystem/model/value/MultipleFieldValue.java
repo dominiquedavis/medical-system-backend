@@ -47,4 +47,8 @@ public class MultipleFieldValue extends FieldValue<List<Integer>> {
         cell.setCellValue(Integer.parseInt(valuesAsString));
     }
 
+    @Override
+    public List<?> getValues() {
+        return super.getValue();
+    }
 }

@@ -7,7 +7,9 @@ import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "DATE_FIELDS_VALUES")
@@ -32,5 +34,10 @@ public class DateFieldValue extends FieldValue<LocalDate> {
         LocalDate localDate = super.getValue();
         Date utilDate = DateUtils.fromLocalDate(localDate);
         cell.setCellValue(utilDate);
+    }
+
+    @Override
+    public List<?> getValues() {
+        return Collections.singletonList(super.getValue());
     }
 }

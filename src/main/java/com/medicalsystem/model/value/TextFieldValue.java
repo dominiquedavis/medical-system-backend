@@ -1,10 +1,12 @@
 package com.medicalsystem.model.value;
 
 import com.medicalsystem.model.FormType;
+import com.medicalsystem.model.field.Field;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "TEXT_FIELDS_VALUES")
@@ -28,4 +30,10 @@ public class TextFieldValue extends FieldValue<String> {
         Cell cell = row.createCell(columnIndex);
         cell.setCellValue(super.getValue());
     }
+
+    @Override
+    public List<?> getValues() {
+        return Collections.singletonList(super.getValue());
+    }
+
 }

@@ -2,7 +2,9 @@ package com.medicalsystem.json.mapper.impl;
 
 import com.medicalsystem.json.mapper.FieldMapper;
 import com.medicalsystem.json.mapper.SectionMapper;
+import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.json.model.JSONSection;
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.model.field.Field;
 import lombok.AllArgsConstructor;
@@ -40,4 +42,22 @@ public class SectionMapperImpl implements SectionMapper {
         return null;
     }
 
+    @Override
+    public JSONSection toJSON(Section section, int patientId) {
+        JSONSection jsonSection = new JSONSection();
+
+        // Set ID
+        jsonSection.setId(section.getId());
+
+        // Set name
+        jsonSection.setName(section.getName());
+
+        // Set fields
+        List<JSONField> jsonFields = section.getFields().stream()
+                .map(f -> fieldMapper.toJSON(f, patientId))
+                .collect(Collectors.toList());
+        jsonSection.setFields(jsonFields);
+
+        return jsonSection;
+    }
 }

@@ -3,11 +3,16 @@ package com.medicalsystem.json.mapper.impl;
 import com.medicalsystem.json.mapper.FormMapper;
 import com.medicalsystem.json.mapper.SectionMapper;
 import com.medicalsystem.json.model.JSONForm;
+import com.medicalsystem.json.model.JSONSection;
 import com.medicalsystem.model.Form;
 import com.medicalsystem.model.FormType;
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.properties.ConfigProperties;
+import com.medicalsystem.service.FormService;
+import com.medicalsystem.service.PatientService;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Log
 public class FormMapperImpl implements FormMapper {
 
     private final SectionMapper sectionMapper;
@@ -49,7 +55,22 @@ public class FormMapperImpl implements FormMapper {
     }
 
     @Override
-    public JSONForm toJSON(int patientId) {
-        return null;
+    public JSONForm toJSON(Form form, Patient patient) {
+        JSONForm jsonForm = new JSONForm();
+
+        // Set type
+        FormType formType = patient.getFormType();
+        jsonForm.setType(formType.name());
+
+        // Set ID
+        jsonForm.setId(form.getId());
+
+        // Set sections
+        List<JSONSection> jsonSections = form.getSections().stream()
+                .map(s -> sectionMapper.toJSON(s, patient.getId()))
+                .collect(Collectors.toList());
+        jsonForm.setSections(jsonSections);
+
+        return jsonForm;
     }
 }

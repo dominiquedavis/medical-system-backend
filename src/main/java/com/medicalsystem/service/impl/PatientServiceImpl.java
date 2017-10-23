@@ -5,6 +5,7 @@ import com.medicalsystem.model.Patient;
 import com.medicalsystem.repository.PatientRepository;
 import com.medicalsystem.service.PatientService;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Log
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
@@ -55,6 +57,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public boolean createPatient(int patientId) {
-        return false;
+        if (exists(patientId)) {
+            log.severe("Patient exists with ID: " + patientId);
+            return false;
+        }
+        saveOrUpdate(new Patient(patientId));
+        log.info("Patient created: " + patientId);
+        return true;
     }
 }

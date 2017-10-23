@@ -2,6 +2,7 @@ package com.medicalsystem.json.mapper;
 
 import com.medicalsystem.json.model.JSONForm;
 import com.medicalsystem.model.Form;
+import com.medicalsystem.model.Patient;
 
 public interface FormMapper {
 
@@ -9,6 +10,6 @@ public interface FormMapper {
 
     JSONForm toJSON(Form form);
 
-    JSONForm toJSON(int patientId);
+    JSONForm toJSON(Form form, Patient patient);
 
 }

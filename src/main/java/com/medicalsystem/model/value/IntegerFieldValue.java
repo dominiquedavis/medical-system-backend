@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "INTEGER_FIELDS_VALUES")
@@ -39,4 +41,8 @@ public class IntegerFieldValue extends FieldValue<Integer> {
         cell.setCellValue(super.getValue());
     }
 
+    @Override
+    public List<?> getValues() {
+        return Collections.singletonList(super.getValue());
+    }
 }

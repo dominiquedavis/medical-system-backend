@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value;
 
+import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Patient;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * An abstract entity representing a specific values for the specific field for the specific patient.
@@ -46,6 +48,20 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     @Transient
     @Getter @Setter
     private T value;
+
+    public JSONField createJSONField(Field<?> field) {
+        JSONField jsonField = new JSONField();
+
+        jsonField.setId(field.getId());
+        jsonField.setName(field.getName());
+        jsonField.setType(field.getType());
+        jsonField.setValues(getValues());
+        jsonField.setPossibleValues(field.getPossibleValues());
+
+        return jsonField;
+    }
+
+    public abstract List<?> getValues();
 
     public abstract void setStringValue(String value);
 

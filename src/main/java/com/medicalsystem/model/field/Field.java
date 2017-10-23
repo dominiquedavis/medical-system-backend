@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -110,5 +112,9 @@ public abstract class Field<T> extends IdComparableEntity {
     }
 
     protected abstract String getTypeSub();
+
+    public List<String> getPossibleValues() {
+        return new ArrayList<>(options.values());
+    }
 
 }
