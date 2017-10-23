@@ -1,7 +1,9 @@
 package com.medicalsystem.service.impl;
 
 import com.medicalsystem.json.mapper.FormMapper;
+import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.json.model.JSONForm;
+import com.medicalsystem.json.model.JSONSection;
 import com.medicalsystem.model.Form;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.Patient;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -77,4 +80,20 @@ public class FormServiceImpl implements FormService {
     public JSONForm updateForm(int patientId, JSONForm jsonForm) {
         return null;
     }
+
+    @Override
+    public List<JSONForm> getForms() {
+        return findAll().stream().map(formMapper::toJSON).collect(Collectors.toList());
+    }
+
+    @Override
+    public void addSection(int formId, JSONSection jsonSection) {
+
+    }
+
+    @Override
+    public void addField(int formId, int sectionId, JSONField jsonField) {
+
+    }
+
 }

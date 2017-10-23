@@ -26,7 +26,15 @@ public class FieldMapperImpl implements FieldMapper {
 
     @Override
     public JSONField toJSON(Field<?> field) {
-        return null;
+        JSONField jsonField = new JSONField();
+
+        jsonField.setId(field.getId());
+        jsonField.setName(field.getName());
+        jsonField.setType(field.getType());
+        jsonField.setValues(null);
+        jsonField.setPossibleValues(null);
+
+        return jsonField;
     }
 
     @Override

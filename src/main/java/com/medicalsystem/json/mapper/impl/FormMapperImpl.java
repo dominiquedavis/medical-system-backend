@@ -51,7 +51,17 @@ public class FormMapperImpl implements FormMapper {
 
     @Override
     public JSONForm toJSON(Form form) {
-        return null;
+        JSONForm jsonForm = new JSONForm();
+
+        jsonForm.setId(form.getId());
+        jsonForm.setType(form.getType().name());
+
+        List<JSONSection> jsonSections = form.getSections().stream()
+                .map(sectionMapper::toJSON)
+                .collect(Collectors.toList());
+        jsonForm.setSections(jsonSections);
+
+        return jsonForm;
     }
 
     @Override

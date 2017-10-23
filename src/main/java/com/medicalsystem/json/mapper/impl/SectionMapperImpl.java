@@ -39,7 +39,17 @@ public class SectionMapperImpl implements SectionMapper {
 
     @Override
     public JSONSection toJSON(Section section) {
-        return null;
+        JSONSection jsonSection = new JSONSection();
+
+        jsonSection.setId(section.getId());
+        jsonSection.setName(section.getName());
+
+        List<JSONField> jsonFields = section.getFields().stream()
+                .map(fieldMapper::toJSON)
+                .collect(Collectors.toList());
+        jsonSection.setFields(jsonFields);
+
+        return jsonSection;
     }
 
     @Override

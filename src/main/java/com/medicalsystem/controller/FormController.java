@@ -1,14 +1,16 @@
 package com.medicalsystem.controller;
 
-import com.medicalsystem.model.Form;
-import com.medicalsystem.model.Section;
-import com.medicalsystem.model.field.Field;
+import com.medicalsystem.json.model.JSONField;
+import com.medicalsystem.json.model.JSONForm;
+import com.medicalsystem.json.model.JSONSection;
 import com.medicalsystem.service.FormService;
-import com.medicalsystem.service.SectionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,38 +20,20 @@ import java.util.List;
 public class FormController {
 
     private final FormService formService;
-    private final SectionService sectionService;
 
-    /**
-     * Returns all forms as patterns (values and possible values are null)
-     *
-     * @return all forms
-     */
     @GetMapping("api/forms")
-    public List<Form> getForms() {
-        return formService.findAll();
+    public List<JSONForm> getForms() {
+        return formService.getForms();
     }
 
-    /**
-     * Adds section to the given form
-     *
-     * @param formId  ID of the form to add the section
-     * @param section a Section object
-     */
     @PostMapping("api/forms/{formId}/sections")
-    public void addSection(@PathVariable int formId, @RequestBody Section section) {
-        // TODO: check if section name exists for given form
-        Form form = formService.findById(formId);
-        section.setForm(form);
-        sectionService.saveOrUpdate(section);
+    public void addSection(@PathVariable int formId, JSONSection jsonSection) {
+        formService.addSection(formId, jsonSection);
     }
 
     @PostMapping("api/forms/{formId}/sections/{sectionId}")
-    public void addField(@PathVariable int formId, @PathVariable int sectionId, @RequestBody Field<?> field) {
-        // TODO: check if field exists
-        Section section = sectionService.findById(sectionId);
-        section.addField(field);
-        sectionService.saveOrUpdate(section);
+    public void addField(@PathVariable int formId, @PathVariable int sectionId, JSONField jsonField) {
+        formService.addField(formId, sectionId, jsonField);
     }
 
 }
