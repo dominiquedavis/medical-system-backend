@@ -1,5 +1,10 @@
 package com.medicalsystem.model.value;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.medicalsystem.json.serializer.LocalDateSerializer;
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.util.DateUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,6 +20,15 @@ import java.util.List;
 @Table(name = "DATE_FIELDS_VALUES")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class DateFieldValue extends FieldValue<LocalDate> {
+
+    private static ObjectMapper mapper;
+
+    static {
+        mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(LocalDate.class, new LocalDateSerializer());
+        mapper.registerModule(module);
+    }
 
     @Access(AccessType.PROPERTY)
     @Override
@@ -38,6 +52,12 @@ public class DateFieldValue extends FieldValue<LocalDate> {
 
     @Override
     public List<?> getValues() {
-        return Collections.singletonList(super.getValue());
+        String serialized = "";
+        try {
+            serialized = mapper.writeValueAsString(super.getValue()).replaceAll("\"", "");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Collections.singletonList(serialized);
     }
 }
