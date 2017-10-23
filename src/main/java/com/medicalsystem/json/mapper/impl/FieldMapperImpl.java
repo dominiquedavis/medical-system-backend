@@ -4,7 +4,6 @@ import com.medicalsystem.json.mapper.FieldMapper;
 import com.medicalsystem.json.model.JSONField;
 import com.medicalsystem.model.field.Field;
 import com.medicalsystem.model.value.FieldValue;
-import com.medicalsystem.service.FieldService;
 import com.medicalsystem.service.FieldValueService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class FieldMapperImpl implements FieldMapper {
 
-    private final FieldService fieldService;
     private final FieldValueService fieldValueService;
 
     @Override
