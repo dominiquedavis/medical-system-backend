@@ -8,9 +8,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An entity representing a single form (a single sheet in an excel file - OPEN, EVAR).
- */
 @Entity
 @Table(name = "FORMS")
 @NoArgsConstructor
@@ -27,14 +24,8 @@ public class Form extends IdComparableEntity {
     @Getter @Setter
     private FormType type;
 
-    /**
-     * A list of sections that make up the form.
-     */
     @OneToMany(mappedBy = "form")
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
 
-    public void addSection(Section section) {
-        this.sections.add(section);
-    }
 }

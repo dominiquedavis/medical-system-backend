@@ -8,14 +8,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TEXT_FIELDS")
+@Table(name = "DOUBLE_FIELDS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
-public class TextField extends Field {
+public class NumberField extends Field {
 
     @Override
     public FieldType getType() {
-        return FieldType.TEXT;
+        return FieldType.NUMBER;
     }
 
 }
