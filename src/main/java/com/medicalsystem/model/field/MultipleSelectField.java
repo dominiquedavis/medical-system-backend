@@ -18,8 +18,7 @@ public class MultipleSelectField extends Field {
     @JoinTable(name = "SELECT_FIELDS_OPTIONS")
     @MapKeyColumn(name = "key")
     @Column(name = "value")
-    @Getter
-    @Setter
+    @Getter @Setter
     private Map<String, String> possibleValues = new HashMap<>();
 
     @Override

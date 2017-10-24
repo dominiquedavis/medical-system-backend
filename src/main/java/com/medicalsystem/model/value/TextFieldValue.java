@@ -10,6 +10,14 @@ import javax.persistence.*;
 public class TextFieldValue extends FieldValue<TextField, String> {
 
     @Access(AccessType.PROPERTY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    @Override
+    public TextField getField() {
+        return super.getField();
+    }
+
+    @Access(AccessType.PROPERTY)
     @Override
     public String getValue() {
         return super.getValue();

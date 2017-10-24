@@ -11,6 +11,14 @@ import java.time.LocalDate;
 public class DateFieldValue extends FieldValue<DateField, LocalDate> {
 
     @Access(AccessType.PROPERTY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    @Override
+    public DateField getField() {
+        return super.getField();
+    }
+
+    @Access(AccessType.PROPERTY)
     @Override
     public LocalDate getValue() {
         return super.getValue();

@@ -6,7 +6,7 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class IdComparableEntity {
 
-    public abstract int getId();
+    public abstract long getId();
 
     @Override
     public int hashCode() {

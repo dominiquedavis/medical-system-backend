@@ -8,30 +8,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-/**
- * An abstract entity representing a specific values for the specific field for the specific patient.
- * @param <T> - the type of the values
- */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class FieldValue<U extends Field, T> extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     @Getter @Setter
-    private int id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Getter @Setter
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+    @Transient
     @Getter @Setter
     private U field;
 
     @Transient
     @Getter @Setter
     private T value;
-
 
 }

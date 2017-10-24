@@ -11,6 +11,14 @@ import java.util.Map;
 public class SelectFieldValue extends FieldValue<SelectField, String> {
 
     @Access(AccessType.PROPERTY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    @Override
+    public SelectField getField() {
+        return super.getField();
+    }
+
+    @Access(AccessType.PROPERTY)
     @Override
     public String getValue() {
         Map<String, String> possibleValues = getField().getPossibleValues();

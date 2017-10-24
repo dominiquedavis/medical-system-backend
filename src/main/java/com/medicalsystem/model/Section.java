@@ -16,7 +16,7 @@ public class Section extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String name;

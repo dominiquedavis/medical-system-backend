@@ -14,7 +14,7 @@ public abstract class Field extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String name;

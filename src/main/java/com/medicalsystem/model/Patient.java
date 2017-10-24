@@ -13,7 +13,7 @@ public class Patient {
 
     @Id
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     @Getter @Setter
