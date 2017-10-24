@@ -1,6 +1,7 @@
 package com.medicalsystem.model.value;
 
 import com.medicalsystem.model.FormType;
+import com.medicalsystem.model.field.IntegerField;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -9,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "INTEGER_FIELDS_VALUES")
@@ -43,6 +45,12 @@ public class IntegerFieldValue extends FieldValue<Integer> {
 
     @Override
     public List<?> getValues() {
+        if (!getField().getOptions().isEmpty()) {
+            IntegerField field = (IntegerField) getField();
+            Map<Integer, String> possibleValues = field.getOptions();
+            int key = super.getValue();
+            return Collections.singletonList(possibleValues.get(key));
+        }
         return Collections.singletonList(super.getValue());
     }
 }

@@ -54,7 +54,7 @@ public class DateFieldValue extends FieldValue<LocalDate> {
     public List<?> getValues() {
         String serialized = "";
         try {
-            serialized = mapper.writeValueAsString(super.getValue()).replaceAll("\"", "");
+            serialized = mapper.writeValueAsString(super.getValue()).replaceAll("\"", "").replaceAll("00", "20");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

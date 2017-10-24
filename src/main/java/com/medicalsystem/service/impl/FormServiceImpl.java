@@ -78,7 +78,7 @@ public class FormServiceImpl implements FormService {
 
     @Override
     public JSONForm updateForm(int patientId, JSONForm jsonForm) {
-        return null;
+        return jsonForm;
     }
 
     @Override

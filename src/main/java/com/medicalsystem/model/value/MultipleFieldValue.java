@@ -1,12 +1,15 @@
 package com.medicalsystem.model.value;
 
 import com.medicalsystem.model.FormType;
+import com.medicalsystem.model.field.IntegerField;
+import com.medicalsystem.model.field.TextField;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Entity
@@ -49,6 +52,20 @@ public class MultipleFieldValue extends FieldValue<List<Integer>> {
 
     @Override
     public List<?> getValues() {
-        return super.getValue();
+        if (getField() instanceof IntegerField) {
+            IntegerField field = (IntegerField) getField();
+            Map<Integer, String> possibleValues = field.getOptions();
+            List<Integer> keys = super.getValue();
+            return keys.stream().map(possibleValues::get).collect(Collectors.toList());
+        }
+
+        if (getField() instanceof TextField) {
+            TextField field = (TextField) getField();
+            Map<String, String> possibleValues = field.getOptions();
+            List<String> keys = super.getValue().stream().map(x -> Integer.toString(x)).collect(Collectors.toList());
+            return keys.stream().map(possibleValues::get).collect(Collectors.toList());
+        }
+
+        return new ArrayList<>();
     }
 }

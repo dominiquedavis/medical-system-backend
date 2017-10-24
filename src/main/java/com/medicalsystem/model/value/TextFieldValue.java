@@ -2,6 +2,7 @@ package com.medicalsystem.model.value;
 
 import com.medicalsystem.model.FormType;
 import com.medicalsystem.model.field.Field;
+import com.medicalsystem.model.field.TextField;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -33,6 +34,12 @@ public class TextFieldValue extends FieldValue<String> {
 
     @Override
     public List<?> getValues() {
+        if (!getField().getOptions().isEmpty()) {
+            TextField field = (TextField) getField();
+            Map<String, String> possibleValues = field.getOptions();
+            String key = super.getValue();
+            return Collections.singletonList(possibleValues.get(key));
+        }
         return Collections.singletonList(super.getValue());
     }
 
