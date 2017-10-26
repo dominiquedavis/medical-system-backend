@@ -1,16 +1,16 @@
-package com.medicalsystem.model.value;
+package com.medicalsystem.model.fieldvalue;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "NUMBER_FIELD_VALUES")
+@Table(name = "TEXT_FIELD_VALUES")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class NumberFieldValue extends FieldValue<Double> {
+public class TextFieldValue extends FieldValue<String> {
 
     @Access(AccessType.PROPERTY)
     @Column(name = "VALUE")
     @Override
-    public Double getValue() {
+    public String getValue() {
         return super.getValue();
     }
 }

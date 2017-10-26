@@ -1,4 +1,4 @@
-package com.medicalsystem.model.value;
+package com.medicalsystem.model.fieldvalue;
 
 import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Patient;

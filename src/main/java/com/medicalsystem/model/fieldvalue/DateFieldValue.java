@@ -1,16 +1,17 @@
-package com.medicalsystem.model.value;
+package com.medicalsystem.model.fieldvalue;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "TEXT_FIELD_VALUES")
+@Table(name = "DATE_FIELD_VALUES")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class TextFieldValue extends FieldValue<String> {
+public class DateFieldValue extends FieldValue<LocalDate> {
 
     @Access(AccessType.PROPERTY)
     @Column(name = "VALUE")
     @Override
-    public String getValue() {
+    public LocalDate getValue() {
         return super.getValue();
     }
 }

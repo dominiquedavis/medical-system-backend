@@ -1,4 +1,4 @@
-package com.medicalsystem.model.value;
+package com.medicalsystem.model.fieldvalue;
 
 import javax.persistence.*;
 import java.util.List;
