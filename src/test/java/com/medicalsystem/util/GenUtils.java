@@ -35,13 +35,13 @@ public final class GenUtils {
             for (int s = 0; s < sectionsToCreate; s++) {
                 Section section = new Section();
                 section.setName("Section " + (s + 1));
-                //section.setForm(form);
+                //section.setForm(form); // not needed to work properly
 
                 for (int i = 0; i < fieldsToCreate; i++) {
                     Field field = new Field();
                     field.setName("Field " + (s + 1));
                     field.setType(GenUtils.getRandomFieldType());
-                    //field.setSection(section);
+                    //field.setSection(section); // not needed to work properly
 
                     Map<Form, Integer> indices = new HashMap<>();
                     indices.put(form, i);
