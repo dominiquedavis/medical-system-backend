@@ -14,17 +14,19 @@ import java.util.List;
 public class Form extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     @Getter @Setter
     private long id;
 
+    @Column(name = "NAME")
     @Getter @Setter
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Getter @Setter
-    private FormType type;
-
-    @OneToMany(mappedBy = "form")
+    @OneToMany(
+            mappedBy = "form",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @Getter @Setter
     private List<Section> sections = new ArrayList<>();
 

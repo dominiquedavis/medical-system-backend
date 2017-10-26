@@ -2,6 +2,8 @@ package com.medicalsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class MedicalSystemBackendApplication {
@@ -9,4 +11,10 @@ public class MedicalSystemBackendApplication {
 	public static void main(String[] args) {
         SpringApplication.run(MedicalSystemBackendApplication.class, args);
 	}
+
+	@Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+    }
+
 }

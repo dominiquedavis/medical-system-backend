@@ -21,7 +21,6 @@ public abstract class IdComparableEntity {
 
         if (obj instanceof IdComparableEntity) {
             IdComparableEntity entity = (IdComparableEntity) obj;
-
             return Objects.equals(getClass(), entity.getClass()) && Objects.equals(getId(), entity.getId());
         }
 
