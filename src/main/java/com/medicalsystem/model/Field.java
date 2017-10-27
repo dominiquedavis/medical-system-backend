@@ -27,7 +27,7 @@ public class Field extends IdComparableEntity {
     @Getter @Setter
     private FieldType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SECTION_ID")
     @Getter @Setter
     private Section section;
@@ -36,7 +36,7 @@ public class Field extends IdComparableEntity {
     @Getter @Setter
     private int excelColumnIndex;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "POSSIBLE_VALUES",
             joinColumns = @JoinColumn(name = "FIELD_ID")

@@ -17,12 +17,12 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     @Getter @Setter
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PATIENT_ID")
     @Getter @Setter
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FIELD_ID")
     @Getter @Setter
     private Field field;

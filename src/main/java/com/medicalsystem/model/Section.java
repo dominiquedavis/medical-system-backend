@@ -22,7 +22,7 @@ public class Section extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FORM_ID")
     @Getter @Setter
     private Form form;

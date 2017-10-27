@@ -22,13 +22,11 @@ public class ExcelImporterImpl implements ExcelImporter {
 
     private final SheetImporter sheetImporter;
 
-    @Transactional
     @Override
     public void importToDatabase(FileInputStream excelFileStream) {
         importHelper(excelFileStream, -1);
     }
 
-    @Transactional
     @Override
     public void importToDatabase(FileInputStream excelFileStream, int rowsToImport) {
         importHelper(excelFileStream, rowsToImport);

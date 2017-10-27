@@ -39,6 +39,6 @@ public class CellImporterImpl implements CellImporter {
 
         fieldValueService.save(fieldValue);
 
-        log.info(String.format("[%d, %s] Value created: %s", patient.getId(), field.getName(), fieldValue.getValue()));
+        log.info(String.format("[%d, %s] %s", patient.getId(), field.getName(), fieldValue.getValue()));
     }
 }
