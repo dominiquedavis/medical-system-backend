@@ -1,5 +1,7 @@
 package com.medicalsystem.model.fieldvalue;
 
+import com.medicalsystem.util.DateUtils;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -13,5 +15,11 @@ public class DateFieldValue extends FieldValue<LocalDate> {
     @Override
     public LocalDate getValue() {
         return super.getValue();
+    }
+
+    @Override
+    public void setValueFromString(String str) {
+        LocalDate value = DateUtils.fromString(str);
+        super.setValue(value);
     }
 }

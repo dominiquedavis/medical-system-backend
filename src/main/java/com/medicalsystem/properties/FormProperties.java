@@ -24,6 +24,9 @@ public class FormProperties {
         private String name;
 
         @Getter @Setter
+        private int index;
+
+        @Getter @Setter
         private List<Section> sections = new ArrayList<>();
 
         public static class Section {
@@ -40,7 +43,7 @@ public class FormProperties {
                 private String name;
 
                 @Getter @Setter
-                private int columnIndex;
+                private int excelColumnIndex;
 
                 @Getter @Setter
                 private FieldType type;

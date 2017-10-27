@@ -1,8 +1,8 @@
 package com.medicalsystem.model.fieldvalue;
 
+import com.medicalsystem.model.Field;
 import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Patient;
-import com.medicalsystem.model.Field;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,4 +31,6 @@ public abstract class FieldValue<T> extends IdComparableEntity {
     @Getter @Setter
     private T value;
 
+
+    public abstract void setValueFromString(String str);
 }

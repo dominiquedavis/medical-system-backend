@@ -32,9 +32,9 @@ public class Field extends IdComparableEntity {
     @Getter @Setter
     private Section section;
 
-    @Column(name = "COLUMN_INDEX")
+    @Column(name = "EXCEL_COLUMN_INDEX")
     @Getter @Setter
-    private int columnIndex;
+    private int excelColumnIndex;
 
     @ElementCollection
     @CollectionTable(

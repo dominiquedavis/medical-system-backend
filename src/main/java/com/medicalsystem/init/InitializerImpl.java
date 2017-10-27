@@ -23,6 +23,9 @@ public class InitializerImpl implements Initializer {
     @Override
     public void runInitialConfiguration() {
         List<Form> forms = formFactory.fromProperties(formProperties.getForms());
-        forms.forEach(formService::save);
+        forms.forEach(form -> {
+            formService.save(form);
+            log.info("Form created: " + form.getName());
+        });
     }
 }

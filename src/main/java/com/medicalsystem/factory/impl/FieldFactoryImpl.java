@@ -30,7 +30,7 @@ public class FieldFactoryImpl implements FieldFactory {
 
         Field field = new Field();
         field.setName(propertiesField.getName());
-        field.setColumnIndex(propertiesField.getColumnIndex());
+        field.setExcelColumnIndex(propertiesField.getExcelColumnIndex());
         field.setType(propertiesField.getType());
         setPossibleValues(field, propertiesField);
         return field;

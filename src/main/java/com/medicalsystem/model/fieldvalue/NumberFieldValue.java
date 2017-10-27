@@ -1,5 +1,7 @@
 package com.medicalsystem.model.fieldvalue;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,5 +14,15 @@ public class NumberFieldValue extends FieldValue<Double> {
     @Override
     public Double getValue() {
         return super.getValue();
+    }
+
+    @Override
+    public void setValueFromString(String str) {
+        str = str.trim();
+        if (NumberUtils.isCreatable(str)) {
+            super.setValue(Double.parseDouble(str));
+        } else {
+            super.setValue(-1.0);
+        }
     }
 }

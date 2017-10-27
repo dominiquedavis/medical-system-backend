@@ -1,6 +1,7 @@
 package com.medicalsystem.service.impl;
 
 import com.medicalsystem.model.Field;
+import com.medicalsystem.model.Form;
 import com.medicalsystem.repository.FieldRepository;
 import com.medicalsystem.service.FieldService;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,6 +24,17 @@ public class FieldServiceImpl implements FieldService {
     @Override
     public List<Field> getAll() {
         return fieldRepository.findAll();
+    }
+
+    @Override
+    public List<Field> getAllByForm(Form form) {
+        return fieldRepository.findAllByForm(form);
+    }
+
+    @Override
+    public Map<Integer, Field> getExcelColumnIndexToFieldMap(Form form) {
+        return getAllByForm(form).stream()
+                .collect(Collectors.toMap(Field::getExcelColumnIndex, Function.identity()));
     }
 
     @Override

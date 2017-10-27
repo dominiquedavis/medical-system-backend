@@ -19,4 +19,7 @@ public class Patient extends IdComparableEntity {
     @Getter @Setter
     private long id;
 
+    public Patient(long id) {
+        this.id = id;
+    }
 }

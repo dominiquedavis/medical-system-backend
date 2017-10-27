@@ -43,4 +43,9 @@ public class FormServiceImpl implements FormService {
     public void deleteById(Long id) {
         formRepository.delete(id);
     }
+
+    @Override
+    public Form getByExcelSheetIndex(int excelSheetIndex) {
+        return formRepository.findByExcelSheetIndex(excelSheetIndex);
+    }
 }

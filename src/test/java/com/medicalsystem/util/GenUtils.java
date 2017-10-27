@@ -43,7 +43,7 @@ public final class GenUtils {
                     field.setType(GenUtils.getRandomFieldType());
                     //field.setSection(section); // not needed to work properly
 
-                    field.setColumnIndex(i);
+                    field.setExcelColumnIndex(i);
 
                     if (field.getType() == FieldType.SELECT || field.getType() == FieldType.MULTIPLE_SELECT) {
                         Map<String, String> possibleValues = new HashMap<>();

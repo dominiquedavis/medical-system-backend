@@ -22,6 +22,10 @@ public class Form extends IdComparableEntity {
     @Getter @Setter
     private String name;
 
+    @Column(name = "EXCEL_SHEET_INDEX")
+    @Getter @Setter
+    private int excelSheetIndex;
+
     @OneToMany(
             mappedBy = "form",
             cascade = CascadeType.ALL,
