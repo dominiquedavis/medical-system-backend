@@ -27,6 +27,6 @@ public class MyApplicationRunner implements ApplicationRunner {
         initializer.runInitialConfiguration();
 
         // Run import
-        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"));
+        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
     }
 }
