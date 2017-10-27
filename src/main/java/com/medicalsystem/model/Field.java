@@ -32,12 +32,9 @@ public class Field extends IdComparableEntity {
     @Getter @Setter
     private Section section;
 
-    @ElementCollection
-    @CollectionTable(name = "FORM_COLUMN_INDICES")
-    @MapKeyJoinColumn(name = "FORM_ID")
     @Column(name = "COLUMN_INDEX")
     @Getter @Setter
-    private Map<Form, Integer> indices = new HashMap<>();
+    private int columnIndex;
 
     @ElementCollection
     @CollectionTable(

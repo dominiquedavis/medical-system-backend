@@ -1,4 +1,4 @@
-package com.medicalsystem;
+package com.medicalsystem.init;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -12,10 +12,13 @@ import org.springframework.stereotype.Component;
 @Log
 public class MyApplicationRunner implements ApplicationRunner {
 
+    private final Initializer initializer;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("Running initialization...");
 
-
+        // Create forms, sections and field from properties file
+        initializer.runInitialConfiguration();
     }
 }

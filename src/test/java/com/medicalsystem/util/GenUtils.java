@@ -43,9 +43,7 @@ public final class GenUtils {
                     field.setType(GenUtils.getRandomFieldType());
                     //field.setSection(section); // not needed to work properly
 
-                    Map<Form, Integer> indices = new HashMap<>();
-                    indices.put(form, i);
-                    field.setIndices(indices);
+                    field.setColumnIndex(i);
 
                     if (field.getType() == FieldType.SELECT || field.getType() == FieldType.MULTIPLE_SELECT) {
                         Map<String, String> possibleValues = new HashMap<>();

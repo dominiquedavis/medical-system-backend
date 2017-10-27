@@ -1,5 +1,6 @@
 package com.medicalsystem.properties;
 
+import com.medicalsystem.model.FieldType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -42,12 +43,12 @@ public class FormProperties {
                 private int columnIndex;
 
                 @Getter @Setter
-                private String type;
+                private FieldType type;
 
                 @Getter @Setter
-                private List<Options> options = new ArrayList<>();
+                private List<Option> options = new ArrayList<>();
 
-                public static class Options {
+                public static class Option {
 
                     @Getter @Setter
                     private String key;

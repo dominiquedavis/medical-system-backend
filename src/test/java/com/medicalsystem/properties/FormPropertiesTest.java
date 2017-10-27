@@ -53,13 +53,13 @@ public class FormPropertiesTest {
         assertFalse(fields.isEmpty());
 
         fields.forEach(field -> {
-            System.out.println(field.getName());
             assertNotNull(field.getName());
+            assertNotNull(field.getType());
             testOptions(field.getOptions());
         });
     }
 
-    private void testOptions(List<FormProperties.Form.Section.Field.Options> options) {
+    private void testOptions(List<FormProperties.Form.Section.Field.Option> options) {
         assertNotNull(options);
     }
 
