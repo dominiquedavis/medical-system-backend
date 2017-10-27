@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @Log
 public class MyApplicationRunner implements ApplicationRunner {
 
-    private final Initializer initializer;
+    private final InitializerImpl initializer;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("Running initialization...");
 
         // Create forms, sections and field from properties file
-        initializer.runInitialConfiguration();
+
     }
 }

@@ -39,6 +39,7 @@ public class FieldRepositoryTest {
 
     @Test
     public void test_findAll() {
+        final long fieldCountBefore = fieldRepository.count();
         final int fieldsToSave = 10;
 
         for (int i = 0; i < fieldsToSave; i++) {
@@ -49,7 +50,7 @@ public class FieldRepositoryTest {
         List<Field> fields = fieldRepository.findAll();
 
         assertNotNull(fields);
-        assertEquals(fieldsToSave, fields.size());
+        assertEquals(fieldsToSave + fieldCountBefore, fields.size());
     }
 
 }

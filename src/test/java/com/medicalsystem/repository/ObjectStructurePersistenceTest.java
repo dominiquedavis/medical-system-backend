@@ -5,6 +5,7 @@ import com.medicalsystem.model.Form;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.service.FormService;
 import com.medicalsystem.util.GenUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class ObjectStructurePersistenceTest {
     @Autowired
     private FormService formService;
 
+    @Before
+    public void clearDatabase() {
+        formRepository.delete(formRepository.findAll());
+    }
+
     @Test
     public void test_autowire() {
         assertNotNull(formRepository);
@@ -46,17 +52,7 @@ public class ObjectStructurePersistenceTest {
         assertNotNull(forms);
         assertEquals(formsToCreate, forms.size());
 
-        for (Form form : forms) {
-            List<Section> sections = form.getSections();
-            assertNotNull(sections);
-            assertEquals(sectionsToCreate, sections.size());
-
-            for (Section section : sections) {
-                List<Field> fields = section.getFields();
-                assertNotNull(fields);
-                assertEquals(fieldsToCreate, fields.size());
-            }
-        }
+        testObjectStructure(sectionsToCreate, fieldsToCreate, forms);
 
         formRepository.delete(forms);
     }
@@ -76,6 +72,12 @@ public class ObjectStructurePersistenceTest {
         assertNotNull(forms);
         assertEquals(formsToCreate, forms.size());
 
+        testObjectStructure(sectionsToCreate, fieldsToCreate, forms);
+
+        forms.forEach(form -> formService.deleteById(form.getId()));
+    }
+
+    private void testObjectStructure(int sectionsToCreate, int fieldsToCreate, List<Form> forms) {
         for (Form form : forms) {
             List<Section> sections = form.getSections();
             assertNotNull(sections);
@@ -87,8 +89,6 @@ public class ObjectStructurePersistenceTest {
                 assertEquals(fieldsToCreate, fields.size());
             }
         }
-
-        forms.forEach(form -> formService.deleteById(form.getId()));
     }
 
 }
