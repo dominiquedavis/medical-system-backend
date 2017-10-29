@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,12 +13,12 @@ public final class RoleUtils {
 
     private RoleUtils() {}
 
-    public static String[] getRoles(Collection<GrantedAuthority> authorities) {
-        return authorities.stream().map(GrantedAuthority::getAuthority).toArray(String[]::new);
+    public static List<String> getRoles(Collection<GrantedAuthority> authorities) {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
     }
 
-    public static Collection<GrantedAuthority> getAuthorities(String[] roles) {
-        return Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    public static Collection<GrantedAuthority> getAuthorities(List<String> roles) {
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     public static Collection<GrantedAuthority> getAuthorities(ApplicationUser user) {

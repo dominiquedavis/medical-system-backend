@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.medicalsystem.security.SecurityConstants.*;
 
@@ -50,7 +51,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         String subject = null;
-        String[] roles = new String[0];
+        List<String> roles = null;
         try {
             subject = getSubject(token);
             roles = getRoles(token);
@@ -69,22 +70,19 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 .getSubject();
     }
 
-    private String[] getRoles(String token) throws SignatureException {
-        List list = Jwts.parser()
+    private List<String> getRoles(String token) throws SignatureException {
+        List rolesRaw = Jwts.parser()
                 .setSigningKey(SECRET.getBytes())
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody()
                 .get("roles", ArrayList.class);
 
-        String[] roles = new String[list.size()];
-        int i = 0;
-        for (Object o : list) {
-            if (!(o instanceof String)) {
-                throw new SignatureException("'roles' element is not a string");
-            }
-            roles[i++] = (String) o;
+        List<String> roles = new ArrayList<>();
+        for (Object o : rolesRaw) {
+            if (!(o instanceof String))
+                throw new SignatureException("Role is not a string: " + o);
+            roles.add((String) o);
         }
-
         return roles;
     }
 }
