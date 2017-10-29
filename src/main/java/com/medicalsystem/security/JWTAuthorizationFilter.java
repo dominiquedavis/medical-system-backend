@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.medicalsystem.security.SecurityConstants.*;
 
@@ -68,10 +70,21 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private String[] getRoles(String token) throws SignatureException {
-        return Jwts.parser()
+        List list = Jwts.parser()
                 .setSigningKey(SECRET.getBytes())
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody()
-                .get("roles", String[].class);
+                .get("roles", ArrayList.class);
+
+        String[] roles = new String[list.size()];
+        int i = 0;
+        for (Object o : list) {
+            if (!(o instanceof String)) {
+                throw new SignatureException("'roles' element is not a string");
+            }
+            roles[i++] = (String) o;
+        }
+
+        return roles;
     }
 }
