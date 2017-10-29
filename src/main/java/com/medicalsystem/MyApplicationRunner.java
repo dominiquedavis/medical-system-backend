@@ -24,9 +24,9 @@ public class MyApplicationRunner implements ApplicationRunner {
         log.info("Running initialization...");
 
         // Create forms, sections and field from properties file
-        initializer.runInitialConfiguration();
+        //initializer.runInitialConfiguration();
 
         // Run import
-        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
+        //excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
     }
 }

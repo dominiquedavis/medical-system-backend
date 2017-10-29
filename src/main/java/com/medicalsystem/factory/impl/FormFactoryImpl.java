@@ -35,6 +35,7 @@ public class FormFactoryImpl implements FormFactory {
 
         Form form = new Form();
         form.setName(propertiesForm.getName());
+        form.setType(propertiesForm.getType());
         form.setExcelSheetIndex(propertiesForm.getIndex());
         form.setSections(sectionFactory.fromProperties(propertiesForm.getSections()));
         form.getSections().forEach(section -> section.setForm(form));

@@ -24,6 +24,9 @@ public class FormProperties {
         private String name;
 
         @Getter @Setter
+        private String type;
+
+        @Getter @Setter
         private int index;
 
         @Getter @Setter
