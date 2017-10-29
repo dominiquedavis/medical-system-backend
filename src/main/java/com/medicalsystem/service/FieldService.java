@@ -12,4 +12,5 @@ public interface FieldService extends CRUDService<Field, Long> {
 
     Map<Integer, Field> getExcelColumnIndexToFieldMap(Form form);
 
+    int getNextExcelColumnIndex(Form form);
 }

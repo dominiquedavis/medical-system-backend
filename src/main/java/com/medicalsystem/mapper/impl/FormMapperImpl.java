@@ -30,4 +30,9 @@ public class FormMapperImpl implements FormMapper {
                 .sections(sectionMapper.toJSONs(form.getSections()))
                 .build();
     }
+
+    @Override
+    public Form fromJSON(JSONForm jsonForm) {
+        return null;
+    }
 }

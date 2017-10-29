@@ -38,6 +38,11 @@ public class FieldServiceImpl implements FieldService {
     }
 
     @Override
+    public int getNextExcelColumnIndex(Form form) {
+        return fieldRepository.findMaxExcelColumnIndexByForm(form) + 1;
+    }
+
+    @Override
     public Field getById(Long id) {
         return fieldRepository.findOne(id);
     }

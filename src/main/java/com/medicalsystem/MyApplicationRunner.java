@@ -33,13 +33,13 @@ public class MyApplicationRunner implements ApplicationRunner {
         createAccount("user", "user", false);
 
         // Create forms, sections and field from properties file
-        initializer.runInitialConfiguration();
+        //initializer.runInitialConfiguration();
 
         // Run import
-        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
+        //excelImporter.importToDatabase("data/baza2.xlsx", 10);
 
         // Run export
-        excelExporter.exportToFile("data/exported.xlsx");
+        //excelExporter.exportToFile("data/exported.xlsx");
     }
 
     private void createAccount(String username, String password, boolean admin) {

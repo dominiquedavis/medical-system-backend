@@ -30,4 +30,12 @@ public class SectionMapperImpl implements SectionMapper {
                 .fields(fieldMapper.toJSONs(section.getFields()))
                 .build();
     }
+
+    @Override
+    public Section fromJSON(JSONSection jsonSection) {
+        Section section = new Section();
+        section.setId(jsonSection.getId());
+        section.setName(jsonSection.getName());
+        return section;
+    }
 }

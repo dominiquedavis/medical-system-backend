@@ -2,6 +2,7 @@ package com.medicalsystem.mapper.impl;
 
 import com.medicalsystem.mapper.FieldMapper;
 import com.medicalsystem.model.Field;
+import com.medicalsystem.model.FieldType;
 import com.medicalsystem.model.json.JSONField;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,15 @@ public class FieldMapperImpl implements FieldMapper {
                 .values(null)
                 .possibleValues(null)
                 .build();
+    }
+
+    @Override
+    public Field fromJSON(JSONField jsonField) {
+        Field field = new Field();
+        field.setName(jsonField.getName());
+        field.setType(FieldType.valueOf(jsonField.getType()));
+        // TODO
+        //field.setPossibleValues();
+        return field;
     }
 }

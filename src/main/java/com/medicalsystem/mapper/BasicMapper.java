@@ -8,4 +8,6 @@ public interface BasicMapper<T, U> {
 
     U toJSON(T t);
 
+    T fromJSON(U u);
+
 }
