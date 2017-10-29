@@ -45,19 +45,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         // Run export
         excelExporter.exportToFile("data/exported.xlsx");
-
-        formService.getAll().forEach(form -> {
-            System.out.println(form.getId());
-            System.out.println(form.getName());
-            System.out.println(form.getSections().size());
-            System.out.println();
-        });
-
-        Form form = patientService.getById(385L).getForm();
-        System.out.println(form.getName());
-        System.out.println(form.getId());
-        System.out.println(form.getSections().size());
-        form.getSections().forEach(s -> System.out.println(s.getId()));
     }
 
     private void createAccount(String username, String password, boolean admin) {
