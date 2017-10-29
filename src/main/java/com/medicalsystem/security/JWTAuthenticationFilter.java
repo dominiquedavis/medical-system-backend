@@ -1,7 +1,7 @@
 package com.medicalsystem.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medicalsystem.model.User;
+import com.medicalsystem.model.ApplicationUser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +32,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         try {
-            User credentials = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            ApplicationUser credentials = new ObjectMapper().readValue(request.getInputStream(), ApplicationUser.class);
 
             return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), new ArrayList<>())

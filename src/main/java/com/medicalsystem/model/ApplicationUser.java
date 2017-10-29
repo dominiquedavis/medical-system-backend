@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USERS")
-public class User extends IdComparableEntity {
+public class ApplicationUser extends IdComparableEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

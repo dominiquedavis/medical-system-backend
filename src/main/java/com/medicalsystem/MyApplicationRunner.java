@@ -2,8 +2,8 @@ package com.medicalsystem;
 
 import com.medicalsystem.excel.importer.ExcelImporter;
 import com.medicalsystem.init.Initializer;
-import com.medicalsystem.model.User;
-import com.medicalsystem.service.UserService;
+import com.medicalsystem.model.ApplicationUser;
+import com.medicalsystem.service.ApplicationUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     private final Initializer initializer;
     private final ExcelImporter excelImporter;
-    private final UserService userService;
+    private final ApplicationUserService userService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -30,14 +30,14 @@ public class MyApplicationRunner implements ApplicationRunner {
         createAdminAccount();
 
         // Create forms, sections and field from properties file
-        initializer.runInitialConfiguration();
+        //initializer.runInitialConfiguration();
 
         // Run import
-        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
+        //excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
     }
 
     private void createAdminAccount() {
-        User user = new User();
+        ApplicationUser user = new ApplicationUser();
         user.setUsername("admin");
         user.setPassword("admin");
         user.setAdmin(true);

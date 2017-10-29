@@ -1,7 +1,7 @@
 package com.medicalsystem.service.impl;
 
-import com.medicalsystem.model.User;
-import com.medicalsystem.service.UserService;
+import com.medicalsystem.model.ApplicationUser;
+import com.medicalsystem.service.ApplicationUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final ApplicationUserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
+        ApplicationUser user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);

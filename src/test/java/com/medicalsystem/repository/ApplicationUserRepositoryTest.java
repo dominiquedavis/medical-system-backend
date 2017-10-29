@@ -1,6 +1,6 @@
 package com.medicalsystem.repository;
 
-import com.medicalsystem.model.User;
+import com.medicalsystem.model.ApplicationUser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,39 +15,39 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserRepositoryTest {
+public class ApplicationUserRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private ApplicationUserRepository applicationUserRepository;
 
     private long id;
 
     @Test
     public void test_autowire() {
-        assertNotNull(userRepository);
+        assertNotNull(applicationUserRepository);
     }
 
     @Before
     public void setup() {
-        User user = new User();
+        ApplicationUser user = new ApplicationUser();
         user.setUsername("mikolaj");
-        user = userRepository.save(user);
+        user = applicationUserRepository.save(user);
         id = user.getId();
     }
 
     @After
     public void tearDown() {
-        userRepository.delete(id);
+        applicationUserRepository.delete(id);
     }
 
     @Test
     public void test_existsByUsername() {
-        assertTrue(userRepository.existsByUsername("mikolaj"));
+        assertTrue(applicationUserRepository.existsByUsername("mikolaj"));
     }
 
     @Test
     public void test_findByUsername() {
-        User user = userRepository.findByUsername("mikolaj");
+        ApplicationUser user = applicationUserRepository.findByUsername("mikolaj");
         assertEquals(id, user.getId());
     }
 }
