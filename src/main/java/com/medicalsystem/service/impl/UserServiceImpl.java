@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
         encryptPassword(user);
         save(user);
 
+        log.info("User registered: " + user.getUsername());
         return true;
     }
 
