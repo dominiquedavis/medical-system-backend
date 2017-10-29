@@ -14,9 +14,9 @@ public class User extends IdComparableEntity {
     @Getter @Setter
     private long id;
 
-    @Column(name = "FULLNAME")
+    @Column(name = "FULL_NAME")
     @Getter @Setter
-    private String fullname;
+    private String fullName;
 
     @Column(name = "EMAIL")
     @Getter @Setter
