@@ -3,8 +3,10 @@ package com.medicalsystem.util;
 import lombok.extern.java.Log;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 @Log
 public final class DateUtils {
@@ -31,5 +33,12 @@ public final class DateUtils {
         }
 
         return date;
+    }
+
+    public static Date toUtilDate(LocalDate localDate) {
+        if (localDate == null) {
+            return null;
+        }
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }

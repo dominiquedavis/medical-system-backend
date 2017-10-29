@@ -33,6 +33,7 @@ public class Form extends IdComparableEntity {
 
     @OneToMany(
             mappedBy = "form",
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

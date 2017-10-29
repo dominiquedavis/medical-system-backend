@@ -1,6 +1,7 @@
 package com.medicalsystem.model.fieldvalue;
 
 import lombok.extern.java.Log;
+import org.apache.poi.ss.usermodel.Cell;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -15,19 +16,16 @@ public class SelectFieldValue extends FieldValue<String> {
     @Column(name = "VALUE")
     @Override
     public String getValue() {
-        Map<String, String> possibleValues = getField().getPossibleValues();
-        String selectedKey = super.getValue();
-        return possibleValues.get(selectedKey);
+        return super.getValue();
     }
 
     @Override
     public void setValueFromString(String str) {
-        str = str.trim();
-        Map<String, String> possibleValues = getField().getPossibleValues();
-        String value = possibleValues.get(str);
-        if (value == null) {
-            log.severe(String.format("[%s] Value not found for a given key: %s", getField().getName(), str));
-        }
-        super.setValue(value);
+        super.setValue(str.trim());
+    }
+
+    @Override
+    protected void createCellValue(Cell cell) {
+        cell.setCellValue(getValue());
     }
 }

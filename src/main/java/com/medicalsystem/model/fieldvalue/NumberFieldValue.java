@@ -1,6 +1,8 @@
 package com.medicalsystem.model.fieldvalue;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
 
@@ -24,5 +26,10 @@ public class NumberFieldValue extends FieldValue<Double> {
         } else {
             super.setValue(-1.0);
         }
+    }
+
+    @Override
+    protected void createCellValue(Cell cell) {
+        cell.setCellValue(getValue());
     }
 }

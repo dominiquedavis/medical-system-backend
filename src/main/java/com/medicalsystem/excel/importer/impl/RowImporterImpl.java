@@ -38,7 +38,7 @@ public class RowImporterImpl implements RowImporter {
 
         Patient patient;
         try {
-            patient = createPatient(cellIterator.next());
+            patient = createPatient(cellIterator.next(), form);
         } catch (NumberFormatException e) {
             log.severe("Patient ID is not an integer in a row: " + row.getRowNum() + " - patient not saved");
             return;
@@ -53,14 +53,17 @@ public class RowImporterImpl implements RowImporter {
         }
     }
 
-    private Patient createPatient(Cell idCell) throws NumberFormatException, EntityExistsException {
+    private Patient createPatient(Cell idCell, Form form) throws NumberFormatException, EntityExistsException {
         String stringValue = ExcelUtils.getValueAsString(idCell);
         long patientId = Long.parseLong(stringValue);
 
         if (patientService.existsById(patientId)) {
             throw new EntityExistsException("Patient exists with ID: " + patientId);
         } else {
-            return patientService.save(new Patient(patientId));
+            Patient patient = new Patient();
+            patient.setId(patientId);
+            patient.setForm(form);
+            return patientService.save(patient);
         }
     }
 }

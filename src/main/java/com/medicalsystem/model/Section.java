@@ -29,6 +29,7 @@ public class Section extends IdComparableEntity {
 
     @OneToMany(
             mappedBy = "section",
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

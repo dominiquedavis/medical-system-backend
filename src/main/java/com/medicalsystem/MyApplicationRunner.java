@@ -1,5 +1,6 @@
 package com.medicalsystem;
 
+import com.medicalsystem.excel.exporter.ExcelExporter;
 import com.medicalsystem.excel.importer.ExcelImporter;
 import com.medicalsystem.init.Initializer;
 import com.medicalsystem.model.ApplicationUser;
@@ -20,6 +21,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     private final Initializer initializer;
     private final ExcelImporter excelImporter;
+    private final ExcelExporter excelExporter;
     private final ApplicationUserService userService;
 
     @Override
@@ -35,6 +37,9 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         // Run import
         excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
+
+        // Run export
+        excelExporter.exportToFile("data/exported.xlsx");
     }
 
     private void createAccount(String username, String password, boolean admin) {

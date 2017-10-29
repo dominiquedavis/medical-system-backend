@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.Form;
 import com.medicalsystem.model.Patient;
 import com.medicalsystem.repository.PatientRepository;
 import com.medicalsystem.service.PatientService;
@@ -22,6 +23,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> getAll() {
         return patientRepository.findAll();
+    }
+
+    @Override
+    public List<Patient> getAllByForm(Form form) {
+        return patientRepository.findAllByForm(form);
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.medicalsystem.model.IdComparableEntity;
 import com.medicalsystem.model.Patient;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.*;
 
@@ -33,4 +35,11 @@ public abstract class FieldValue<T> extends IdComparableEntity {
 
 
     public abstract void setValueFromString(String str);
+
+    public void createCell(Row row){
+        Cell cell = row.createCell(getField().getExcelColumnIndex());
+        createCellValue(cell);
+    }
+
+    protected abstract void createCellValue(Cell cell);
 }

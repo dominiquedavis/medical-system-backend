@@ -1,5 +1,7 @@
 package com.medicalsystem.model.fieldvalue;
 
+import org.apache.poi.ss.usermodel.Cell;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,5 +19,10 @@ public class TextFieldValue extends FieldValue<String> {
     @Override
     public void setValueFromString(String str) {
         super.setValue(str.trim());
+    }
+
+    @Override
+    protected void createCellValue(Cell cell) {
+        cell.setCellValue(getValue());
     }
 }

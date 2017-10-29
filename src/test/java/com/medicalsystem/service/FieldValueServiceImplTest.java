@@ -1,7 +1,9 @@
 package com.medicalsystem.service;
 
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.fieldvalue.DateFieldValue;
 import com.medicalsystem.model.fieldvalue.FieldValue;
+import com.medicalsystem.model.fieldvalue.SelectFieldValue;
 import com.medicalsystem.model.fieldvalue.TextFieldValue;
 import com.medicalsystem.service.impl.FieldValueServiceImpl;
 import org.junit.Test;
@@ -21,6 +23,9 @@ public class FieldValueServiceImplTest {
 
     @Autowired
     private FieldValueServiceImpl fieldValueService;
+
+    @Autowired
+    private PatientService patientService;
 
     @Test
     public void test_autowire() {
@@ -94,4 +99,26 @@ public class FieldValueServiceImplTest {
         assertEquals(2, fieldValues.size());
     }
 
+    @Test
+    public void test_getAllByPatient() {
+        fieldValueService.getAll().forEach(fv -> fieldValueService.deleteById(fv.getId()));
+
+        Patient patient = patientService.save(new Patient());
+
+        TextFieldValue textFieldValue = new TextFieldValue();
+        textFieldValue.setPatient(patient);
+
+        DateFieldValue dateFieldValue = new DateFieldValue();
+        dateFieldValue.setPatient(patient);
+
+        SelectFieldValue selectFieldValue = new SelectFieldValue();
+        selectFieldValue.setPatient(null);
+
+        fieldValueService.save(textFieldValue);
+        fieldValueService.save(dateFieldValue);
+
+        assertEquals(2, fieldValueService.getAllByPatient(patient).size());
+
+        fieldValueService.getAll().forEach(fv -> fieldValueService.deleteById(fv.getId()));
+    }
 }

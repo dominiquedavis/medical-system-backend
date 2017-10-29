@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl;
 
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.fieldvalue.FieldValue;
 import com.medicalsystem.repository.fieldvalue.FieldValueRepository;
 import com.medicalsystem.service.FieldValueService;
@@ -34,6 +35,14 @@ public class FieldValueServiceImpl implements FieldValueService {
     public List<FieldValue<?>> getAll() {
         return subClassRepositories.stream()
                 .map(JpaRepository::findAll)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FieldValue<?>> getAllByPatient(Patient patient) {
+        return subClassRepositories.stream()
+                .map(repository -> repository.findAllByPatient(patient))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
