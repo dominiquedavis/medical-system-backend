@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 
 public interface ExcelImporter {
 
-    void importToDatabase(FileInputStream excelFileStream);
+    void importToDatabase(String excelFileName);
 
-    void importToDatabase(FileInputStream excelFileStream, int rowsToImport);
+    void importToDatabase(String excelFileName, int rowsToImport);
 
 }

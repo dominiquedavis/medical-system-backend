@@ -23,22 +23,22 @@ public class ExcelImporterImpl implements ExcelImporter {
     private final SheetImporter sheetImporter;
 
     @Override
-    public void importToDatabase(FileInputStream excelFileStream) {
-        importHelper(excelFileStream, -1);
+    public void importToDatabase(String excelFileName) {
+        importHelper(excelFileName, -1);
     }
 
     @Override
-    public void importToDatabase(FileInputStream excelFileStream, int rowsToImport) {
-        importHelper(excelFileStream, rowsToImport);
+    public void importToDatabase(String excelFileName, int rowsToImport) {
+        importHelper(excelFileName, rowsToImport);
     }
 
-    private void importHelper(FileInputStream excelFileStream, int rowsToImport) {
+    private void importHelper(String excelFileName, int rowsToImport) {
         Workbook workbook;
         try {
-            workbook = ExcelUtils.loadWorkbook(excelFileStream);
+            workbook = ExcelUtils.loadWorkbook(excelFileName);
         } catch (IOException e) {
             log.severe(e.getMessage());
-            log.severe("File not imported: " + excelFileStream.toString());
+            log.severe("File not imported: " + excelFileName);
             return;
         }
 

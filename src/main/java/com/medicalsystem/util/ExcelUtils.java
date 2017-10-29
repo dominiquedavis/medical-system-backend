@@ -14,8 +14,8 @@ public final class ExcelUtils {
 
     private ExcelUtils() {}
 
-    public static Workbook loadWorkbook(FileInputStream excelFileStream) throws IOException {
-        return new XSSFWorkbook(excelFileStream);
+    public static Workbook loadWorkbook(String excelFileName) throws IOException {
+        return new XSSFWorkbook(new FileInputStream(excelFileName));
     }
 
     public static String getValueAsString(Cell cell) {
