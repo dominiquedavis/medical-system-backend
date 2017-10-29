@@ -1,5 +1,8 @@
 package com.medicalsystem.service;
 
+import com.medicalsystem.excel.importer.ExcelImporter;
+import com.medicalsystem.init.Initializer;
+import com.medicalsystem.model.Field;
 import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.fieldvalue.DateFieldValue;
 import com.medicalsystem.model.fieldvalue.FieldValue;
@@ -26,6 +29,18 @@ public class FieldValueServiceImplTest {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private Initializer initializer;
+
+    @Autowired
+    private FormService formService;
+
+    @Autowired
+    private ExcelImporter excelImporter;
+
+    @Autowired
+    private FieldService fieldService;
 
     @Test
     public void test_autowire() {
@@ -120,5 +135,20 @@ public class FieldValueServiceImplTest {
         assertEquals(2, fieldValueService.getAllByPatient(patient).size());
 
         fieldValueService.getAll().forEach(fv -> fieldValueService.deleteById(fv.getId()));
+    }
+
+    @Test
+    public void test_getByPatientAndField() {
+        initializer.runInitialConfiguration();
+        excelImporter.importToDatabase("data/baza2.xslx");
+
+        Patient patient = patientService.getById(1L);
+        Field field = fieldService.getById(3L);
+
+        FieldValue<?> fieldValue = fieldValueService.getByPatientAndField(patient, field);
+        //assertNotNull(fieldValue);
+
+        fieldValueService.getAll().forEach(fv -> fieldValueService.deleteById(fv.getId()));
+        formService.getAll().forEach(form -> formService.deleteById(form.getId()));
     }
 }

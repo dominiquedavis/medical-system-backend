@@ -9,5 +9,6 @@ import java.util.List;
 public interface FormService extends CRUDService<Form, Long> {
     Form getByExcelSheetIndex(int excelSheetIndex);
     List<JSONForm> getAllAsJSON();
+    JSONForm getJSONFormByPatientId(long patientId);
     void addSection(long formId, JSONSection jsonSection);
 }

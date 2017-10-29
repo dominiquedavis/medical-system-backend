@@ -4,7 +4,10 @@ import com.medicalsystem.excel.exporter.ExcelExporter;
 import com.medicalsystem.excel.importer.ExcelImporter;
 import com.medicalsystem.init.Initializer;
 import com.medicalsystem.model.ApplicationUser;
+import com.medicalsystem.model.Form;
 import com.medicalsystem.service.ApplicationUserService;
+import com.medicalsystem.service.FormService;
+import com.medicalsystem.service.PatientService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class MyApplicationRunner implements ApplicationRunner {
     private final ExcelImporter excelImporter;
     private final ExcelExporter excelExporter;
     private final ApplicationUserService userService;
+    private final FormService formService;
+    private final PatientService patientService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -33,13 +38,26 @@ public class MyApplicationRunner implements ApplicationRunner {
         createAccount("user", "user", false);
 
         // Create forms, sections and field from properties file
-        //initializer.runInitialConfiguration();
+        initializer.runInitialConfiguration();
 
         // Run import
-        //excelImporter.importToDatabase("data/baza2.xlsx", 10);
+        excelImporter.importToDatabase("data/baza2.xlsx", 10);
 
         // Run export
-        //excelExporter.exportToFile("data/exported.xlsx");
+        excelExporter.exportToFile("data/exported.xlsx");
+
+        formService.getAll().forEach(form -> {
+            System.out.println(form.getId());
+            System.out.println(form.getName());
+            System.out.println(form.getSections().size());
+            System.out.println();
+        });
+
+        Form form = patientService.getById(385L).getForm();
+        System.out.println(form.getName());
+        System.out.println(form.getId());
+        System.out.println(form.getSections().size());
+        form.getSections().forEach(s -> System.out.println(s.getId()));
     }
 
     private void createAccount(String username, String password, boolean admin) {

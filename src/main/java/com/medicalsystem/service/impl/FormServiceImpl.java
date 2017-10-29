@@ -3,12 +3,14 @@ package com.medicalsystem.service.impl;
 import com.medicalsystem.mapper.FormMapper;
 import com.medicalsystem.mapper.SectionMapper;
 import com.medicalsystem.model.Form;
+import com.medicalsystem.model.Patient;
 import com.medicalsystem.model.Section;
 import com.medicalsystem.model.json.JSONField;
 import com.medicalsystem.model.json.JSONForm;
 import com.medicalsystem.model.json.JSONSection;
 import com.medicalsystem.repository.FormRepository;
 import com.medicalsystem.service.FormService;
+import com.medicalsystem.service.PatientService;
 import com.medicalsystem.service.SectionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -28,6 +30,7 @@ public class FormServiceImpl implements FormService {
     private final FormMapper formMapper;
     private final SectionMapper sectionMapper;
     private final SectionService sectionService;
+    private final PatientService patientService;
 
     @Override
     public List<Form> getAll() {
@@ -53,6 +56,16 @@ public class FormServiceImpl implements FormService {
         save(form);
 
         log.info("Section added: " + jsonSection.getName());
+    }
+
+    @Override
+    public JSONForm getJSONFormByPatientId(long patientId) {
+        Patient patient = patientService.getById(patientId);
+        if (patient == null) {
+            log.severe("Patient not found with ID: " + patientId);
+            return JSONForm.builder().build();
+        }
+        return formMapper.toJSON(patient.getForm(), patient);
     }
 
     @Override

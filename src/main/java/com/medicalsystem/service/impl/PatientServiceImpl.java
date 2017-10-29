@@ -49,4 +49,17 @@ public class PatientServiceImpl implements PatientService {
     public void deleteById(Long id) {
         patientRepository.delete(id);
     }
+
+    @Override
+    public boolean create(long patientId) {
+        if (existsById(patientId)) {
+            log.severe("Patient exists with ID: " + patientId);
+            return false;
+        }
+        Patient patient = new Patient();
+        patient.setId(patientId);
+        save(patient);
+        log.info("Patient created: " + patientId);
+        return true;
+    }
 }

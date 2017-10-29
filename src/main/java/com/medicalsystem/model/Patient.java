@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(
-        name = "PATIENT",
+        name = "PATIENTS",
         indexes = { @Index(name = "ID_INDEX", columnList = "ID", unique = true) }
 )
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class Patient extends IdComparableEntity {
     @Getter @Setter
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FORM_ID")
     @Getter @Setter
     private Form form;
