@@ -50,6 +50,48 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
+    public boolean updateStatus(long userId, String status) {
+        ApplicationUser user = getById(userId);
+
+        if (user == null) {
+            log.info("User not found with ID: " + userId);
+            return false;
+        }
+
+        user.setStatus(status);
+        save(user);
+
+        log.info(String.format("Status updated for user '%d': '%s'", userId, status));
+        return true;
+    }
+
+    @Override
+    public boolean updateAdminRights(long userId, boolean admin) {
+        ApplicationUser user = getById(userId);
+
+        if (user == null) {
+            log.info("User not found with ID: " + userId);
+            return false;
+        }
+
+        user.setAdmin(admin);
+        save(user);
+
+        log.info(String.format("Admin rights set to '%b' for user: '%d'", admin, userId));
+        return true;
+    }
+
+    @Override
+    public boolean delete(long userId) {
+        if (existsById(userId)) {
+            log.info("User not found with ID: " + userId);
+            return false;
+        }
+        deleteById(userId);
+        return true;
+    }
+
+    @Override
     public List<ApplicationUser> getAll() {
         return applicationUserRepository.findAll();
     }
