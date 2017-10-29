@@ -6,10 +6,14 @@ import com.medicalsystem.service.ApplicationUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -24,14 +28,14 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     @Override
     public boolean register(ApplicationUser user) {
         if (existsByUsername(user.getUsername())) {
-            log.info("ApplicationUser exists with a given username: " + user.getUsername());
+            log.info("User exists with a given username: " + user.getUsername());
             return false;
         }
 
         encryptPassword(user);
         save(user);
 
-        log.info("ApplicationUser registered: " + user.getUsername());
+        log.info("User registered: " + user.getUsername());
         return true;
     }
 
@@ -41,7 +45,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     }
 
     @Override
-    public ApplicationUser findByUsername(String username) {
+    public ApplicationUser getByUsername(String username) {
         return applicationUserRepository.findByUsername(username);
     }
 

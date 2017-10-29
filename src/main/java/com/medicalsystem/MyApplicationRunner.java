@@ -26,21 +26,22 @@ public class MyApplicationRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("Running initialization...");
 
-        // Create admin account
-        createAdminAccount();
+        // Create accounts
+        createAccount("admin", "admin", true);
+        createAccount("user", "user", false);
 
         // Create forms, sections and field from properties file
-        //initializer.runInitialConfiguration();
+        initializer.runInitialConfiguration();
 
         // Run import
-        //excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
+        excelImporter.importToDatabase(new FileInputStream("data/baza2.xlsx"), 10);
     }
 
-    private void createAdminAccount() {
+    private void createAccount(String username, String password, boolean admin) {
         ApplicationUser user = new ApplicationUser();
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAdmin(true);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setAdmin(admin);
         userService.register(user);
     }
 }

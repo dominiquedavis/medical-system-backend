@@ -1,6 +1,8 @@
 package com.medicalsystem.security;
 
+import com.medicalsystem.util.RoleUtils;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,11 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import static com.medicalsystem.security.SecurityConstants.HEADER_STRING;
-import static com.medicalsystem.security.SecurityConstants.SECRET;
-import static com.medicalsystem.security.SecurityConstants.TOKEN_PREFIX;
+import static com.medicalsystem.security.SecurityConstants.*;
 
 @Log
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -48,17 +47,31 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return null;
         }
 
-        String user = null;
+        String subject = null;
+        String[] roles = new String[0];
         try {
-            user = Jwts.parser()
-                    .setSigningKey(SECRET.getBytes())
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject();
-        } catch (Exception e) {
+            subject = getSubject(token);
+            roles = getRoles(token);
+        } catch (SignatureException e) {
             log.warning("Login denied: " + e.getMessage());
         }
 
-        return (user == null) ? null : new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        return (subject == null) ? null : new UsernamePasswordAuthenticationToken(subject, null, RoleUtils.getAuthorities(roles));
+    }
+
+    private String getSubject(String token) throws SignatureException {
+        return Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
+    }
+
+    private String[] getRoles(String token) throws SignatureException {
+        return Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .get("roles", String[].class);
     }
 }

@@ -2,11 +2,13 @@ package com.medicalsystem.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medicalsystem.model.ApplicationUser;
+import com.medicalsystem.util.RoleUtils;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -35,7 +37,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ApplicationUser credentials = new ObjectMapper().readValue(request.getInputStream(), ApplicationUser.class);
 
             return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), new ArrayList<>())
+                new UsernamePasswordAuthenticationToken(
+                        credentials.getUsername(),
+                        credentials.getPassword(),
+                        new ArrayList<>()
+                )
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -45,8 +51,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
+        User principal = (User) authResult.getPrincipal();
+
         String token = Jwts.builder()
-                .setSubject(((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername())
+                .setSubject(principal.getUsername())
+                .claim("roles", RoleUtils.getRoles(principal.getAuthorities()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SIGNATURE_ALGORITHM, SECRET.getBytes())
                 .compact();
