@@ -18,7 +18,7 @@ public class TextFieldValue extends FieldValue<String> {
 
     @Override
     public void setValueFromString(String str) {
-        super.setValue(str.trim());
+        super.setValue(str);
     }
 
     @Override

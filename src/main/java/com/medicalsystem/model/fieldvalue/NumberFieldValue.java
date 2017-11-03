@@ -20,12 +20,8 @@ public class NumberFieldValue extends FieldValue<Double> {
 
     @Override
     public void setValueFromString(String str) {
-        str = str.trim();
-        if (NumberUtils.isCreatable(str)) {
-            super.setValue(Double.parseDouble(str));
-        } else {
-            super.setValue(-1.0);
-        }
+        Double value = NumberUtils.isCreatable(str) ? Double.parseDouble(str) : -1;
+        super.setValue(value);
     }
 
     @Override

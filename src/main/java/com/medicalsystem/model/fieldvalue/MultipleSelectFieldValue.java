@@ -28,7 +28,6 @@ public class MultipleSelectFieldValue extends FieldValue<List<String>> {
 
     @Override
     public void setValueFromString(String str) {
-        str = str.trim();
         List<String> values = new ArrayList<>();
 
         if (str.endsWith("11")) {

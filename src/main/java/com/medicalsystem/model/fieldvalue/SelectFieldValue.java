@@ -4,7 +4,6 @@ import lombok.extern.java.Log;
 import org.apache.poi.ss.usermodel.Cell;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity
 @Table(name = "SELECT_FIELD_VALUES")
@@ -21,7 +20,11 @@ public class SelectFieldValue extends FieldValue<String> {
 
     @Override
     public void setValueFromString(String str) {
-        super.setValue(str.trim());
+        if (getField().getPossibleValues().containsKey(str)) {
+            super.setValue(str);
+        } else {
+            super.setValue(null);
+        }
     }
 
     @Override

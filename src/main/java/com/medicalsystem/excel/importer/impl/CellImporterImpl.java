@@ -35,7 +35,7 @@ public class CellImporterImpl implements CellImporter {
         FieldValue<?> fieldValue = fieldValueFactory.fromFieldType(field.getType());
         fieldValue.setPatient(patient);
         fieldValue.setField(field);
-        fieldValue.setValueFromString(ExcelUtils.getValueAsString(cell));
+        fieldValue.setValueFromString(ExcelUtils.getValueAsString(cell).trim());
 
         fieldValueService.save(fieldValue);
 
