@@ -14,10 +14,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Patient extends IdComparableEntity {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     @Getter @Setter
     private long id;
+
+    @Column(name = "PATIENT_ID", unique = true)
+    @Getter @Setter
+    private String patientId;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FORM_ID")

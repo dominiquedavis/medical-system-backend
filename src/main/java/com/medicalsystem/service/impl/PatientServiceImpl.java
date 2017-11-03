@@ -41,6 +41,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public boolean existsByPatientId(String patientId) {
+        return patientRepository.existsByPatientId(patientId);
+    }
+
+    @Override
     public Patient save(Patient patient) {
         return patientRepository.save(patient);
     }
@@ -51,13 +56,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public boolean create(long patientId) {
-        if (existsById(patientId)) {
+    public boolean create(String patientId) {
+        if (existsByPatientId(patientId)) {
             log.severe("Patient exists with ID: " + patientId);
             return false;
         }
         Patient patient = new Patient();
-        patient.setId(patientId);
+        patient.setPatientId(patientId);
         save(patient);
         log.info("Patient created: " + patientId);
         return true;

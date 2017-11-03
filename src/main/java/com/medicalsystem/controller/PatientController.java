@@ -22,7 +22,7 @@ public class PatientController {
 
     // TODO: Potrzebna dodatkowa informacja o formie pacjenta
     @PostMapping("{patientId}")
-    public boolean createPatient(@PathVariable long patientId) {
+    public boolean createPatient(@PathVariable String patientId) {
         return patientService.create(patientId);
     }
 
