@@ -31,4 +31,11 @@ class ApplicationUserServiceImplTest {
         val saved = applicationUserService.save(user)
         Assert.assertTrue(saved.id > 0)
     }
+
+    @Test
+    fun testRegister() {
+        val user = ApplicationUser(username = "fifi", email = "fifi@gmail.com")
+        Assert.assertTrue(applicationUserService.register(user))
+        Assert.assertFalse(applicationUserService.register(user))
+    }
 }

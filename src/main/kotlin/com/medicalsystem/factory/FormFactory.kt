@@ -15,6 +15,5 @@ object FormFactory : FromPropertiesFactory<PropForm, Form> {
         return form
     }
 
-    override fun createFromProperties(t: List<PropForm>): List<Form> =
-            t.map(this::createFromProperties)
+    override fun createFromProperties(t: List<PropForm>): List<Form> = t.map(this::createFromProperties)
 }

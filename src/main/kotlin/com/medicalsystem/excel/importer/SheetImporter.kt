@@ -16,13 +16,14 @@ class SheetImporter @Autowired constructor(
         val formService: FormService,
         val fieldService: FieldService) {
 
-    val NUMBER_OF_HEADER_ROWS = 2
+    val numberOfHeaderRows = 2
 
     fun importToDatabase(sheet: Sheet) {
         val sheetIndex: Int = sheet.workbook.getSheetIndex(sheet)
-        val form: Form = formService.getBySheetIndex(sheetIndex) ?: throw ExcelImportException("No form with sheet index: $sheetIndex")
+        val form: Form = formService.getBySheetIndex(sheetIndex) ?:
+                throw ExcelImportException("No form with sheet index: $sheetIndex")
 
-        if (sheet.physicalNumberOfRows <= NUMBER_OF_HEADER_ROWS) {
+        if (sheet.physicalNumberOfRows <= numberOfHeaderRows) {
             logger().warn("Sheet contains no data rows: ${sheet.sheetName}")
             return
         }
@@ -31,8 +32,15 @@ class SheetImporter @Autowired constructor(
 
         sheet.rowIterator()
                 .asSequence()
-                .drop(NUMBER_OF_HEADER_ROWS)
-                .forEach { rowImporter.importToDatabase(it, form, fields, getMaxNumberOfCells(sheet)) }
+                .drop(numberOfHeaderRows)
+                .forEach {
+                    try {
+                        rowImporter.importToDatabase(it, form, fields, getMaxNumberOfCells(sheet))
+                    }  catch (e: ExcelImportException) {
+                        logger().error(e)
+                        logger().warn("Skipping row ${it.sheet.indexOf(it)}")
+                    }
+                }
     }
 
     private fun getMaxNumberOfCells(sheet: Sheet): Int {

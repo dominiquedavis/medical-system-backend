@@ -13,6 +13,5 @@ object FieldFactory : FromPropertiesFactory<PropField, Field> {
                     possibleValues = t.options.associateBy({ it.key }, { it.`val` })
             )
 
-    override fun createFromProperties(t: List<PropField>): List<Field> =
-            t.map(this::createFromProperties)
+    override fun createFromProperties(t: List<PropField>): List<Field> = t.map(this::createFromProperties)
 }

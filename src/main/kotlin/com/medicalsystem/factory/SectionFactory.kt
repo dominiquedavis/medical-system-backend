@@ -15,6 +15,5 @@ object SectionFactory : FromPropertiesFactory<PropSection, Section> {
         return section
     }
 
-    override fun createFromProperties(t: List<PropSection>): List<Section> =
-            t.map(this::createFromProperties)
+    override fun createFromProperties(t: List<PropSection>): List<Section> = t.map(this::createFromProperties)
 }
