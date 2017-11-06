@@ -14,7 +14,7 @@ class UserDetailsServiceImpl @Autowired constructor(val userService: Application
 
     override fun loadUserByUsername(username: String): UserDetails {
         val user: ApplicationUser? = userService.getByUsername(username)
-        user?.let { return User(user.username, user.password, emptyList()) }
+        user?.let { return User(user.username, user.password, user.getAuthorities()) }
         throw UsernameNotFoundException(username)
     }
 }

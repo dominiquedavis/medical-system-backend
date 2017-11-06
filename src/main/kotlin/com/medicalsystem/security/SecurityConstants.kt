@@ -8,6 +8,6 @@ object SecurityConstants {
     val SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256
     val TOKEN_PREFIX = "Bearer "
     val HEADER_STRING = "Authorization"
-    val LOGIN_URL = "api/auth/login"
-    val REGISTER_URL = "api/auth/register"
+    val LOGIN_URL = "/api/auth/login"
+    val REGISTER_URL = "/api/auth/register"
 }

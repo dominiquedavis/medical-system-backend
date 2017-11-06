@@ -3,9 +3,12 @@ package com.medicalsystem.security
 import com.medicalsystem.security.SecurityConstants.HEADER_STRING
 import com.medicalsystem.security.SecurityConstants.SECRET
 import com.medicalsystem.security.SecurityConstants.TOKEN_PREFIX
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import javax.servlet.FilterChain
@@ -28,15 +31,31 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token: String? = request.getHeader(HEADER_STRING)
         token?.let {
-            val user: String? = Jwts.parser()
-                    .setSigningKey(SECRET.toByteArray())
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .body
-                    .subject
-            user?.let {
-                return UsernamePasswordAuthenticationToken(user, null, ArrayList())
+            try {
+                val subject: String? = getSubject(token)
+                val roles: List<String> = getRoles(token)
+                subject?.let {
+                    return UsernamePasswordAuthenticationToken(subject, null, roles.map { SimpleGrantedAuthority(it) })
+                }
+            } catch (e: SignatureException) {
+                logger.warn("Login denied: ${e.message}")
             }
         }
         return null
     }
+
+    private fun getSubject(token: String): String? =
+            getBody(token)
+                    .subject
+
+    private fun getRoles(token: String): List<String> =
+            getBody(token)
+                    .get("roles", ArrayList::class.java)
+                    .mapNotNull { it as? String }
+
+    private fun getBody(token: String): Claims =
+            Jwts.parser()
+                    .setSigningKey(SECRET.toByteArray())
+                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .body
 }

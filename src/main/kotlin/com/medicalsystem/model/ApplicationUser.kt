@@ -1,5 +1,7 @@
 package com.medicalsystem.model
 
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import javax.persistence.*
 
 @Entity
@@ -27,4 +29,12 @@ data class ApplicationUser(
 
         @Column(name = "ADMIN")
         var admin: Boolean = false
-)
+) {
+    fun getAuthorities(): List<GrantedAuthority> {
+        val authorities: MutableList<SimpleGrantedAuthority> = mutableListOf(SimpleGrantedAuthority("user"))
+        if (admin) {
+            authorities.add(SimpleGrantedAuthority("admin"))
+        }
+        return authorities
+    }
+}

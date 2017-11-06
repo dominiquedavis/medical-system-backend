@@ -49,6 +49,7 @@ class JWTAuthenticationFilter(private val authManager: AuthenticationManager) : 
 
         val token: String = Jwts.builder()
                 .setSubject(principal.username)
+                .claim("roles", principal.authorities.map { it.authority })
                 .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SIGNATURE_ALGORITHM, SECRET.toByteArray())
                 .compact()
