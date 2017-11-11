@@ -1,5 +1,6 @@
 package com.medicalsystem.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import javax.persistence.*
@@ -30,11 +31,11 @@ data class ApplicationUser(
         @Column(name = "ADMIN")
         var admin: Boolean = false
 ) {
-    fun getAuthorities(): List<GrantedAuthority> {
-        val authorities: MutableList<SimpleGrantedAuthority> = mutableListOf(SimpleGrantedAuthority("user"))
-        if (admin) {
-            authorities.add(SimpleGrantedAuthority("admin"))
-        }
-        return authorities
-    }
+    @JsonIgnore
+    fun getAuthorities(): List<GrantedAuthority> =
+            if (admin) {
+                listOf(SimpleGrantedAuthority("user"), SimpleGrantedAuthority("admin"))
+            } else {
+                listOf(SimpleGrantedAuthority("user"))
+            }
 }

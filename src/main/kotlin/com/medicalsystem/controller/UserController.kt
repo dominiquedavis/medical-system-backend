@@ -16,4 +16,5 @@ class UserController @Autowired constructor(val userService: ApplicationUserServ
 
     @PostMapping("api/auth/register")
     fun register(@RequestBody user: ApplicationUser): Boolean = userService.register(user)
+
 }
