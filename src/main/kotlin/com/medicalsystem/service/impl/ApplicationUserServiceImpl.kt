@@ -19,6 +19,31 @@ class ApplicationUserServiceImpl @Autowired constructor(
 
     override fun existsByUsername(username: String): Boolean = (getByUsername(username) != null)
 
+    override fun updateStatus(userId: Long, status: String): Boolean {
+        val user: ApplicationUser = getById(userId) ?: return false
+        user.status = status
+        save(user)
+        logger().info("Status updated for user ${user.username}: ${user.status}")
+        return true
+    }
+
+    override fun updateAdminRights(userId: Long, admin: Boolean): Boolean {
+        val user: ApplicationUser = getById(userId) ?: return false
+        user.admin = admin
+        save(user)
+        logger().info("Admin rights updated for user ${user.username}: ${user.status}")
+        return true
+    }
+
+    override fun deleteUser(userId: Long): Boolean =
+            if (exists(userId)) {
+                logger().info("User not found with ID: $userId")
+                false
+            } else {
+                delete(userId)
+                true
+            }
+
     override fun register(user: ApplicationUser): Boolean =
             if (!existsByUsername(user.username)) {
                 encryptPassword(user)
