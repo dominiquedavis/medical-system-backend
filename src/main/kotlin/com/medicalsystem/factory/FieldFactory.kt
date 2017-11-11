@@ -28,4 +28,12 @@ object FieldFactory : PropertiesFactory<PropField, Field>, DTOFactory<FieldDTO, 
                     values = null,
                     possibleValues = null
             )
+
+    override fun createEmptyFromDTO(ts: List<FieldDTO>): List<Field> {
+        TODO("not implemented")
+    }
+
+    override fun createEmptyFromDTO(t: FieldDTO): Field {
+        TODO("not implemented")
+    }
 }

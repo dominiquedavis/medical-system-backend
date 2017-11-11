@@ -28,4 +28,12 @@ object FormFactory : PropertiesFactory<PropForm, Form>, DTOFactory<FormDTO, Form
                     type = u.type,
                     sections = SectionFactory.createEmptyDTO(u.sections)
             )
+
+    override fun createEmptyFromDTO(ts: List<FormDTO>): List<Form> {
+        TODO("not implemented")
+    }
+
+    override fun createEmptyFromDTO(t: FormDTO): Form {
+        TODO("not implemented")
+    }
 }

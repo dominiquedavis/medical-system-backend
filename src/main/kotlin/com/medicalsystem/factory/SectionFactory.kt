@@ -28,4 +28,13 @@ object SectionFactory : PropertiesFactory<PropSection, Section>, DTOFactory<Sect
                     name = u.name,
                     fields = FieldFactory.createEmptyDTO(u.fields)
             )
+
+    override fun createEmptyFromDTO(ts: List<SectionDTO>): List<Section> =
+            ts.map { createEmptyFromDTO(it) }
+
+    override fun createEmptyFromDTO(t: SectionDTO): Section =
+            Section(
+                    id = t.id,
+                    name = t.name
+            )
 }

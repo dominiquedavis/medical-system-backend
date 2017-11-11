@@ -33,7 +33,7 @@ class InitializerTest {
         val sectionsToCreate = formProperties.forms.flatMap { it.sections }.size
         val fieldsToCreate = formProperties.forms.flatMap { it.sections }.flatMap { it.fields }.size
 
-        initializer.runInitialConfiguration()
+        initializer.runInitialFormConfiguration()
 
         val forms = formService.getAll()
 
