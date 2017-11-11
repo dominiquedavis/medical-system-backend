@@ -1,9 +1,13 @@
 package com.medicalsystem.factory
 
 import com.medicalsystem.model.Section
+import com.medicalsystem.model.dto.SectionDTO
 import com.medicalsystem.properties.FormProperties.PropForm.PropSection
 
-object SectionFactory : FromPropertiesFactory<PropSection, Section> {
+object SectionFactory : PropertiesFactory<PropSection, Section>, DTOFactory<SectionDTO, Section> {
+
+    override fun createFromProperties(t: List<PropSection>): List<Section> =
+            t.map(this::createFromProperties)
 
     override fun createFromProperties(t: PropSection): Section {
         val section = Section(name = t.name)
@@ -15,5 +19,13 @@ object SectionFactory : FromPropertiesFactory<PropSection, Section> {
         return section
     }
 
-    override fun createFromProperties(t: List<PropSection>): List<Section> = t.map(this::createFromProperties)
+    override fun createEmptyDTO(us: List<Section>): List<SectionDTO> =
+            us.map { createEmptyDTO(it) }
+
+    override fun createEmptyDTO(u: Section): SectionDTO =
+            SectionDTO(
+                    id = u.id,
+                    name = u.name,
+                    fields = FieldFactory.createEmptyDTO(u.fields)
+            )
 }

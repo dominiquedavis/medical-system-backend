@@ -5,7 +5,7 @@ import com.medicalsystem.model.FieldType
 data class FieldDTO(
         val id: Long = 0,
         val name: String = "",
-        val type: FieldType? = null,
+        val type: FieldType,
         val values: List<*>? = null,
         val possibleValues: List<*>? = null
 )
