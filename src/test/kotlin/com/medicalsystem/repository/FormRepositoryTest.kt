@@ -35,7 +35,7 @@ class FormRepositoryTest {
         section.form = form
 
         val savedForm = formRepository.save(form)
-        val savedSection = savedForm.sections[0]
+        val savedSection = savedForm.sections.iterator().next()
 
         Assert.assertEquals(savedSection.id, sectionRepository.findOne(savedSection.id).id)
     }
@@ -49,7 +49,7 @@ class FormRepositoryTest {
         section.form = form
 
         val savedForm = formRepository.save(form)
-        val savedSection = savedForm.sections[0]
+        val savedSection = savedForm.sections.iterator().next()
 
         formRepository.deleteAll()
 

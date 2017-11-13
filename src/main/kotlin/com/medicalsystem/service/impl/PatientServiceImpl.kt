@@ -11,5 +11,10 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class PatientServiceImpl @Autowired constructor(patientRepository: PatientRepository) : PatientService(patientRepository) {
-    override fun create(id: String, form: Form): Patient? = if (exists(id)) { null } else { save(Patient(id, form)) }
+    override fun create(id: String, form: Form): Patient? =
+            if (exists(id)) {
+                null
+            } else {
+                save(Patient(id, form))
+            }
 }

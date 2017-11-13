@@ -3,9 +3,9 @@ package com.medicalsystem.model.dto
 import com.medicalsystem.model.FieldType
 
 data class FieldDTO(
-        val id: Long = 0,
-        val name: String = "",
-        val type: FieldType,
-        val values: List<*>? = null,
-        val possibleValues: List<*>? = null
+        var id: Long = 0,
+        var name: String = "",
+        var type: FieldType,
+        var values: List<*>? = null,
+        var possibleValues: List<*>? = null
 )

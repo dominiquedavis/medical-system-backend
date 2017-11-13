@@ -1,5 +1,7 @@
 package com.medicalsystem.factory
 
+import com.medicalsystem.model.Patient
+
 /**
  * Methods for creating DTO from model objects and vice versa
  *
@@ -7,6 +9,6 @@ package com.medicalsystem.factory
  * @param U model type
  */
 interface DTOFactory<T, U> {
-    fun toDTO(us: List<U>, patientId: String?): List<T> = us.map { toDTO(it, patientId) }
-    fun toDTO(u: U, patientId: String?): T
+    fun toDTO(us: List<U>, patient: Patient?): List<T> = us.map { toDTO(it, patient) }
+    fun toDTO(u: U, patient: Patient?): T
 }

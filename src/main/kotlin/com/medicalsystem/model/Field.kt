@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "FIELDS")
-data class Field(
+class Field(
 
         @Id @GeneratedValue
         @Column(name = "ID")
@@ -29,6 +29,7 @@ data class Field(
         @Column(name = "VALUE")
         var possibleValues: Map<String, String> = mutableMapOf()
 ) {
+
     override fun toString(): String {
         return "Field(id=$id, name='$name')"
     }

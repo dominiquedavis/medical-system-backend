@@ -1,5 +1,7 @@
 package com.medicalsystem.service.impl
 
+import com.medicalsystem.model.Field
+import com.medicalsystem.model.Patient
 import com.medicalsystem.model.value.FieldValue
 import com.medicalsystem.repository.value.FieldValueRepository
 import com.medicalsystem.service.FieldValueService
@@ -22,10 +24,14 @@ class FieldValueServiceImpl @Autowired constructor(
                     .map { it.findAll() }
                     .flatMap { it.asIterable() }
 
-
     override fun getById(id: Long): FieldValue<*>? =
             readRepositories
                     .mapNotNull { it.findOne(id) }
+                    .firstOrNull()
+
+    override fun getByFieldAndPatient(field: Field, patient: Patient): FieldValue<*>? =
+            readRepositories
+                    .mapNotNull { it.findByFieldAndPatient(field, patient) }
                     .firstOrNull()
 
     override fun exists(id: Long): Boolean =

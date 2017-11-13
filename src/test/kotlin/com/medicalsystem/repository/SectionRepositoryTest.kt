@@ -42,7 +42,7 @@ class SectionRepositoryTest {
         field.section = section
 
         val savedSection = sectionRepository.save(section)
-        val savedField = savedSection.fields[0]
+        val savedField = savedSection.fields.iterator().next()
 
         Assert.assertEquals(savedField.id, fieldRepository.findOne(savedField.id).id)
     }
@@ -56,7 +56,7 @@ class SectionRepositoryTest {
         field.section = section
 
         val savedSection = sectionRepository.save(section)
-        val savedField = savedSection.fields[0]
+        val savedField = savedSection.fields.iterator().next()
 
         sectionRepository.deleteAll()
 

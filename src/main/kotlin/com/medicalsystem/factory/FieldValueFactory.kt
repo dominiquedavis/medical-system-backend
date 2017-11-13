@@ -14,7 +14,7 @@ object FieldValueFactory {
         return fieldValue
     }
 
-    private fun createInstance(fieldType: FieldType): FieldValue<*> =
+    fun createInstance(fieldType: FieldType): FieldValue<*> =
             when (fieldType) {
                 TEXT -> TextFieldValue()
                 NUMBER -> NumberFieldValue()

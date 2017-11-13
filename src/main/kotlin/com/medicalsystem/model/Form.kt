@@ -27,6 +27,7 @@ data class Form(
         )
         var sections: MutableList<Section> = mutableListOf()
 ) {
+
     override fun toString(): String {
         return "Form(id=$id, name='$name')"
     }

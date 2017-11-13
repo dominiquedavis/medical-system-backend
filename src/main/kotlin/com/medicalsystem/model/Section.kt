@@ -25,6 +25,7 @@ data class Section(
         )
         var fields: MutableList<Field> = mutableListOf()
 ) {
+
     override fun toString(): String {
         return "Section(id=$id, name='$name')"
     }

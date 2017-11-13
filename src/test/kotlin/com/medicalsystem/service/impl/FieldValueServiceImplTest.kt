@@ -1,10 +1,12 @@
 package com.medicalsystem.service.impl
 
+import com.medicalsystem.factory.FieldValueFactory
+import com.medicalsystem.init.Initializer
+import com.medicalsystem.model.Patient
 import com.medicalsystem.model.value.*
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import com.medicalsystem.service.FormService
+import com.medicalsystem.service.PatientService
+import org.junit.*
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,8 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class FieldValueServiceImplTest {
 
-    @Autowired
-    lateinit var fieldValueService: FieldValueServiceImpl
+    @Autowired lateinit var fieldValueService: FieldValueServiceImpl
+    @Autowired lateinit var patientService: PatientService
+    @Autowired lateinit var initializer: Initializer
+    @Autowired lateinit var formService: FormService
 
     @Before @After
     fun setup() = fieldValueService.deleteAll()

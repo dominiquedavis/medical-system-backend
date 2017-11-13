@@ -1,32 +1,46 @@
 package com.medicalsystem.factory
 
 import com.medicalsystem.model.Field
+import com.medicalsystem.model.FieldType.*
+import com.medicalsystem.model.Patient
 import com.medicalsystem.model.dto.FieldDTO
+import com.medicalsystem.model.value.FieldValue
+import com.medicalsystem.model.value.MultipleSelectFieldValue
+import com.medicalsystem.model.value.SelectFieldValue
+import com.medicalsystem.service.FieldValueService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import javax.persistence.EntityNotFoundException
 
 @Component
-class FieldDTOFactory : DTOFactory<FieldDTO, Field> {
+class FieldDTOFactory @Autowired constructor(
+        val fieldValueService: FieldValueService) : DTOFactory<FieldDTO, Field> {
 
-    override fun toDTO(u: Field, patientId: String?): FieldDTO =
-            FieldDTO(
-                    id = u.id,
-                    name = u.name,
-                    type = u.type,
-                    values = getValues(patientId),
-                    possibleValues = getPossibleValues(patientId)
-            )
+    override fun toDTO(u: Field, patient: Patient?): FieldDTO {
+        val fieldDTO = FieldDTO(id = u.id, name = u.name, type = u.type)
 
-    private fun getValues(patientId: String?): List<*>? {
-        patientId?.let {
-            // TODO
+        patient?.let {
+            val fieldValue: FieldValue<*> = fieldValueService.getByFieldAndPatient(u, patient)
+                    ?: throw EntityNotFoundException("No field value for $u and patient '$patient'")
+
+            when (u.type) {
+                TEXT, NUMBER, DATE -> {
+                    fieldDTO.values = listOf(fieldValue.value)
+                    fieldDTO.possibleValues = emptyList<Any>()
+                }
+                SELECT -> {
+                    val value: String? = (fieldValue as SelectFieldValue).value
+                    fieldDTO.values = listOf(u.possibleValues[value])
+                    fieldDTO.possibleValues = u.possibleValues.values.toList()
+                }
+                MULTIPLE_SELECT -> {
+                    val values: List<String> = (fieldValue as MultipleSelectFieldValue).value
+                    fieldDTO.values = values.map { u.possibleValues[it] }
+                    fieldDTO.possibleValues = u.possibleValues.values.toList()
+                }
+            }
         }
-        return null
-    }
 
-    private fun getPossibleValues(patientId: String?): List<*>? {
-        patientId?.let {
-            // TODO
-        }
-        return null
+        return fieldDTO
     }
 }

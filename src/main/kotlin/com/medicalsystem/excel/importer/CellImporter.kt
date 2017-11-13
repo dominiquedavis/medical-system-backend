@@ -19,6 +19,7 @@ class CellImporter @Autowired constructor(val fieldValueService: FieldValueServi
                 throw ExcelImportException("Field not found with column index: ${cell.columnIndex}")
 
         val fieldValue: FieldValue<*> = FieldValueFactory.fromFieldAndStringValue(field, ExcelUtils.asString(cell))
+        fieldValue.patient = patient
         fieldValueService.save(fieldValue)
 
         logger().info("[${patient.id}, ${field.name}]: ${fieldValue.value}")

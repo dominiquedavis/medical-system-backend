@@ -4,6 +4,7 @@ import com.medicalsystem.model.ApplicationUser
 import com.medicalsystem.model.Form
 import com.medicalsystem.properties.FromPropertiesModelFactory
 import com.medicalsystem.service.ApplicationUserService
+import com.medicalsystem.service.ExcelService
 import com.medicalsystem.service.FormService
 import com.medicalsystem.util.logger
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Component
 class Initializer @Autowired constructor(
         val formService: FormService,
         val userService: ApplicationUserService,
+        val excelService: ExcelService,
         val formPropertiesModelFactory: FromPropertiesModelFactory) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) {
         userService.register(ApplicationUser(username = "admin", password = "admin", admin = true))
         runInitialFormConfiguration()
-        //excelService.importToDatabase("data/baza2_test.xlsx")
+        excelService.importToDatabase("data/baza2_test.xlsx")
     }
 
     fun runInitialFormConfiguration() {
