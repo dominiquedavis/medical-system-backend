@@ -1,9 +1,8 @@
 package com.medicalsystem.init
 
-import com.medicalsystem.factory.FormFactory
 import com.medicalsystem.model.ApplicationUser
 import com.medicalsystem.model.Form
-import com.medicalsystem.properties.FormProperties
+import com.medicalsystem.properties.FromPropertiesModelFactory
 import com.medicalsystem.service.ApplicationUserService
 import com.medicalsystem.service.FormService
 import com.medicalsystem.util.logger
@@ -14,9 +13,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class Initializer @Autowired constructor(
-        val formProperties: FormProperties,
         val formService: FormService,
-        val userService: ApplicationUserService) : ApplicationRunner {
+        val userService: ApplicationUserService,
+        val formPropertiesModelFactory: FromPropertiesModelFactory) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) {
         userService.register(ApplicationUser(username = "admin", password = "admin", admin = true))
@@ -25,7 +24,7 @@ class Initializer @Autowired constructor(
     }
 
     fun runInitialFormConfiguration() {
-        val forms: List<Form> = FormFactory.createFromProperties(formProperties.forms)
+        val forms: List<Form> = formPropertiesModelFactory.createForms()
         forms.forEach { form ->
             formService.save(form)
             logger().info("Form saved: $form")
