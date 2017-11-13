@@ -7,6 +7,6 @@ import com.medicalsystem.repository.FormRepository
 
 abstract class FormService(formRepository: FormRepository) : DefaultCRUDService<Form, Long, FormRepository>(formRepository) {
     abstract fun getBySheetIndex(sheetIndex: Int): Form?
-    abstract fun getAllAsDTO(): List<FormDTO>
+    abstract fun getAllAsDTO(patientId: String?): List<FormDTO>
     abstract fun addSection(sectionDTO: SectionDTO, formId: Long)
 }
