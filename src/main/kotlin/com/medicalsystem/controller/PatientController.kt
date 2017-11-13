@@ -24,4 +24,8 @@ class PatientController @Autowired constructor(
     @GetMapping("{patientId}/patientForm")
     fun getForm(@PathVariable patientId: String): FormDTO =
             formService.getFormDTOForPatient(patientId) ?: throw EntityNotFoundException("No form for patient with ID: $patientId")
+
+    @PutMapping("{patientId}/patientForm")
+    fun updateForm(@PathVariable patientId: String, @RequestBody formDTO: FormDTO): FormDTO =
+            formService.updateFormForPatient(patientId, formDTO)
 }

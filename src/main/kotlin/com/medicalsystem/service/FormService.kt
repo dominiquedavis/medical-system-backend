@@ -10,5 +10,6 @@ abstract class FormService(formRepository: FormRepository) : DefaultCRUDService<
     abstract fun getBySheetIndex(sheetIndex: Int): Form?
     abstract fun getAllAsDTO(): List<FormDTO>
     abstract fun getFormDTOForPatient(patientId: String): FormDTO?
+    abstract fun updateFormForPatient(patientId: String, formDTO: FormDTO): FormDTO
     abstract fun addSection(sectionDTO: SectionDTO, formId: Long)
 }

@@ -27,4 +27,14 @@ class MultipleSelectFieldValue : FieldValue<List<String>>() {
         this.value = values
     }
 
+    fun setValuesByMapValues(mapValues: List<String>) {
+        val values: MutableList<String> = mutableListOf()
+        field?.let {
+            it.possibleValues.forEach { key, value ->
+                if (mapValues.contains(value))
+                    values.add(key)
+            }
+        }
+        this.value = values
+    }
 }

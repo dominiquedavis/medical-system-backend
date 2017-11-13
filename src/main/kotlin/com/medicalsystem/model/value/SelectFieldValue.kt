@@ -18,4 +18,13 @@ class SelectFieldValue : FieldValue<String?>() {
                     null
                 }
     }
+
+    fun setValueByMapValue(mapValue: String) {
+        field?.let {
+            it.possibleValues.forEach { key, value ->
+                if (value == mapValue)
+                    this.value = key
+            }
+        }
+    }
 }

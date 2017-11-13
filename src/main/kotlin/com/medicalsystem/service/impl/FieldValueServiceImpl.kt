@@ -34,6 +34,11 @@ class FieldValueServiceImpl @Autowired constructor(
                     .mapNotNull { it.findByFieldAndPatient(field, patient) }
                     .firstOrNull()
 
+    override fun getAllFieldValuesForPatient(patient: Patient): List<FieldValue<*>> =
+            readRepositories
+                    .map { it.findAllByPatient(patient) }
+                    .flatMap { it.asIterable() }
+
     override fun exists(id: Long): Boolean =
             readRepositories
                     .map { it.exists(id) }

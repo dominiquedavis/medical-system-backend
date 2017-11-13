@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface FieldValueRepository<T : FieldValue<*>> : JpaRepository<T, Long> {
     fun findByFieldAndPatient(field: Field, patient: Patient): T?
+    fun findAllByPatient(patient: Patient): List<T>
 }
