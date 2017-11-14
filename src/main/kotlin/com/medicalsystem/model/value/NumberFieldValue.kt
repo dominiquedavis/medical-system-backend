@@ -1,6 +1,7 @@
 package com.medicalsystem.model.value
 
 import org.apache.commons.lang3.math.NumberUtils
+import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.*
 
 @Entity
@@ -18,5 +19,9 @@ class NumberFieldValue : FieldValue<Double>() {
                 } else {
                     -1.0
                 }
+    }
+
+    override fun createCellValue(cell: Cell) {
+        cell.setCellValue(value)
     }
 }

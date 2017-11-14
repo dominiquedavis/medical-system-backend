@@ -1,6 +1,9 @@
 package com.medicalsystem.model.value
 
 import com.medicalsystem.util.DateUtils
+import com.medicalsystem.util.ExcelUtils
+import com.medicalsystem.util.logger
+import org.apache.poi.ss.usermodel.Cell
 import java.text.ParseException
 import java.util.*
 import javax.persistence.*
@@ -20,5 +23,16 @@ class DateFieldValue : FieldValue<Date?>() {
                 } catch (e: ParseException) {
                     null
                 }
+    }
+
+    override fun createCellValue(cell: Cell) {
+        ExcelUtils.setDateCellStyle(cell)
+
+        if (value == null) {
+            cell.setCellValue("")
+            logger().error("Date is null: '${field?.name}'")
+        } else {
+            cell.setCellValue(value)
+        }
     }
 }

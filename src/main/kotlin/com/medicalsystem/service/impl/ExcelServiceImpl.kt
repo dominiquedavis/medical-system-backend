@@ -1,5 +1,6 @@
 package com.medicalsystem.service.impl
 
+import com.medicalsystem.excel.exporter.ExcelExporter
 import com.medicalsystem.excel.importer.WorkbookImporter
 import com.medicalsystem.service.ExcelService
 import com.medicalsystem.util.ExcelUtils
@@ -13,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
 
 @Service
-class ExcelServiceImpl @Autowired constructor(val workbookImporter: WorkbookImporter) : ExcelService {
+class ExcelServiceImpl @Autowired constructor(
+        val workbookImporter: WorkbookImporter,
+        val excelExporter: ExcelExporter) : ExcelService {
 
     private val IMPORT_FILE_PATH = "data/dataImport.xlsx"
     private val EXPORT_FILE_PATH = "data/dataExport.xlsx"
@@ -38,7 +41,6 @@ class ExcelServiceImpl @Autowired constructor(val workbookImporter: WorkbookImpo
         }
     }
 
-    override fun exportToFile(path: String) {
-        TODO("not implemented")
-    }
+    override fun exportToFile(path: String) =
+            excelExporter.exportToFile(path)
 }

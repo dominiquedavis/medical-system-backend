@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value
 
+import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.*
 
 @Entity
@@ -26,5 +27,9 @@ class SelectFieldValue : FieldValue<String?>() {
                     this.value = key
             }
         }
+    }
+
+    override fun createCellValue(cell: Cell) {
+        cell.setCellValue(value)
     }
 }

@@ -2,6 +2,8 @@ package com.medicalsystem.model.value
 
 import com.medicalsystem.model.Field
 import com.medicalsystem.model.Patient
+import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.Row
 import javax.persistence.*
 
 @Entity
@@ -24,4 +26,11 @@ abstract class FieldValue<T> {
 
 
     abstract fun setValueFromString(s: String)
+
+    fun createCell(row: Row) {
+        val cell: Cell = row.createCell(field?.columnIndex ?: -1)
+        createCellValue(cell)
+    }
+
+    abstract fun createCellValue(cell: Cell)
 }

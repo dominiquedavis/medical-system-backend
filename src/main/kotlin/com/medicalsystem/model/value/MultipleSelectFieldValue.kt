@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value
 
+import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.*
 
 @Entity
@@ -36,5 +37,9 @@ class MultipleSelectFieldValue : FieldValue<List<String>>() {
             }
         }
         this.value = values
+    }
+
+    override fun createCellValue(cell: Cell) {
+        cell.setCellValue(value.joinToString(""))
     }
 }

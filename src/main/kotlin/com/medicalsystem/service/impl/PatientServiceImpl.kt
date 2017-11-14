@@ -10,11 +10,15 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class PatientServiceImpl @Autowired constructor(patientRepository: PatientRepository) : PatientService(patientRepository) {
+class PatientServiceImpl @Autowired constructor(val patientRepository: PatientRepository) : PatientService(patientRepository) {
+
     override fun create(id: String, form: Form): Patient? =
             if (exists(id)) {
                 null
             } else {
                 save(Patient(id, form))
             }
+
+    override fun getAllByForm(form: Form): List<Patient> =
+            patientRepository.findAllByForm(form)
 }
