@@ -20,12 +20,10 @@ class Initializer @Autowired constructor(
         val formPropertiesModelFactory: FromPropertiesModelFactory) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) {
-        /*
         userService.register(ApplicationUser(username = "admin", password = "admin", admin = true))
         runInitialFormConfiguration()
         excelService.importToDatabase("data/baza2_test.xlsx")
         excelService.exportToFile("data/exported.xlsx")
-        */
     }
 
     fun runInitialFormConfiguration() {
