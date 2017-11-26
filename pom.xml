@@ -23,7 +23,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<kotlin.version>1.1.60</kotlin.version>
+		<kotlin.version>1.1.61</kotlin.version>
 	</properties>
 
 	<dependencies>
@@ -104,17 +104,31 @@
 				<executions>
 					<execution>
 						<id>compile</id>
-						<phase>compile</phase>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<configuration>
+							<sourceDirs>
+								<source>src/main/java</source>
+								<source>src/main/kotlin</source>
+								<source>src/main/resources</source>
+							</sourceDirs>
+						</configuration>
 					</execution>
 					<execution>
 						<id>test-compile</id>
-						<phase>test-compile</phase>
+						<phase>process-test-sources</phase>
 						<goals>
 							<goal>test-compile</goal>
 						</goals>
+						<configuration>
+							<sourceDirs>
+								<source>src/test/java</source>
+								<source>src/test/kotlin</source>
+								<source>src/test/resources</source>
+							</sourceDirs>
+						</configuration>
 					</execution>
 				</executions>
 				<dependencies>
