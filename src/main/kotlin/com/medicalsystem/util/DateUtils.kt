@@ -7,12 +7,12 @@ import java.util.*
 object DateUtils {
 
     private val dateFormats: Array<String> = arrayOf(
-            "dd-MM-yyyy",
+            "yyyy-MM-dd",
             "d.M.y",
             "M/d/y"
     )
 
-    private val jsonFormatter = SimpleDateFormat("dd-MM-yyyy")
+    private val jsonFormatter = SimpleDateFormat("yyyy-MM-dd")
 
     fun fromString(s: String): Date = DateUtils.parseDateStrictly(s, *dateFormats)
 
