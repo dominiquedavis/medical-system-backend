@@ -23,7 +23,7 @@ class Initializer @Autowired constructor(
         userService.register(ApplicationUser(username = "admin", password = "admin", admin = true))
         runInitialFormConfiguration()
         excelService.importToDatabase("data/baza2_test.xlsx")
-        excelService.exportToFile("data/exported.xlsx")
+        //excelService.exportToFile("data/exported.xlsx")
     }
 
     fun runInitialFormConfiguration() {

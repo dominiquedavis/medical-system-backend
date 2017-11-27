@@ -4,10 +4,12 @@ import com.medicalsystem.model.Field
 import com.medicalsystem.model.FieldType.*
 import com.medicalsystem.model.Patient
 import com.medicalsystem.model.dto.FieldDTO
+import com.medicalsystem.model.value.DateFieldValue
 import com.medicalsystem.model.value.FieldValue
 import com.medicalsystem.model.value.MultipleSelectFieldValue
 import com.medicalsystem.model.value.SelectFieldValue
 import com.medicalsystem.service.FieldValueService
+import com.medicalsystem.util.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.persistence.EntityNotFoundException
@@ -24,8 +26,13 @@ class FieldDTOFactory @Autowired constructor(
                     ?: throw EntityNotFoundException("No field value for $u and patient '$patient'")
 
             when (u.type) {
-                TEXT, NUMBER, DATE -> {
+                TEXT, NUMBER -> {
                     fieldDTO.values = listOf(fieldValue.value)
+                    fieldDTO.possibleValues = emptyList<Any>()
+                }
+                DATE -> {
+                    val dateValue = (fieldValue as DateFieldValue).value
+                    fieldDTO.values = listOf(DateUtils.toString(dateValue))
                     fieldDTO.possibleValues = emptyList<Any>()
                 }
                 SELECT -> {
