@@ -12,6 +12,7 @@ import com.medicalsystem.repository.FormRepository
 import com.medicalsystem.service.FieldValueService
 import com.medicalsystem.service.FormService
 import com.medicalsystem.service.PatientService
+import org.apache.commons.lang3.time.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -31,6 +32,9 @@ class FormServiceImpl @Autowired constructor(
 
     override fun getAllAsDTO(): List<FormDTO> =
             formDTOFactory.toDTO(getAll(), null)
+
+    override fun getAllFormNames(): List<String> =
+        formRepository.findAllFormNames()
 
     override fun getFormDTOForPatient(patientId: String): FormDTO? {
         val patient: Patient = patientService.getById(patientId) ?: throw EntityNotFoundException("No patient with ID: $patientId")
@@ -83,7 +87,8 @@ class FormServiceImpl @Autowired constructor(
                         fieldValueService.save(numberFieldValue)
                     }
                     DATE -> {
-                        val value: Date = Date((values[0] as Long) * 1000)
+                        val value: Date = com.medicalsystem.util.DateUtils.fromString(values[0] as String)
+                        //val value: Date = Date((values[0] as Long) * 1000)
                         val dateFieldValue = fieldValue as DateFieldValue
                         dateFieldValue.value = value
                         fieldValueService.save(dateFieldValue)

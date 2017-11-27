@@ -7,6 +7,7 @@ import java.util.*
 object DateUtils {
 
     private val dateFormats: Array<String> = arrayOf(
+            "dd-MM-yyyy",
             "d.M.y",
             "M/d/y"
     )
