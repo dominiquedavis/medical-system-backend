@@ -7,10 +7,14 @@ import com.medicalsystem.util.ExcelUtils
 import com.medicalsystem.util.FileUtils
 import org.apache.poi.ss.usermodel.Workbook
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.InputStreamResource
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 
 @Service
@@ -31,7 +35,14 @@ class ExcelServiceImpl @Autowired constructor(
             }
 
     override fun exportToFile(): ResponseEntity<*> {
-        TODO("not implemented")
+        excelExporter.exportToFile(EXPORT_FILE_PATH)
+        val file = File(EXPORT_FILE_PATH)
+        val resource = InputStreamResource(FileInputStream(file))
+
+        return ResponseEntity.ok()
+            .contentLength(file.length())
+            .contentType(MediaType.parseMediaType("application/octet-stream"))
+            .body(resource)
     }
 
     override fun importToDatabase(path: String) {
