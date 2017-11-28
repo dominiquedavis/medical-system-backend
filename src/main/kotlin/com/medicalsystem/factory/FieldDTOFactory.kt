@@ -8,6 +8,7 @@ import com.medicalsystem.model.value.DateFieldValue
 import com.medicalsystem.model.value.FieldValue
 import com.medicalsystem.model.value.MultipleSelectFieldValue
 import com.medicalsystem.model.value.SelectFieldValue
+import com.medicalsystem.service.FieldService
 import com.medicalsystem.service.FieldValueService
 import com.medicalsystem.util.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,14 +17,20 @@ import javax.persistence.EntityNotFoundException
 
 @Component
 class FieldDTOFactory @Autowired constructor(
-        val fieldValueService: FieldValueService) : DTOFactory<FieldDTO, Field> {
+        val fieldValueService: FieldValueService,
+        val fieldService: FieldService) : DTOFactory<FieldDTO, Field> {
 
     override fun toDTO(u: Field, patient: Patient?): FieldDTO {
         val fieldDTO = FieldDTO(id = u.id, name = u.name, type = u.type)
 
         patient?.let {
-            val fieldValue: FieldValue<*> = fieldValueService.getByFieldAndPatient(u, patient)
-                    ?: throw EntityNotFoundException("No field value for $u and patient '$patient'")
+            val fieldValue: FieldValue<*>? = fieldValueService.getByFieldAndPatient(u, patient)
+
+            if (fieldValue == null) {
+                fieldDTO.values = emptyList<Any>()
+                fieldDTO.possibleValues = u.possibleValues.values.toList()
+                return fieldDTO
+            }
 
             when (u.type) {
                 TEXT, NUMBER -> {
@@ -51,7 +58,13 @@ class FieldDTOFactory @Autowired constructor(
         return fieldDTO
     }
 
-    override fun emptyFromDTO(t: FieldDTO): Field {
-        TODO("not implemented")
+    override fun fromDTO(t: FieldDTO): Field {
+        val field: Field? = fieldService.getById(t.id)
+        /*return if (field == null) {
+            Field(name = t.name, )
+        } else {
+
+        }*/
+        return Field()
     }
 }

@@ -18,8 +18,8 @@ class PatientController @Autowired constructor(
             patientService.exists(patientId)
 
     @PostMapping("{patientId}")
-    fun createPatient(@PathVariable patientId: String): Boolean =
-            TODO("need info about form")
+    fun createPatient(@PathVariable patientId: String, @RequestBody formName: String): Boolean =
+            patientService.create(patientId, formName)
 
     @GetMapping("{patientId}/patientForm")
     fun getForm(@PathVariable patientId: String): FormDTO =

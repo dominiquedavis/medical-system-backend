@@ -10,13 +10,19 @@ import org.springframework.stereotype.Component
 class SectionDTOFactory @Autowired constructor(val fieldDTOFactory: FieldDTOFactory) : DTOFactory<SectionDTO, Section> {
 
     override fun toDTO(u: Section, patient: Patient?): SectionDTO =
-            SectionDTO(
-                    id = u.id,
-                    name = u.name,
-                    fields = fieldDTOFactory.toDTO(u.fields.asSequence().distinct().toList(), patient)
-            )
+        SectionDTO(
+            id = u.id,
+            name = u.name,
+            fields = fieldDTOFactory.toDTO(u.fields.asSequence().distinct().toList(), patient)
+        )
 
-    override fun emptyFromDTO(t: SectionDTO): Section {
-        TODO("not implemented")
+    override fun fromDTO(t: SectionDTO): Section {
+        val section = Section(
+            id = t.id,
+            name = t.name,
+            fields = fieldDTOFactory.fromDTO(t.fields ?: emptyList()).toMutableList()
+        )
+        section.fields.forEach { it.section = section }
+        return section
     }
 }

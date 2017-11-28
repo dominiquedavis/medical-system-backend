@@ -1,6 +1,7 @@
 package com.medicalsystem.service.impl
 
 import com.medicalsystem.factory.FormDTOFactory
+import com.medicalsystem.factory.SectionDTOFactory
 import com.medicalsystem.model.FieldType.*
 import com.medicalsystem.model.Form
 import com.medicalsystem.model.Patient
@@ -27,6 +28,7 @@ class FormServiceImpl @Autowired constructor(
         val formRepository: FormRepository,
         val formDTOFactory: FormDTOFactory,
         val patientService: PatientService,
+        val sectionDTOFactory: SectionDTOFactory,
         val fieldValueService: FieldValueService) : FormService(formRepository) {
 
     override fun getBySheetIndex(sheetIndex: Int): Form? =
@@ -40,7 +42,7 @@ class FormServiceImpl @Autowired constructor(
 
     override fun getFormDTOForPatient(patientId: String): FormDTO? {
         val patient: Patient = patientService.getById(patientId) ?:
-            throw JpaObjectRetrievalFailureException(EntityNotFoundException("No patient with ID: $patientId"))
+            throw RuntimeException("No patient with ID: $patientId")
         patient.form?.let {
             return formDTOFactory.toDTO(it, patient)
         }
@@ -63,13 +65,13 @@ class FormServiceImpl @Autowired constructor(
                     .toList()
 
             if (fieldsDTO.size != fieldValues.size) {
-                throw RuntimeException("fieldsDTO != fieldValues")
+                throw RuntimeException("fieldsDTO.size(${fieldsDTO.size}) != fieldValues.size(${fieldValues.size})")
             }
 
             fieldValues.forEachIndexed { index, fieldValue ->
                 val values: List<*> = fieldsDTO[index].values ?: throw RuntimeException("Values are null")
 
-                if (values[0] == null)
+                if (values.isEmpty() || values[0] == null)
                     return@forEachIndexed
 
                 when (fieldValue.field?.type) {
@@ -123,9 +125,20 @@ class FormServiceImpl @Autowired constructor(
     }
 
     override fun addForm(formDTO: FormDTO): FormDTO {
-        val form: Form = formDTOFactory.emptyFromDTO(formDTO)
-        // Set sheet index to the next available
+        val form = Form()
+        form.name = formDTO.type
+        form.type = formDTO.type
         form.sheetIndex = getNextSheetIndex()
+        save(form)
+        return formDTO
+    }
+
+    override fun updateForm(formDTO: FormDTO): FormDTO {
+        val form: Form = getById(formDTO.id) ?: throw RuntimeException("No form with ID: ${formDTO.id}")
+        form.name = formDTO.type
+        form.type = formDTO.type
+        form.sections = sectionDTOFactory.fromDTO(formDTO.sections).toMutableList()
+        form.sections.forEach { it.form = form }
         save(form)
         return formDTO
     }
@@ -136,4 +149,7 @@ class FormServiceImpl @Autowired constructor(
     override fun addSection(sectionDTO: SectionDTO, formId: Long) {
         TODO()
     }
+
+    override fun findByName(name: String): Form? =
+        formRepository.findByName(name)
 }

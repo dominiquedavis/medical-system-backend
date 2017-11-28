@@ -2,6 +2,7 @@ package com.medicalsystem.factory
 
 import com.medicalsystem.model.Form
 import com.medicalsystem.model.Patient
+import com.medicalsystem.model.Section
 import com.medicalsystem.model.dto.FormDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -16,10 +17,11 @@ class FormDTOFactory @Autowired constructor(val sectionDTOFactory: SectionDTOFac
                     sections = sectionDTOFactory.toDTO(u.sections.asSequence().distinct().toList(), patient)
             )
 
-    override fun emptyFromDTO(t: FormDTO): Form =
+    override fun fromDTO(t: FormDTO): Form =
         Form(
             id = t.id,
             name = t.type,
-            type = t.type
+            type = t.type,
+            sections = sectionDTOFactory.fromDTO(t.sections).toMutableList()
         )
 }

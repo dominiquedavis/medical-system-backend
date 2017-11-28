@@ -21,4 +21,8 @@ class FormController @Autowired constructor(val formService: FormService) {
     @PostMapping
     fun addForm(@RequestBody formDTO: FormDTO): FormDTO =
         formService.addForm(formDTO)
+
+    @PutMapping
+    fun updateForm(@RequestBody formDTO: FormDTO): FormDTO =
+        formService.updateForm(formDTO)
 }

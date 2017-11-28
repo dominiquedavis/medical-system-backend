@@ -17,6 +17,11 @@ class MultipleSelectFieldValue : FieldValue<List<String>>() {
         val values = mutableListOf<String>()
         var str = s
 
+        if (s == "") {
+            this.value = values
+            return
+        }
+
         if (s.endsWith("11")) {
             values.add("11")
             str = s.substring(0, s.length - "11".length)

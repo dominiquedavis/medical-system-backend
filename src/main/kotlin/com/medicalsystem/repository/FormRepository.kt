@@ -13,4 +13,6 @@ interface FormRepository : JpaRepository<Form, Long> {
 
     @Query("SELECT MAX(f.sheetIndex) FROM Form f")
     fun findMaxSheetIndex(): Int
+
+    fun findByName(name: String): Form?
 }

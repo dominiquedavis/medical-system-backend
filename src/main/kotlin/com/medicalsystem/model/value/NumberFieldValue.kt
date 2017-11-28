@@ -17,7 +17,7 @@ class NumberFieldValue : FieldValue<Double>() {
                 if (NumberUtils.isCreatable(s)) {
                     s.toDouble()
                 } else {
-                    -1.0
+                    0.0
                 }
     }
 
