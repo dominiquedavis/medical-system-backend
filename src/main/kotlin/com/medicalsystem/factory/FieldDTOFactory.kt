@@ -50,4 +50,8 @@ class FieldDTOFactory @Autowired constructor(
 
         return fieldDTO
     }
+
+    override fun emptyFromDTO(t: FieldDTO): Field {
+        TODO("not implemented")
+    }
 }

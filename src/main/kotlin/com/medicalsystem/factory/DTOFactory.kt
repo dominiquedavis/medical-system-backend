@@ -11,4 +11,7 @@ import com.medicalsystem.model.Patient
 interface DTOFactory<T, U> {
     fun toDTO(us: List<U>, patient: Patient?): List<T> = us.map { toDTO(it, patient) }
     fun toDTO(u: U, patient: Patient?): T
+
+    fun emptyFromDTO(ts: List<T>): List<U> = ts.map { emptyFromDTO(it) }
+    fun emptyFromDTO(t: T): U
 }

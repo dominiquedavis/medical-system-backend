@@ -15,4 +15,11 @@ class FormDTOFactory @Autowired constructor(val sectionDTOFactory: SectionDTOFac
                     type = u.type,
                     sections = sectionDTOFactory.toDTO(u.sections.asSequence().distinct().toList(), patient)
             )
+
+    override fun emptyFromDTO(t: FormDTO): Form =
+        Form(
+            id = t.id,
+            name = t.type,
+            type = t.type
+        )
 }

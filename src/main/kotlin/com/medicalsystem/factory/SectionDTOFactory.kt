@@ -15,4 +15,8 @@ class SectionDTOFactory @Autowired constructor(val fieldDTOFactory: FieldDTOFact
                     name = u.name,
                     fields = fieldDTOFactory.toDTO(u.fields.asSequence().distinct().toList(), patient)
             )
+
+    override fun emptyFromDTO(t: SectionDTO): Section {
+        TODO("not implemented")
+    }
 }

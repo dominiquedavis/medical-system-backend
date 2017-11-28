@@ -14,6 +14,7 @@ import com.medicalsystem.service.FormService
 import com.medicalsystem.service.PatientService
 import com.medicalsystem.util.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.text.ParseException
@@ -38,7 +39,8 @@ class FormServiceImpl @Autowired constructor(
         formRepository.findAllFormNames()
 
     override fun getFormDTOForPatient(patientId: String): FormDTO? {
-        val patient: Patient = patientService.getById(patientId) ?: throw EntityNotFoundException("No patient with ID: $patientId")
+        val patient: Patient = patientService.getById(patientId) ?:
+            throw JpaObjectRetrievalFailureException(EntityNotFoundException("No patient with ID: $patientId"))
         patient.form?.let {
             return formDTOFactory.toDTO(it, patient)
         }
@@ -119,6 +121,17 @@ class FormServiceImpl @Autowired constructor(
         }
         return formDTO
     }
+
+    override fun addForm(formDTO: FormDTO): FormDTO {
+        val form: Form = formDTOFactory.emptyFromDTO(formDTO)
+        // Set sheet index to the next available
+        form.sheetIndex = getNextSheetIndex()
+        save(form)
+        return formDTO
+    }
+
+    override fun getNextSheetIndex(): Int =
+        formRepository.findMaxSheetIndex() + 1
 
     override fun addSection(sectionDTO: SectionDTO, formId: Long) {
         TODO()

@@ -18,7 +18,7 @@ class FormController @Autowired constructor(val formService: FormService) {
     fun getFormNames(): List<String> =
         formService.getAllFormNames()
 
-    @PostMapping("{formId}/sections")
-    fun addSection(@PathVariable formId: Long, @RequestBody sectionDTO: SectionDTO) =
-        formService.addSection(sectionDTO, formId)
+    @PostMapping
+    fun addForm(@RequestBody formDTO: FormDTO): FormDTO =
+        formService.addForm(formDTO)
 }
