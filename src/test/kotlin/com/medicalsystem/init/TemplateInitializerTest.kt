@@ -35,6 +35,8 @@ class TemplateInitializerTest {
         } else {
             //val common: Collection<Form> = getCommonElements(formsBefore, formsAfter)
         }
+
+        formsCreated.forEach { formService.delete(it.id) }
     }
 
     private fun <T : IdComparableEntity<*>> getCommonElements(a: Collection<T>, b: Collection<T>): Collection<T> =

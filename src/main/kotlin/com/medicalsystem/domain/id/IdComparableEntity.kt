@@ -2,7 +2,7 @@ package com.medicalsystem.domain.id
 
 import java.util.*
 
-abstract class IdComparableEntity<ID>(private var defaultId: ID) {
+abstract class IdComparableEntity<ID>(private var defaultId: ID? = null) {
     abstract var id: ID
 
     override fun equals(other: Any?): Boolean =
