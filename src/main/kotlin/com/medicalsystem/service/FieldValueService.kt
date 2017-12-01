@@ -1,10 +1,10 @@
 package com.medicalsystem.service
 
-import com.medicalsystem.model.Field
-import com.medicalsystem.model.Patient
-import com.medicalsystem.model.value.FieldValue
+import com.medicalsystem.domain.value.FieldValue
+import com.medicalsystem.repository.value.FieldValueRepository
+import org.springframework.stereotype.Service
 
-interface FieldValueService : CRUDService<FieldValue<*>, Long> {
-    fun getByFieldAndPatient(field: Field, patient: Patient): FieldValue<*>?
-    fun getAllFieldValuesForPatient(patient: Patient): List<FieldValue<*>>
-}
+@Service
+class FieldValueService(
+        private val fieldValueRepository: FieldValueRepository
+) : CRUDService<FieldValue<*>, Long>(fieldValueRepository)

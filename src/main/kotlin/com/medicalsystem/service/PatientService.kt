@@ -1,11 +1,8 @@
 package com.medicalsystem.service
 
-import com.medicalsystem.model.Form
-import com.medicalsystem.model.Patient
+import com.medicalsystem.domain.Patient
 import com.medicalsystem.repository.PatientRepository
+import org.springframework.stereotype.Service
 
-abstract class PatientService(patientRepository: PatientRepository) : DefaultCRUDService<Patient, String, PatientRepository>(patientRepository) {
-    abstract fun create(id: String, form: Form): Patient?
-    abstract fun create(patientId: String, formName: String): Boolean
-    abstract fun getAllByForm(form: Form): List<Patient>
-}
+@Service
+class PatientService(private val patientRepository: PatientRepository) : CRUDService<Patient, String>(patientRepository)

@@ -10,7 +10,5 @@ import org.springframework.test.context.junit4.SpringRunner
 class MedicalSystemBackendApplicationTests {
 
 	@Test
-	fun contextLoads() {
-	}
-
+	fun contextLoads() {}
 }

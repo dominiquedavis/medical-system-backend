@@ -1,10 +1,8 @@
 package com.medicalsystem.service
 
-import com.medicalsystem.model.Field
-import com.medicalsystem.model.Form
-import com.medicalsystem.repository.FieldRepository
+import com.medicalsystem.domain.template.Field
+import com.medicalsystem.repository.template.FieldRepository
+import org.springframework.stereotype.Service
 
-abstract class FieldService(fieldRepository: FieldRepository) : DefaultCRUDService<Field, Long, FieldRepository>(fieldRepository) {
-    abstract fun getAllByForm(form: Form): List<Field>
-    abstract fun getColumnIndexToFieldMap(form: Form): Map<Int, Field>
-}
+@Service
+class FieldService(private val fieldRepository: FieldRepository) : CRUDService<Field, Long>(fieldRepository)
