@@ -4,7 +4,6 @@ import com.medicalsystem.domain.id.LongIdComparableEntity
 import javax.persistence.*
 
 @Entity
-@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["name", "colIndex"])])
 class Field(
     var name: String = "",
     var type: FieldType? = null,

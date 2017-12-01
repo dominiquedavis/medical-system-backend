@@ -12,25 +12,25 @@ import java.util.List;
 @PropertySource(value = "classpath:initialConfig.properties", encoding = "UTF-8")
 @ConfigurationProperties
 public class InitialConfig {
-    private List<PropForm> forms = new ArrayList<>();
+    private List<ConfigForm> forms = new ArrayList<>();
 
-    public static class PropForm {
+    public static class ConfigForm {
         private String name;
         private String type;
         private int index;
-        private List<PropSection> sections = new ArrayList<>();
+        private List<ConfigSection> sections = new ArrayList<>();
 
-        public static class PropSection {
+        public static class ConfigSection {
             private String name;
-            private List<PropField> fields = new ArrayList<>();
+            private List<ConfigField> fields = new ArrayList<>();
 
-            public static class PropField {
+            public static class ConfigField {
                 private String name;
                 private int excelColumnIndex;
                 private FieldType type;
-                private List<PropOption> options = new ArrayList<>();
+                private List<ConfigOption> options = new ArrayList<>();
 
-                public static class PropOption {
+                public static class ConfigOption {
                     private String key;
                     private String val;
 
@@ -75,11 +75,11 @@ public class InitialConfig {
                     this.type = type;
                 }
 
-                public List<PropOption> getOptions() {
+                public List<ConfigOption> getOptions() {
                     return options;
                 }
 
-                public void setOptions(List<PropOption> options) {
+                public void setOptions(List<ConfigOption> options) {
                     this.options = options;
                 }
             }
@@ -92,11 +92,11 @@ public class InitialConfig {
                 this.name = name;
             }
 
-            public List<PropField> getFields() {
+            public List<ConfigField> getFields() {
                 return fields;
             }
 
-            public void setFields(List<PropField> fields) {
+            public void setFields(List<ConfigField> fields) {
                 this.fields = fields;
             }
         }
@@ -125,20 +125,20 @@ public class InitialConfig {
             this.index = index;
         }
 
-        public List<PropSection> getSections() {
+        public List<ConfigSection> getSections() {
             return sections;
         }
 
-        public void setSections(List<PropSection> sections) {
+        public void setSections(List<ConfigSection> sections) {
             this.sections = sections;
         }
     }
 
-    public List<PropForm> getForms() {
+    public List<ConfigForm> getForms() {
         return forms;
     }
 
-    public void setForms(List<PropForm> forms) {
+    public void setForms(List<ConfigForm> forms) {
         this.forms = forms;
     }
 }

@@ -4,7 +4,6 @@ import com.medicalsystem.domain.id.LongIdComparableEntity
 import javax.persistence.*
 
 @Entity
-@Table(uniqueConstraints = [UniqueConstraint(columnNames = arrayOf("name"))])
 class Section(
     var name: String = "",
     @OneToMany(
@@ -21,4 +20,7 @@ class Section(
         fields.add(field)
         field.section = this
     }
+
+    override fun toString(): String =
+            "Section(id='$id', name='$name', fields='${fields.size}')"
 }

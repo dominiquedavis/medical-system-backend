@@ -19,18 +19,21 @@ import javax.persistence.*
     UniqueConstraint(columnNames = ["name", "sheetIndex"])
 ])
 class Form(
-    var name: String = "",
-    var sheetIndex: Int = -1,
-    @OneToMany(
-        mappedBy = "form",
-        cascade = [CascadeType.ALL],
-        orphanRemoval = true
-    )
-    var sections: MutableSet<Section> = mutableSetOf()
+        var name: String = "",
+        var sheetIndex: Int = -1,
+        @OneToMany(
+                mappedBy = "form",
+                cascade = [CascadeType.ALL],
+                orphanRemoval = true
+        )
+        var sections: MutableSet<Section> = mutableSetOf()
 ) : LongIdComparableEntity() {
 
     fun addSection(section: Section) {
         sections.add(section)
         section.form = this
     }
+
+    override fun toString(): String =
+            "Form(id='$id', name='$name', index='$sheetIndex', sections='${sections.size}')"
 }
