@@ -102,7 +102,7 @@ class FieldValueRepositoryTest {
     }
 
     private fun testPatientAndFieldReferences() {
-        val unsavedPatient = Patient()
+        val unsavedPatient = Patient("789")
         val unsavedField = Field(name = "fieldff", colIndex = 123123)
         val unsavedValue = TextFieldValue(value = "some text value")
         val savedPatient = patientRepository.save(unsavedPatient)

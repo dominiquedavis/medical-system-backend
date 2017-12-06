@@ -8,7 +8,7 @@ class Field(
     var name: String = "",
     var type: FieldType? = null,
     var colIndex: Int = -1,
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var possibleValues: MutableSet<ValueOption> = mutableSetOf(),
     @ManyToOne(fetch = FetchType.LAZY)
     var section: Section? = null

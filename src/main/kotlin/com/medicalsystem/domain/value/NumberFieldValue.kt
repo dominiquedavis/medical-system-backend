@@ -4,6 +4,11 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity
-class NumberFieldValue(
-    @Column(name = "NUMBER_VALUE")
-    override var value: Double = -1.0) : FieldValue<Double>()
+class NumberFieldValue(@Column(name = "NUMBER_VALUE") override var value: Double? = null) : FieldValue<Double?>() {
+
+    override fun setValueFromString(stringValue: String) {
+        if (stringValue != "") {
+            value = stringValue.toDouble()
+        }
+    }
+}
