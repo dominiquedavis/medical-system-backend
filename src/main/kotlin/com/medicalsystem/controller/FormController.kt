@@ -30,8 +30,8 @@ class FormController @Autowired constructor(val formService: FormService,
     fun addForm(@RequestBody formDTO: FormDTO): FormDTO =
             formService.addForm(formDTO)
 
-    @PutMapping
-    fun updateForm(@RequestBody formDTO: FormDTO): FormDTO =
+    @PostMapping("{formId}")
+    fun updateForm(@RequestBody formDTO: FormDTO, @PathVariable formId: Long): FormDTO =
             formService.updateForm(formDTO)
 
     @PostMapping("{formId}/sections")
@@ -40,7 +40,7 @@ class FormController @Autowired constructor(val formService: FormService,
         return sectionService.addSection(form, sectionDTO)
     }
 
-    @PutMapping("sections/{sectionId}")
+    @PostMapping("sections/{sectionId}")
     fun updateSection(@RequestBody sectionDTO: SectionDTO, @PathVariable sectionId: Long): SectionDTO {
         val section = sectionService.getById(sectionDTO.id) ?: throw RuntimeException("Section not found with ID: ${sectionDTO.id}")
         section.name = sectionDTO.name
@@ -64,11 +64,12 @@ class FormController @Autowired constructor(val formService: FormService,
         }
         field.possibleValues = possVals
 
-        fieldService.save(field)
+        val saved = fieldService.save(field)
+        addingFieldDTO.id = saved.id
         return addingFieldDTO
     }
 
-    @PutMapping("fields/{fieldId}")
+    @PostMapping("fields/{fieldId}")
     fun updateField(@PathVariable fieldId: Long, @RequestBody addingFieldDTO: AddingFieldDTO): AddingFieldDTO {
         val field = fieldService.getById(fieldId) ?: throw RuntimeException("Field not found with ID: $fieldId")
         field.name = addingFieldDTO.name

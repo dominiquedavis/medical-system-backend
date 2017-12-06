@@ -3,14 +3,14 @@ package com.medicalsystem.model.dto
 import com.medicalsystem.model.FieldType
 
 data class AddingFieldDTO(
-        val id: Long = 0,
-        val name: String = "",
-        val type: FieldType? = null,
-        val possibleValues: List<FieldValuePair>? = null,
-        val values: List<Any>? = null
+        var id: Long = 0,
+        var name: String = "",
+        var type: FieldType? = null,
+        var values: List<Any>? = null,
+        var possibleValues: List<SelectFieldValue>? = null
 )
 
-data class FieldValuePair(
-        val value: String,
-        val excelKey: String
+data class SelectFieldValue(
+        var value: String = "",
+        var excelKey: String = ""
 )
