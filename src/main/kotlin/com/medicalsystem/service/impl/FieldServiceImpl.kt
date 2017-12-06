@@ -13,4 +13,5 @@ import org.springframework.transaction.annotation.Transactional
 class FieldServiceImpl @Autowired constructor(val fieldRepository: FieldRepository) : FieldService(fieldRepository) {
     override fun getAllByForm(form: Form): List<Field> = fieldRepository.findAllByForm(form)
     override fun getColumnIndexToFieldMap(form: Form): Map<Int, Field> = getAllByForm(form).associateBy { it.columnIndex }
+    override fun getMaxColumnIndex(): Int = fieldRepository.findMaxColIndex()
 }
