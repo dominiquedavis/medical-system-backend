@@ -2,6 +2,7 @@ package com.medicalsystem.model.value
 
 import com.medicalsystem.model.Field
 import com.medicalsystem.model.Patient
+import com.medicalsystem.model.report.ReportField
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import javax.persistence.*
@@ -33,4 +34,6 @@ abstract class FieldValue<T> {
     }
 
     abstract fun createCellValue(cell: Cell)
+
+    abstract fun fullfills(reportField: ReportField): Boolean
 }

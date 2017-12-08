@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value
 
+import com.medicalsystem.model.report.ReportField
 import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.*
 
@@ -31,5 +32,9 @@ class SelectFieldValue : FieldValue<String?>() {
 
     override fun createCellValue(cell: Cell) {
         cell.setCellValue(value)
+    }
+
+    override fun fullfills(reportField: ReportField): Boolean {
+        return false
     }
 }

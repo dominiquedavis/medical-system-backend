@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value
 
+import com.medicalsystem.model.report.ReportField
 import com.medicalsystem.util.DateUtils
 import com.medicalsystem.util.ExcelUtils
 import com.medicalsystem.util.logger
@@ -34,5 +35,9 @@ class DateFieldValue : FieldValue<Date?>() {
         } else {
             cell.setCellValue(value)
         }
+    }
+
+    override fun fullfills(reportField: ReportField): Boolean {
+        return false
     }
 }

@@ -1,5 +1,6 @@
 package com.medicalsystem.model.value
 
+import com.medicalsystem.model.report.ReportField
 import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.*
 
@@ -46,5 +47,9 @@ class MultipleSelectFieldValue : FieldValue<List<String>>() {
 
     override fun createCellValue(cell: Cell) {
         cell.setCellValue(value.joinToString(""))
+    }
+
+    override fun fullfills(reportField: ReportField): Boolean {
+        return false
     }
 }
