@@ -12,6 +12,9 @@ class MySheet(sheet: Sheet, val form: Form) : Sheet by sheet {
     val numberOfHeaderRows: Int
         get() = 2
 
+    val name: String
+        get() = form.name
+
     val fieldsIndices: Map<Int, Field> = initFieldsIndices()
     val maxNumberOfCells: Int = initMaxNumberOfCells()
 

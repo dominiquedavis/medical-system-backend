@@ -27,7 +27,7 @@ class CellImporter(private val fieldValueService: FieldValueService) {
         try {
             fieldValue.setValueFromString(stringValue)
         } catch (e: Exception) {
-            result.errorConvertingValue(stringValue, e, cell, row, sheet)
+            result.errorConvertingValue(stringValue, e, row, sheet, field)
             return
         }
 

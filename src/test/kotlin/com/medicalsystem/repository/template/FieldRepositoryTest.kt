@@ -77,7 +77,6 @@ class FieldRepositoryTest {
         val unsavedOption3 = ValueOption(key = "mno", value = "pqr")
         unsavedField1.addPossibleValue(unsavedOption1)
         unsavedField1.addPossibleValue(unsavedOption2)
-        unsavedField2.addPossibleValue(unsavedOption2)
         unsavedField2.addPossibleValue(unsavedOption3)
 
         println(unsavedField1)
