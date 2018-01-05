@@ -12,12 +12,12 @@ import javax.persistence.*
  * The Form represent a single sheet in an excel spreadsheet.
  */
 @Entity
-@Table(uniqueConstraints = [(UniqueConstraint(columnNames = ["name", "sheetName"]))])
+@Table(uniqueConstraints = [ UniqueConstraint(columnNames = ["name", "sheetName"]) ])
 class Form(
         var name: String = "",
         var sheetName: String = "",
 
-        @OneToMany(mappedBy = "form", cascade = [CascadeType.ALL], orphanRemoval = true)
+        @OneToMany(mappedBy = "form", cascade = [ CascadeType.ALL ], orphanRemoval = true)
         var sections: MutableSet<Section> = mutableSetOf()
 
 ) : LongIdComparableEntity() {

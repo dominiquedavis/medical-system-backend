@@ -12,9 +12,9 @@ class Report(
         @ElementCollection
         var includedForms: List<String> = emptyList(),
 
-        @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, fetch = FetchType.EAGER)
-        var fields: List<ReportField> = emptyList(),
+        @OneToMany(cascade = [ CascadeType.ALL ], orphanRemoval = true, fetch = FetchType.EAGER)
+        var sections: List<ReportSection> = emptyList(),
 
-        var sortByFieldID: Long = 0
+        var sortByField: Long = 0
 
 ) : LongIdComparableEntity()

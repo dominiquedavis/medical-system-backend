@@ -13,7 +13,7 @@ class Section(
         @ManyToOne(fetch = FetchType.LAZY)
         var form: Form? = null,
 
-        @OneToMany(mappedBy = "section", cascade = [CascadeType.ALL], orphanRemoval = true)
+        @OneToMany(mappedBy = "section", cascade = [ CascadeType.ALL ], orphanRemoval = true)
         var fields: MutableSet<Field> = mutableSetOf()
 
 ) : LongIdComparableEntity() {

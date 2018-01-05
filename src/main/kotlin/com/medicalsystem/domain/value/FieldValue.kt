@@ -35,6 +35,9 @@ abstract class FieldValue<T>(
     abstract var value: T
 
     companion object {
+        /**
+         * Creates a FieldValue<*> instance based on FieldType
+         */
         fun createInstanceByFieldType(fieldType: FieldType): FieldValue<*> =
                 when (fieldType) {
                     DATE -> DateFieldValue()

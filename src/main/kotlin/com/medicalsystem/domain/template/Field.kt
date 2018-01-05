@@ -18,7 +18,7 @@ class Field(
         var section: Section? = null,
 
         //@OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-        @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+        @OneToMany(fetch = FetchType.EAGER, cascade = [ CascadeType.ALL ])
         var possibleValues: MutableSet<Option> = mutableSetOf()
 
 ) : LongIdComparableEntity() {

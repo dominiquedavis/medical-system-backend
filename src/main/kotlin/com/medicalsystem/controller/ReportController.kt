@@ -1,6 +1,5 @@
 package com.medicalsystem.controller
 
-import com.medicalsystem.domain.dto.FormDTO
 import com.medicalsystem.domain.report.Report
 import com.medicalsystem.domain.report.ReportResults
 import com.medicalsystem.service.ReportService
@@ -19,20 +18,11 @@ class ReportController(private val reportService: ReportService) {
             reportService.findAll()
 
     /**
-     * Returns common part of the listed forms as a FormDTO object.
-     */
-    @GetMapping("form/{formNames}")
-    fun getReportBaseForm(@PathVariable formNames: String): FormDTO {
-        val names: List<String> = formNames.split(",").filterNot { it.isBlank() }
-        return reportService.getReportBaseForm(names)
-    }
-
-    /**
-     * Persist given Report to the database.
+     * Accepts an empty Report with information about forms and fills the Report with sections and fields.
      */
     @PostMapping
-    fun saveReport(@RequestBody report: Report): Report =
-            reportService.save(report)
+    fun createReport(@RequestBody report: Report): Report =
+            reportService.createReport(report)
 
     /**
      * Updates Report at a given ID.
@@ -52,6 +42,6 @@ class ReportController(private val reportService: ReportService) {
      * Returns result of the last executed report as an excel file.
      */
     @GetMapping("api/reportResult")
-    fun getResultExcelBlob(): ResponseEntity<*> =
+    fun exportReport(): ResponseEntity<*> =
             TODO()
 }
