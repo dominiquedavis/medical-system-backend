@@ -26,7 +26,7 @@ class SectionService(
         // Fetch Section object to which the Field will be bound
         val section: Section = findByID(sectionId) ?: throw EntityNotFoundException(NO_SECTION_WITH_ID + sectionId)
 
-        // Check if no field with this name
+        // Check if no formField with this name
         if (section.fields.any { it.name == fieldDTO.name }) {
             throw IllegalArgumentException(FIELD_EXISTS_WITH_NAME + fieldDTO.name)
         }
@@ -37,7 +37,7 @@ class SectionService(
         // Set excel column
         field.columnIdx = fieldService.getNextColumnIndex()
 
-        // Bind field to section
+        // Bind formField to section
         section.addField(field)
 
         // Persist newly created Field

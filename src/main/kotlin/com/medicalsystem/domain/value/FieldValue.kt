@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Row
 import javax.persistence.*
 
 /**
- * An abstract class providing common properties for all of the types of field values.
+ * An abstract class providing common properties for all of the types of formField values.
  * A FieldValue entity represents a single value for a specified Field for a specified Patient.
  *
  * @param T name of the stored value
@@ -106,5 +106,5 @@ abstract class FieldValue<T>(
             field?.possibleValues ?: throw IllegalStateException(FIELD_IS_NULL)
 
     override fun toString(): String =
-            "FieldValue(id=$id, field=${field?.id}, patient='${patient?.id}', value='$value')"
+            "FieldValue(id=$id, formField=${field?.id}, patient='${patient?.id}', value='$value')"
 }

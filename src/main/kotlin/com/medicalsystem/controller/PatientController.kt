@@ -24,14 +24,14 @@ class PatientController(private val patientService: PatientService) {
             patientService.create(patientId, formName)
 
     /**
-     * Returns a FormDTO aggregate with field values filled for a Patient with a given ID.
+     * Returns a FormDTO aggregate with formField values filled for a Patient with a given ID.
      */
     @GetMapping("{patientId}/patientForm")
     fun getForm(@PathVariable patientId: String): FormDTO =
             patientService.getFilledFormForPatient(patientId)
 
     /**
-     * Updates field values for a given Patient.
+     * Updates formField values for a given Patient.
      */
     @PutMapping("{patientId}/patientForm")
     fun updateForm(@PathVariable patientId: String, @RequestBody formDTO: FormDTO): FormDTO =

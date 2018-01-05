@@ -7,7 +7,7 @@ import java.util.*
  * An abstract class providing an ID and methods for comparing entities using this ID.
  * Every managed entity should extend this class.
  *
- * @param ID name of the ID field
+ * @param ID name of the ID formField
  */
 abstract class IdComparableEntity<ID>(@JsonIgnore var defaultId: ID? = null) {
     abstract var id: ID

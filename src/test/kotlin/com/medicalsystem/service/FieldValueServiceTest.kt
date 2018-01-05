@@ -66,7 +66,7 @@ class FieldValueServiceTest : TransactionalDatabaseClearableTest() {
     @Test
     fun testMultipleSelectFieldValues() {
         val unsavedOptions = mutableSetOf(Option("1", "2"), Option("3", "4"), Option("5", "6"))
-        val unsavedField = Field(name = "some field", type = FieldType.MULTIPLE_SELECT, possibleValues = unsavedOptions)
+        val unsavedField = Field(name = "some formField", type = FieldType.MULTIPLE_SELECT, possibleValues = unsavedOptions)
 
         val savedField = fieldService.save(unsavedField)
         val savedOptions = savedField.possibleValues.toList()

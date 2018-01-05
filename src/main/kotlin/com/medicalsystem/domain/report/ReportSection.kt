@@ -12,6 +12,6 @@ class ReportSection(
         var checked: Boolean = false,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
-        var fields: List<ReportField> = emptyList()
+        var fields: MutableList<ReportField> = mutableListOf()
 
 ) : LongIdComparableEntity()

@@ -1,9 +1,6 @@
 package com.medicalsystem.service
 
 import com.medicalsystem.converter.templatetodto.FieldToDTOConverter
-import com.medicalsystem.converter.templatetodto.FormToDTOConverter
-import com.medicalsystem.domain.dto.FormDTO
-import com.medicalsystem.domain.dto.SectionDTO
 import com.medicalsystem.domain.report.Report
 import com.medicalsystem.domain.report.ReportField
 import com.medicalsystem.domain.report.ReportResults
@@ -68,7 +65,7 @@ class ReportService(
 
         // Get ReportFields which should be included in the report
         val includedFields: List<ReportField> = report.sections.filter { it.checked }
-                .flatMap { it.fields }.filter { it.checked }
+                .flatMap { it.fields }.filter { it.isChecked }
 
         return reportResults
     }
@@ -89,9 +86,13 @@ class ReportService(
 
             // Add ReportFields to ReportSection
             val reportFields = commonFields.filter { it.section?.name == reportSection.name }
-                    .map { ReportField(field = it.id) }
+                    .map {
+                        val reportField = ReportField()
+                        reportField.formField = it.id
+                        reportField
+                    }
 
-            reportSection.fields = reportFields
+            reportSection.fields = reportFields.toMutableList()
 
             reportSection
         }

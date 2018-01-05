@@ -27,7 +27,7 @@ class FieldService(
         // Fetch current Field
         val currentField: Field = findByID(fieldId) ?: throw EntityNotFoundException(NO_FIELD_WITH_ID + fieldId)
 
-        // Convert given field DTO
+        // Convert given formField DTO
         val newField: Field = fieldConverter.convert(fieldDTO)
 
         // Update properties

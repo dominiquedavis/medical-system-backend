@@ -16,7 +16,7 @@ class FormSheet(sheet: Sheet, val form: Form) : Sheet by sheet {
     val maxNumberOfCells: Int = initMaxNumberOfCells()
 
     /**
-     * A mapping of field index to actual Field object.
+     * A mapping of formField index to actual Field object.
      * For caching purposes.
      */
     val fieldsIndices: Map<Int, Field> = initFieldsIndices()

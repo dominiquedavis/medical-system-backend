@@ -25,7 +25,7 @@ class Field(
 
     fun addPossibleValue(option: Option) {
         if (type != FieldType.SELECT && type != FieldType.MULTIPLE_SELECT) {
-            throw NotSupportedException("Cannot add possible values to a non-select field name")
+            throw NotSupportedException("Cannot add possible values to a non-select formField name")
         }
 
         possibleValues.add(option)

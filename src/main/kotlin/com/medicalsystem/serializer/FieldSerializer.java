@@ -6,11 +6,14 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.medicalsystem.converter.templatetodto.FieldToDTOConverter;
 import com.medicalsystem.domain.dto.FieldDTO;
 import com.medicalsystem.domain.template.Field;
+import com.medicalsystem.domain.template.Option;
 import com.medicalsystem.service.FieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class FieldSerializer extends JsonSerializer<Long> {
 
@@ -34,6 +37,16 @@ public class FieldSerializer extends JsonSerializer<Long> {
 
         FieldDTO fieldDTO = fieldConverter.convert(field);
 
-        jgen.writeObjectField("formField", fieldDTO);
+        jgen.writeStartObject();
+        jgen.writeNumberField("id", field.getId());
+        jgen.writeObjectField("name", field.getName());
+        jgen.writeObjectField("type", field.getType().name());
+        jgen.writeObjectField("values", new ArrayList<>());
+        jgen.writeObjectField("possibleValues", field.getPossibleValues().stream()
+                .map(Option::getValue)
+                .collect(Collectors.toList()));
+        jgen.writeEndObject();
+
+        System.out.println("wykonało się do chuja");
     }
 }

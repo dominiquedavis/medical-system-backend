@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component
 class CellImporter(private val fieldValueService: FieldValueService) {
 
     fun importCell(cell: Cell, formSheet: FormSheet, patient: Patient): List<ImportError> {
-        // Get field corresponding to this cell from the cached fields
+        // Get formField corresponding to this cell from the cached fields
         val field: Field = formSheet.fieldsIndices[cell.columnIndex] ?:
-                // Return error if no field found with a given index
+                // Return error if no formField found with a given index
                 return listOf(ImportError.noFieldWithColumnIndex(formSheet, cell))
 
         // Create FieldValue object of a corresponding name

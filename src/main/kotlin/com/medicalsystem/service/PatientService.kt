@@ -56,7 +56,7 @@ class PatientService(
     }
 
     /**
-     * Returns a FormDTO aggregate with field values filled for a Patient with a given ID.
+     * Returns a FormDTO aggregate with formField values filled for a Patient with a given ID.
      */
     fun getFilledFormForPatient(patientId: String): FormDTO {
         // Get Patient
@@ -69,7 +69,7 @@ class PatientService(
     }
 
     /**
-     * Updates field values for a given Patient.
+     * Updates formField values for a given Patient.
      */
     fun updateFormForPatient(patientId: String, formDTO: FormDTO): FormDTO {
         // Get Patient
