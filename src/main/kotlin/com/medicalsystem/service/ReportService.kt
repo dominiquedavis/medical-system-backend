@@ -10,6 +10,7 @@ import com.medicalsystem.domain.template.Form
 import com.medicalsystem.domain.template.Section
 import com.medicalsystem.exception.NO_FIELD_WITH_ID
 import com.medicalsystem.exception.NO_FORM_WITH_NAME
+import com.medicalsystem.executor.ReportExecutor
 import com.medicalsystem.repository.report.ReportRepository
 import org.springframework.stereotype.Service
 import javax.persistence.EntityNotFoundException
@@ -19,7 +20,7 @@ class ReportService(
         reportRepository: ReportRepository,
         private val formService: FormService,
         private val fieldService: FieldService,
-        private val fieldConverter: FieldToDTOConverter
+        private val reportExecutor: ReportExecutor
 ) : CRUDService<Report, Long>(reportRepository) {
 
     /**
@@ -51,8 +52,7 @@ class ReportService(
      */
     fun execute(report: Report): ReportResults {
         // Fetch Field to sort by
-        val sortField: Field = fieldService.findByID(report.sortByField) ?:
-                throw EntityNotFoundException(NO_FIELD_WITH_ID + report.sortByField)
+        val sortField: Field? = fieldService.findByID(report.sortByField)
 
         // Get Forms which should be included in the report
         val includedForms: List<Form> = report.includedForms.map {
@@ -60,14 +60,7 @@ class ReportService(
                     throw  EntityNotFoundException(NO_FORM_WITH_NAME + it)
         }
 
-        // Prepare ReportResults return object
-        val reportResults = ReportResults()
-
-        // Get ReportFields which should be included in the report
-        val includedFields: List<ReportField> = report.sections.filter { it.checked }
-                .flatMap { it.fields }.filter { it.isChecked }
-
-        return reportResults
+        return reportExecutor.executeReport(report, sortField, includedForms)
     }
 
     /**

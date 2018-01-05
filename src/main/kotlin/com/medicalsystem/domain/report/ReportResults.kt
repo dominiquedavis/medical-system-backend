@@ -1,5 +1,5 @@
 package com.medicalsystem.domain.report
 
-data class ReportResults(var resultInfo: MutableList<ReportCount> = mutableListOf()) {
-    val urlToBlob: String = "api/reportResult"
+data class ReportResults(var resultInfo: List<ReportCount> = emptyList()) {
+    val urlToBlob: String = "api/reports/result"
 }

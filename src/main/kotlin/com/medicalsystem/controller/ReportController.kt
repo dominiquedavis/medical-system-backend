@@ -2,13 +2,18 @@ package com.medicalsystem.controller
 
 import com.medicalsystem.domain.report.Report
 import com.medicalsystem.domain.report.ReportResults
+import com.medicalsystem.excel.exporter.ExcelExporter
 import com.medicalsystem.service.ReportService
+import org.springframework.core.io.InputStreamResource
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.io.File
+import java.io.FileInputStream
 
 @RestController
 @RequestMapping("api/reports")
-class ReportController(private val reportService: ReportService) {
+class ReportController(private val reportService: ReportService, private val excelExporter: ExcelExporter) {
 
     /**
      * Returns a list of all saved reports.
@@ -41,7 +46,15 @@ class ReportController(private val reportService: ReportService) {
     /**
      * Returns result of the last executed report as an excel file.
      */
-    @GetMapping("api/reportResult")
-    fun exportReport(): ResponseEntity<*> =
-            TODO()
+    @GetMapping("result")
+    fun exportReport(): ResponseEntity<*> {
+        excelExporter.exportToFile("data/dataExport.xlsx")
+        val file = File("data/dataExport.xlsx")
+        val resource = InputStreamResource(FileInputStream(file))
+
+        return ResponseEntity.ok()
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource)
+    }
 }

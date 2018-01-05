@@ -46,7 +46,5 @@ public class FieldSerializer extends JsonSerializer<Long> {
                 .map(Option::getValue)
                 .collect(Collectors.toList()));
         jgen.writeEndObject();
-
-        System.out.println("wykonało się do chuja");
     }
 }

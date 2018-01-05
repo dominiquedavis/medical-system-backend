@@ -13,6 +13,6 @@ public class FieldDeserializer extends JsonDeserializer<Long> {
     @Override
     public Long deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        return (Long) node.get("id").numberValue();
+        return (long) (int) node.get("id").numberValue();
     }
 }
