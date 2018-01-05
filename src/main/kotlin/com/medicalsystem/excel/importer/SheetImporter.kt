@@ -1,51 +1,37 @@
 package com.medicalsystem.excel.importer
 
-import com.medicalsystem.model.Field
-import com.medicalsystem.model.Form
-import com.medicalsystem.service.FieldService
+import com.medicalsystem.domain.template.Form
+import com.medicalsystem.excel.importer.result.ImportError
+import com.medicalsystem.exception.NO_FORM_WITH_SHEET_NAME
 import com.medicalsystem.service.FormService
-import com.medicalsystem.util.logger
-import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import javax.persistence.EntityNotFoundException
 
 @Component
-class SheetImporter @Autowired constructor(
-        val rowImporter: RowImporter,
-        val formService: FormService,
-        val fieldService: FieldService) {
+class SheetImporter(private val rowImporter: RowImporter, private val formService: FormService) {
 
-    val numberOfHeaderRows = 2
+    fun importSheet(sheet: Sheet): List<ImportError> {
+        val formSheet: FormSheet = sheet.bindToForm()
 
-    fun importToDatabase(sheet: Sheet) {
-        val sheetIndex: Int = sheet.workbook.getSheetIndex(sheet)
-        val form: Form = formService.getBySheetIndex(sheetIndex) ?:
-                throw ExcelImportException("No form with sheet index: $sheetIndex")
-
-        if (sheet.physicalNumberOfRows <= numberOfHeaderRows) {
-            logger().warn("Sheet contains no data rows: ${sheet.sheetName}")
-            return
+        if (formSheet.containsNoDataRows) {
+            return listOf(ImportError.noDataRowsInSheet(formSheet))
         }
 
-        val fields: Map<Int, Field> = fieldService.getColumnIndexToFieldMap(form)
-
-        sheet.rowIterator()
-                .asSequence()
-                .drop(numberOfHeaderRows)
-                .forEach {
-                    try {
-                        rowImporter.importToDatabase(it, form, fields, getMaxNumberOfCells(sheet))
-                    }  catch (e: ExcelImportException) {
-                        logger().error(e)
-                        logger().warn("Skipping row ${it.sheet.indexOf(it)}")
-                    }
-                }
+        // Iterate over rows
+        return formSheet.rowIterator().asSequence()
+                // Skip header rows
+                .drop(formSheet.numberOfHeaderRows)
+                // Import each row
+                .map { rowImporter.importRow(it, formSheet) }
+                // Aggregate import results
+                .flatten().toList()
     }
 
-    private fun getMaxNumberOfCells(sheet: Sheet): Int {
-        val it: Iterator<Row> = sheet.rowIterator()
-        it.next()
-        return it.next().lastCellNum.toInt()
+    private fun Sheet.bindToForm(): FormSheet {
+        val form: Form = formService.findBySheetName(sheetName) ?:
+                throw EntityNotFoundException(NO_FORM_WITH_SHEET_NAME + sheetName)
+
+        return FormSheet(this, form)
     }
 }

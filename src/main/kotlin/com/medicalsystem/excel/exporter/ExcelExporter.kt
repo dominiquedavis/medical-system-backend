@@ -1,7 +1,7 @@
 package com.medicalsystem.excel.exporter
 
-import com.medicalsystem.model.Form
-import com.medicalsystem.model.Patient
+import com.medicalsystem.domain.Patient
+import com.medicalsystem.domain.template.Form
 import com.medicalsystem.service.FieldValueService
 import com.medicalsystem.service.FormService
 import com.medicalsystem.service.PatientService
@@ -10,22 +10,23 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.FileOutputStream
 
 @Component
-class ExcelExporter @Autowired constructor(
-        val formService: FormService,
-        val patientService: PatientService,
-        val fieldValueService: FieldValueService) {
+class ExcelExporter(
+        private val formService: FormService,
+        private val patientService: PatientService,
+        private val fieldValueService: FieldValueService
+) {
 
     fun exportToFile(path: String) {
         val workbook: Workbook = XSSFWorkbook()
 
-        formService.getAll()
-                .sortedBy { it.sheetIndex }
-                .forEach { exportForm(it, workbook.createSheet(it.name)) }
+        formService.findAll()
+                .sortedBy { it.sheetName }
+                .reversed()
+                .forEach { exportForm(it, workbook.createSheet(it.sheetName)) }
 
         saveWorkbook(workbook, path)
 
@@ -50,21 +51,20 @@ class ExcelExporter @Autowired constructor(
         // Create headers for the rest of the fields
         form.sections
                 .flatMap { it.fields }
-                .forEach { secondHeader.createCell(it.columnIndex).setCellValue(it.name) }
+                .forEach { secondHeader.createCell(it.columnIdx).setCellValue(it.name) }
     }
 
     private fun exportData(form: Form, sheet: Sheet) {
-        val patients: List<Patient> = patientService.getAllByForm(form).sortedWith(compareBy { it.id })
+        val patients: List<Patient> = patientService.findAllByForm(form).sortedWith(compareBy { it.id })
         var rowIndex = 2
         patients.forEach { exportPatient(it, sheet.createRow(rowIndex++)) }
     }
 
     private fun exportPatient(patient: Patient, row: Row) {
         row.createCell(0).setCellValue(patient.id)
-        fieldValueService.getAllFieldValuesForPatient(patient).forEach { it.createCell(row) }
+        fieldValueService.findAllForPatient(patient).forEach { it.exportToExcelCell(row) }
     }
 
     private fun saveWorkbook(workbook: Workbook, path: String) =
             FileOutputStream(path).use { workbook.write(it) }
-
 }

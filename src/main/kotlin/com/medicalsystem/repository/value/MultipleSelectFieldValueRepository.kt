@@ -1,5 +1,0 @@
-package com.medicalsystem.repository.value
-
-import com.medicalsystem.model.value.MultipleSelectFieldValue
-
-interface MultipleSelectFieldValueRepository : FieldValueRepository<MultipleSelectFieldValue>

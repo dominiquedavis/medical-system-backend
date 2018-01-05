@@ -1,14 +1,7 @@
 package com.medicalsystem.security
 
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.core.Authentication
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import java.io.IOException
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import com.medicalsystem.model.ApplicationUser
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.medicalsystem.domain.ApplicationUser
 import com.medicalsystem.security.SecurityConstants.EXPIRATION_TIME
 import com.medicalsystem.security.SecurityConstants.HEADER_STRING
 import com.medicalsystem.security.SecurityConstants.LOGIN_URL
@@ -16,9 +9,16 @@ import com.medicalsystem.security.SecurityConstants.SECRET
 import com.medicalsystem.security.SecurityConstants.SIGNATURE_ALGORITHM
 import com.medicalsystem.security.SecurityConstants.TOKEN_PREFIX
 import io.jsonwebtoken.Jwts
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import java.io.IOException
 import java.util.*
 import javax.servlet.FilterChain
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 
 class JWTAuthenticationFilter(private val authManager: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {

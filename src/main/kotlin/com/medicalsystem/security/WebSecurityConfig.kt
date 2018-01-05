@@ -19,9 +19,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-class WebSecurityConfig @Autowired constructor(
+class WebSecurityConfig(
         val userDetailsService: UserDetailsService,
-        val passwordEncoder: BCryptPasswordEncoder) : WebSecurityConfigurerAdapter() {
+        val passwordEncoder: BCryptPasswordEncoder
+) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable()

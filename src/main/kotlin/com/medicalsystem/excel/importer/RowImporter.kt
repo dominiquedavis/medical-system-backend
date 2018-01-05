@@ -1,39 +1,45 @@
 package com.medicalsystem.excel.importer
 
-import com.medicalsystem.model.Field
-import com.medicalsystem.model.Form
-import com.medicalsystem.model.Patient
+import com.medicalsystem.domain.Patient
+import com.medicalsystem.excel.getAsString
+import com.medicalsystem.excel.importer.result.ImportError
 import com.medicalsystem.service.PatientService
-import com.medicalsystem.util.ExcelUtils
-import com.medicalsystem.util.logger
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class RowImporter @Autowired constructor(
-        val patientService: PatientService,
-        val cellImporter: CellImporter) {
+class RowImporter(private val patientService: PatientService, private val cellImporter: CellImporter) {
 
-    fun importToDatabase(row: Row, form: Form, fields: Map<Int, Field>, maxNumberOfCells: Int) {
+    fun importRow(row: Row, formSheet: FormSheet): List<ImportError> {
         if (row.physicalNumberOfCells == 0) {
-            logger().warn("No cells found in row: ${row.sheet.indexOf(row)}")
-            return
+            return listOf(ImportError.noDataCellsInRow(formSheet, row))
         }
 
-        val patient: Patient = patientFromRow(row, form)
+        // Extract patient ID
+        val patientId = row.getPatientId()
+        if (patientId == "") {
+            return listOf(ImportError.patientIdEmpty(formSheet, row))
+        }
 
-        (1 until maxNumberOfCells)
+        // Check if patient exists
+        if (patientService.exists(patientId)) {
+            return listOf(ImportError.patientExists(formSheet, row, patientId))
+        }
+
+        // Create and save Patient object
+        val patient = patientService.save(Patient(patientId, formSheet.form))
+
+        // Process the rest of the cells
+        return (1 until formSheet.maxNumberOfCells)
+                // Get cell or create empty cell if one does not exist at given index
                 .map { row.getCell(it) ?: row.createCell(it) }
-                .forEach { cellImporter.importToDatabase(it, patient, fields) }
+                // Import each cell and aggregate results
+                .flatMap { cellImporter.importCell(it, formSheet, patient) }
     }
 
-    fun patientFromRow(row: Row, form: Form): Patient {
-        val idCell: Cell = row.iterator().next()
-        val patientId: String = ExcelUtils.asString(idCell)
-        if (patientId.isEmpty()) throw ExcelImportException("Patient ID is empty")
-        return patientService.create(patientId, form) ?:
-                throw ExcelImportException("Patient exists with ID: $patientId")
+    private fun Row.getPatientId(): String {
+        val cellWithId: Cell = this.iterator().next()
+        return cellWithId.getAsString()
     }
 }
