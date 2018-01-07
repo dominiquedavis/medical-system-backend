@@ -27,7 +27,22 @@ class MedicalSystemBackendApplication : ApplicationRunner {
     override fun run(agrs: ApplicationArguments?) {
         templateInitializer.loadTemplateFromConfig()
         excelImporter.importToDatabase("data/baza2_test.xlsx")
-        userService.register(ApplicationUser(username = "admin", password = "admin", admin = true))
+
+        userService.register(ApplicationUser(
+                fullName = "Administrator systemu", username = "admin", email = "administrator@medicalsystem.net",
+                password = "admin", admin = true, status = "Aktywny"))
+
+        userService.register(ApplicationUser(
+                fullName = "Mikołaj Sieniawski", username = "msieniawski", email = "msieniawski@gmail.com",
+                password = "msieniawski", admin = true, status = "Aktywny"))
+
+        userService.register(ApplicationUser(
+                fullName = "Tomasz Radwan", username = "tradwan", email = "trwadwan@gmail.com",
+                password = "tradwan", admin = false, status = "Aktywny"))
+
+        userService.register(ApplicationUser(
+                fullName = "Jakub Piekarz", username = "jpiekarz", email = "jpiekarz@gmail.com",
+                password = "jpiekarz", admin = false, status = "Aktywny"))
     }
 
     @Bean

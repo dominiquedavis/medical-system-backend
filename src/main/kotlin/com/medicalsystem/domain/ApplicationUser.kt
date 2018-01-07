@@ -24,7 +24,7 @@ data class ApplicationUser(
         var password: String = "",
 
         @Column(name = "STATUS")
-        var status: String = "",
+        var status: String = "waiting",
 
         @Column(name = "ADMIN")
         var admin: Boolean = false

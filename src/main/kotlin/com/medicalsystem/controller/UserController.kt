@@ -19,7 +19,7 @@ class UserController(private val userService: ApplicationUserService) {
      */
     @GetMapping("api/users/statusList")
     fun getStatusList(): List<String> =
-            listOf("accepted", "waiting")
+            listOf("Aktywny", "Oczekujący")
 
     /**
      * Changes status of a given user.

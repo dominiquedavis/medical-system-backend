@@ -2,6 +2,7 @@ package com.medicalsystem.security
 
 import com.medicalsystem.security.SecurityConstants.LOGIN_URL
 import com.medicalsystem.security.SecurityConstants.REGISTER_URL
+import com.medicalsystem.service.ApplicationUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
@@ -20,8 +21,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class WebSecurityConfig(
-        val userDetailsService: UserDetailsService,
-        val passwordEncoder: BCryptPasswordEncoder
+        private val userDetailsService: UserDetailsService,
+        private val passwordEncoder: BCryptPasswordEncoder,
+        private val userService: ApplicationUserService
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
@@ -32,7 +34,7 @@ class WebSecurityConfig(
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthorizationFilter(authenticationManager()))
-                .addFilter(JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(JWTAuthenticationFilter(authenticationManager(), userService))
                 // This disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

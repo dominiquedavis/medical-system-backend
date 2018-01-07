@@ -8,6 +8,7 @@ import com.medicalsystem.security.SecurityConstants.LOGIN_URL
 import com.medicalsystem.security.SecurityConstants.SECRET
 import com.medicalsystem.security.SecurityConstants.SIGNATURE_ALGORITHM
 import com.medicalsystem.security.SecurityConstants.TOKEN_PREFIX
+import com.medicalsystem.service.ApplicationUserService
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -20,8 +21,10 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
-class JWTAuthenticationFilter(private val authManager: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
+class JWTAuthenticationFilter(
+        private val authManager: AuthenticationManager,
+        private var userService: ApplicationUserService
+) : UsernamePasswordAuthenticationFilter() {
 
     init {
         setFilterProcessesUrl(LOGIN_URL)
@@ -32,13 +35,16 @@ class JWTAuthenticationFilter(private val authManager: AuthenticationManager) : 
                 val credentials: ApplicationUser =
                         ObjectMapper().readValue(request?.inputStream, ApplicationUser::class.java)
 
+                if (!credentials.isAccepted()) {
+                    throw IllegalAccessError("Konto użytkownika nie zostało jeszcze zaakceptowane.")
+                }
+
                 authManager.authenticate(
                         UsernamePasswordAuthenticationToken(
                                 credentials.username,
                                 credentials.password,
-                                ArrayList()
-                        )
-                )
+                                ArrayList()))
+
             } catch (e: IOException) {
                 throw RuntimeException(e)
             }
@@ -55,5 +61,12 @@ class JWTAuthenticationFilter(private val authManager: AuthenticationManager) : 
                 .compact()
 
         response?.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
+    }
+
+    private fun ApplicationUser.isAccepted(): Boolean {
+        userService.findByUsername(this.username)?.let {
+            return it.status == "Aktywny"
+        }
+        return false
     }
 }
