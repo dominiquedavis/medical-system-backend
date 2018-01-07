@@ -99,6 +99,14 @@ class MultipleSelectFieldValue(
         }
     }
 
+    override fun compareToOther(other: FieldValue<*>): Int =
+            if (other is MultipleSelectFieldValue) {
+                this.value.joinToString("") { it.value }
+                        .compareTo(other.value.joinToString("") { it.value })
+            } else {
+                0
+            }
+
     private fun addByKey(key: String) {
         value.add(getPossibleValueByKey(key))
     }

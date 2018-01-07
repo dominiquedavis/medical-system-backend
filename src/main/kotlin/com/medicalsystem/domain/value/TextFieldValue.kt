@@ -76,4 +76,11 @@ class TextFieldValue(override var value: String? = null) : FieldValue<String?>()
             null -> throw IllegalStateException("ConditionType is null")
         }
     }
+
+    override fun compareToOther(other: FieldValue<*>): Int =
+        if (other is TextFieldValue) {
+            this.value?.compareTo(other.value ?: "") ?: 0
+        } else {
+            0
+        }
 }

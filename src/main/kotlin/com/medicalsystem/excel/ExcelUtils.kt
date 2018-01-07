@@ -17,10 +17,8 @@ fun Cell.getAsString(): String = formatter.formatCellValue(this).trim()
  * Makes the cell display dates properly.
  */
 fun Cell.setStyleAsDate() {
-    if (dateCellStyle == null) {
-        val workbook: Workbook = this.row.sheet.workbook
-        dateCellStyle = workbook.createCellStyle()
-        dateCellStyle!!.dataFormat = workbook.creationHelper.createDataFormat().getFormat("dd.mm.yyyy")
-    }
+    val workbook: Workbook = this.row.sheet.workbook
+    dateCellStyle = workbook.createCellStyle()
+    dateCellStyle!!.dataFormat = workbook.creationHelper.createDataFormat().getFormat("dd.mm.yyyy")
     this.cellStyle = dateCellStyle!!
 }

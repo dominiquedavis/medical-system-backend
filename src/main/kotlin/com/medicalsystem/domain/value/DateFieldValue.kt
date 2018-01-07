@@ -86,4 +86,11 @@ class DateFieldValue(override var value: LocalDate? = null) : FieldValue<LocalDa
             null -> throw IllegalStateException("ConditionType is null")
         }
     }
+
+    override fun compareToOther(other: FieldValue<*>): Int =
+            if (other is DateFieldValue) {
+                this.value?.compareTo(other.value ?: LocalDate.MAX) ?: 0
+            } else {
+                0
+            }
 }

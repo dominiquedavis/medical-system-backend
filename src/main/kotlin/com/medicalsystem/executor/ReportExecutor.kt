@@ -43,7 +43,7 @@ class ReportExecutor(
         }
 
         // Set data in ExcelReportGenerator (to generate an excel file later)
-        excelReportGenerator.excelReportInfo = ExcelReportInfo(formToPatientsMeetingCriteria, reportFields)
+        excelReportGenerator.excelReportInfo = ExcelReportInfo(formToPatientsMeetingCriteria, reportFields, sortField)
 
         return ReportResults(resultInfo = resultInfo)
     }

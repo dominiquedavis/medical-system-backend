@@ -117,4 +117,6 @@ abstract class FieldValue<T>(
 
     override fun toString(): String =
             "FieldValue(id=$id, formField=${field?.id}, patient='${patient?.id}', value='$value')"
+
+    abstract fun compareToOther(other: FieldValue<*>): Int
 }

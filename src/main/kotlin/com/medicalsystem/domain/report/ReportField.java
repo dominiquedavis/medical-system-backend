@@ -75,6 +75,6 @@ public class ReportField {
     @Override
     public String toString() {
         return String.format("ReportField(id=%d, checked=%s, formField=%d, condType=%s, condVal=%s)",
-                id, checked, formField, conditionType.name(), conditionValue.stream().collect(Collectors.joining(", ")));
+                id, checked, formField, conditionType, conditionValue);
     }
 }

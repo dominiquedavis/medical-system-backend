@@ -69,7 +69,14 @@ class ExcelReportGenerator(private val fieldService: FieldService, private val f
 
     private fun exportData(form: Form, sheet: Sheet, fields: List<Field>, patients: List<Patient>) {
         var rowIndex = 2
-        patients.sortedBy { it.id }.forEach { exportPatient(it, sheet.createRow(rowIndex++), fields) }
+        patients.sortedWith(Comparator { p1, p2 ->
+            excelReportInfo?.sortField?.let {
+                val fv1 = fieldValueService.findByFieldAndPatientByNameNoCreate(it.name, p1) ?: throw EntityNotFoundException(NO_FIELD_VALUE_FOR_FIELD_AND_PATIENT + "$it $p1")
+                val fv2 = fieldValueService.findByFieldAndPatientByNameNoCreate(it.name, p2) ?: throw EntityNotFoundException(NO_FIELD_VALUE_FOR_FIELD_AND_PATIENT + "$it $p2")
+                return@Comparator fv1.compareToOther(fv2)
+            }
+            return@Comparator p1.id.compareTo(p2.id)
+        }).forEach { exportPatient(it, sheet.createRow(rowIndex++), fields) }
     }
 
     private fun exportPatient(patient: Patient, row: Row, fields: List<Field>) {

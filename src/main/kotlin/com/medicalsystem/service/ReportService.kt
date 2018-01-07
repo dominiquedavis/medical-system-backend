@@ -50,7 +50,7 @@ class ReportService(
      */
     fun execute(report: Report): ReportResults {
         // Fetch Field to sort by
-        val sortField: Field? = fieldService.findByID(report.sortByField)
+        val sortField: Field? = getSortField(report)
 
         // Get Forms which should be included in the report
         val includedForms: List<Form> = report.includedForms.map {
@@ -129,5 +129,15 @@ class ReportService(
             }
         }
         return true
+    }
+
+    private fun getSortField(report: Report): Field? {
+        val reportFieldId: Long = report.sortByField
+        val reportField: ReportField? = report.sections.flatMap { it.fields }.find { it.id == reportFieldId }
+        reportField?.let {
+            val fieldId = it.formField
+            return fieldService.findByID(fieldId)
+        }
+        return null
     }
 }

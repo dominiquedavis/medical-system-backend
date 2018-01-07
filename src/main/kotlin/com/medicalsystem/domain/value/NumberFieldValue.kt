@@ -86,4 +86,11 @@ class NumberFieldValue(override var value: Double? = null) : FieldValue<Double?>
             null -> throw IllegalStateException("ConditionType is null")
         }
     }
+
+    override fun compareToOther(other: FieldValue<*>): Int =
+            if (other is NumberFieldValue) {
+                this.value?.compareTo(other.value ?: 0.0) ?: 0
+            } else {
+                0
+            }
 }

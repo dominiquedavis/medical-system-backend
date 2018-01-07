@@ -91,4 +91,11 @@ class SelectFieldValue(
             null -> throw IllegalStateException("ConditionType is null")
         }
     }
+
+    override fun compareToOther(other: FieldValue<*>): Int =
+            if (other is SelectFieldValue) {
+                this.value?.value?.compareTo(other.value?.value ?: "") ?: 0
+            } else {
+                0
+            }
 }
