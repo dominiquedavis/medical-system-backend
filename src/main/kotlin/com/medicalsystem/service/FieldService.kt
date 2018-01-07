@@ -35,11 +35,8 @@ class FieldService(
         currentField.type = newField.type
         currentField.possibleValues = newField.possibleValues
 
-        // Update possible values
-
-
         // Persist updated object
-        save(newField)
+        save(currentField)
 
         // Update ID of the returned object
         fieldDTO.id = fieldId
