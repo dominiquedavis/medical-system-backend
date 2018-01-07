@@ -26,7 +26,8 @@ class MedicalSystemBackendApplication : ApplicationRunner {
 
     override fun run(agrs: ApplicationArguments?) {
         templateInitializer.loadTemplateFromConfig()
-        excelImporter.importToDatabase("data/baza2_test.xlsx")
+        //excelImporter.importToDatabase("data/baza2_test.xlsx")
+        excelImporter.importToDatabase("data/baza2.xlsx")
 
         userService.register(ApplicationUser(
                 fullName = "Administrator", username = "admin", email = "administrator@medicalsystem.net",
