@@ -81,12 +81,12 @@ class ReportService(
                         val reportField = ReportField()
                         reportField.formField = it.id
                         reportField
-                    }
+                    }.sortedBy { it.formField }
 
             reportSection.fields = reportFields.toMutableList()
 
             reportSection
-        }
+        }.sortedBy { it.id }
 
         report.sections = reportSections
     }

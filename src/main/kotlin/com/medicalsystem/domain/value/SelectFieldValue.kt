@@ -52,11 +52,15 @@ class SelectFieldValue(
         val condValues: List<String> = reportField.conditionValue
 
         if (condValues.isEmpty()) {
-            throw IllegalArgumentException("Provided list is empty: $reportField")
+            //throw IllegalArgumentException("Provided list is empty: $reportField")
         }
 
         if (this.value == null) {
             logger().error("FieldValue is null")
+        }
+
+        if (this.value == null) {
+            return true
         }
 
         val stringValue = this.value!!.value
@@ -92,7 +96,7 @@ class SelectFieldValue(
                 val arg = condValues.first()
                 return stringValue != arg
             }
-            null -> throw IllegalStateException("ConditionType is null")
+            null -> return true
         }
     }
 
