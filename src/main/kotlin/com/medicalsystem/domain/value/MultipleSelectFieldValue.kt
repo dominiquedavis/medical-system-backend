@@ -95,6 +95,9 @@ class MultipleSelectFieldValue(
                 val arg = condValues.first()
                 return stringValues.contains(arg)
             }
+            ConditionType.NOT -> {
+                return stringValues != condValues
+            }
             null -> throw IllegalStateException("ConditionType is null")
         }
     }

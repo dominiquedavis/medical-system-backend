@@ -1,6 +1,7 @@
 package com.medicalsystem.domain.value
 
 import com.medicalsystem.domain.dto.FieldDTO
+import com.medicalsystem.domain.report.ConditionType
 import com.medicalsystem.domain.report.ConditionType.EQUAL
 import com.medicalsystem.domain.report.ConditionType.BIGGER
 import com.medicalsystem.domain.report.ConditionType.SMALLER
@@ -72,6 +73,10 @@ class TextFieldValue(override var value: String? = null) : FieldValue<String?>()
             CONTAINS -> {
                 val arg = condValues.first()
                 return this.value!!.contains(arg)
+            }
+            ConditionType.NOT -> {
+                val arg = condValues.first()
+                return this.value != arg
             }
             null -> throw IllegalStateException("ConditionType is null")
         }

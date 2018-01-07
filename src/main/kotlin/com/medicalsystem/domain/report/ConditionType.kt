@@ -5,5 +5,6 @@ enum class ConditionType {
     BIGGER,
     SMALLER,
     BETWEEN,
-    CONTAINS
+    CONTAINS,
+    NOT
 }

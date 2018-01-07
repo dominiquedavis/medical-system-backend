@@ -88,6 +88,10 @@ class SelectFieldValue(
                 val arg = condValues.first()
                 return stringValue.contains(arg)
             }
+            ConditionType.NOT -> {
+                val arg = condValues.first()
+                return stringValue != arg
+            }
             null -> throw IllegalStateException("ConditionType is null")
         }
     }

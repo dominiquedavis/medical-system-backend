@@ -83,6 +83,10 @@ class DateFieldValue(override var value: LocalDate? = null) : FieldValue<LocalDa
             ConditionType.CONTAINS -> {
                 return false
             }
+            ConditionType.NOT -> {
+                val arg = stringToLocalDate(condValues.first())
+                return this.value != arg
+            }
             null -> throw IllegalStateException("ConditionType is null")
         }
     }

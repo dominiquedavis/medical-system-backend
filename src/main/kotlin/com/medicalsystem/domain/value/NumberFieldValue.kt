@@ -83,6 +83,10 @@ class NumberFieldValue(override var value: Double? = null) : FieldValue<Double?>
             ConditionType.CONTAINS -> {
                 return false
             }
+            ConditionType.NOT -> {
+                val arg = condValues.first().toDouble()
+                return this.value != arg
+            }
             null -> throw IllegalStateException("ConditionType is null")
         }
     }
