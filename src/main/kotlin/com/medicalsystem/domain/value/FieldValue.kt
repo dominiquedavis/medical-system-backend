@@ -3,6 +3,7 @@ package com.medicalsystem.domain.value
 import com.medicalsystem.domain.Patient
 import com.medicalsystem.domain.dto.FieldDTO
 import com.medicalsystem.domain.id.LongIdComparableEntity
+import com.medicalsystem.domain.report.ReportField
 import com.medicalsystem.domain.template.Field
 import com.medicalsystem.domain.template.FieldType
 import com.medicalsystem.domain.template.FieldType.*
@@ -60,6 +61,10 @@ abstract class FieldValue<T>(
      */
     fun exportToExcelCell(row: Row) {
         val cellIndex: Int = field?.columnIdx ?: throw IllegalStateException(FIELD_IS_NULL)
+        exportToExcelCell(row, cellIndex)
+    }
+
+    fun exportToExcelCell(row: Row, cellIndex: Int) {
         val cell: Cell = row.createCell(cellIndex)
         fillCellWithValue(cell)
     }
@@ -97,6 +102,11 @@ abstract class FieldValue<T>(
      */
     protected fun getPossibleValueByValue(value: String): Option =
             getPossibleValues().find { it.value == value } ?: throw NoSuchElementException(NO_OPTION_WITH_VALUE + "$field $value")
+
+    /**
+     * Returns true if field value meets contrains of the given ReportField
+     */
+    abstract fun meetsCriteria(reportField: ReportField): Boolean
 
     /**
      * Returns a set of possible values of the associated Field.

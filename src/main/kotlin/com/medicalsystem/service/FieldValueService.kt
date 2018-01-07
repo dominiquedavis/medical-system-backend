@@ -24,4 +24,16 @@ class FieldValueService(private val fieldValueRepository: FieldValueRepository) 
 
         return save(emptyFieldValue)
     }
+
+    /**
+     * Same as above but not creating empty value if not found
+     */
+    fun findByFieldAndPatientNoCreate(field: Field, patient: Patient): FieldValue<*>? =
+            fieldValueRepository.findByFieldAndPatient(field, patient)
+
+    /**
+     * Same as above but not creating empty value if not found and by name
+     */
+    fun findByFieldAndPatientByNameNoCreate(fieldName: String, patient: Patient): FieldValue<*>? =
+            fieldValueRepository.findByFieldNameAndPatient(fieldName, patient)
 }

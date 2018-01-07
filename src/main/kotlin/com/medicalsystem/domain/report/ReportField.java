@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class ReportField {
@@ -69,5 +70,11 @@ public class ReportField {
 
     public void setConditionValue(List<String> conditionValue) {
         this.conditionValue = conditionValue;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ReportField(id=%d, checked=%s, formField=%d, condType=%s, condVal=%s)",
+                id, checked, formField, conditionType.name(), conditionValue.stream().collect(Collectors.joining(", ")));
     }
 }

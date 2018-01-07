@@ -1,7 +1,10 @@
 package com.medicalsystem.domain.value
 
 import com.medicalsystem.domain.dto.FieldDTO
+import com.medicalsystem.domain.report.ConditionType
+import com.medicalsystem.domain.report.ReportField
 import com.medicalsystem.domain.template.Option
+import com.medicalsystem.util.logger
 import org.apache.poi.ss.usermodel.Cell
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -43,5 +46,49 @@ class SelectFieldValue(
 
     override fun updateValue(values: List<Any>) {
         this.value = getPossibleValueByValue(values.first() as String)
+    }
+
+    override fun meetsCriteria(reportField: ReportField): Boolean {
+        val condValues: List<String> = reportField.conditionValue
+
+        if (condValues.isEmpty()) {
+            throw IllegalArgumentException("Provided list is empty: $reportField")
+        }
+
+        if (this.value == null) {
+            logger().error("FieldValue is null")
+        }
+
+        val stringValue = this.value!!.value
+
+        when (reportField.conditionType) {
+            ConditionType.EQUAL -> {
+                val arg = condValues.first()
+                return stringValue == arg
+            }
+            ConditionType.BIGGER -> {
+                val arg = condValues.first()
+                return stringValue > arg
+            }
+            ConditionType.SMALLER -> {
+                val arg = condValues.first()
+                return stringValue < arg
+            }
+            ConditionType.BETWEEN -> {
+                if (condValues.size < 2) {
+                    throw IllegalArgumentException("Not enough condition values (should be 2): is ${condValues.size}")
+                }
+
+                val arg1 = condValues[0]
+                val arg2 = condValues[1]
+
+                return (stringValue in arg1..arg2) || (stringValue in arg2..arg1)
+            }
+            ConditionType.CONTAINS -> {
+                val arg = condValues.first()
+                return stringValue.contains(arg)
+            }
+            null -> throw IllegalStateException("ConditionType is null")
+        }
     }
 }

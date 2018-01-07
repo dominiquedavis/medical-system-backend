@@ -10,4 +10,6 @@ interface FieldValueRepository : JpaRepository<FieldValue<*>, Long> {
     fun findAllByPatient(patient: Patient): List<FieldValue<*>>
 
     fun findByFieldAndPatient(field: Field, patient: Patient): FieldValue<*>?
+
+    fun findByFieldNameAndPatient(fieldName: String, patient: Patient): FieldValue<*>?
 }

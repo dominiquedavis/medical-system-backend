@@ -1,6 +1,5 @@
 package com.medicalsystem.service
 
-import com.medicalsystem.converter.templatetodto.FieldToDTOConverter
 import com.medicalsystem.domain.report.Report
 import com.medicalsystem.domain.report.ReportField
 import com.medicalsystem.domain.report.ReportResults
@@ -8,7 +7,6 @@ import com.medicalsystem.domain.report.ReportSection
 import com.medicalsystem.domain.template.Field
 import com.medicalsystem.domain.template.Form
 import com.medicalsystem.domain.template.Section
-import com.medicalsystem.exception.NO_FIELD_WITH_ID
 import com.medicalsystem.exception.NO_FORM_WITH_NAME
 import com.medicalsystem.executor.ReportExecutor
 import com.medicalsystem.repository.report.ReportRepository
@@ -98,11 +96,11 @@ class ReportService(
      */
     private fun getCommonSections(forms: List<Form>): List<Section> {
         val allSections: List<Section> = forms.flatMap { it.sections }
-        return allSections.filter { it.presentInEveryForm(forms) }
+        return allSections.filter { it.presentInEveryForm(forms) }.distinctBy { it.name }
     }
 
     /**
-     * Checks if section is preset in every form (identified by name)
+     * Checks if section is present in every form (identified by name)
      */
     private fun Section.presentInEveryForm(forms: List<Form>): Boolean {
         for (form in forms) {
@@ -118,7 +116,7 @@ class ReportService(
      */
     private fun getCommonFields(forms: List<Form>): List<Field> {
         val allFields: List<Field> = forms.flatMap { it.sections }.flatMap { it.fields }
-        return allFields.filter { it.presentInEveryForm(forms) }
+        return allFields.filter { it.presentInEveryForm(forms) }.distinctBy { it.name }
     }
 
     /**

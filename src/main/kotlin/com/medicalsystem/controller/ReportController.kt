@@ -2,7 +2,7 @@ package com.medicalsystem.controller
 
 import com.medicalsystem.domain.report.Report
 import com.medicalsystem.domain.report.ReportResults
-import com.medicalsystem.excel.exporter.ExcelExporter
+import com.medicalsystem.executor.ExcelReportGenerator
 import com.medicalsystem.service.ReportService
 import org.springframework.core.io.InputStreamResource
 import org.springframework.http.MediaType
@@ -13,7 +13,10 @@ import java.io.FileInputStream
 
 @RestController
 @RequestMapping("api/reports")
-class ReportController(private val reportService: ReportService, private val excelExporter: ExcelExporter) {
+class ReportController(
+        private val reportService: ReportService,
+        private val excelReportGenerator: ExcelReportGenerator
+) {
 
     /**
      * Returns a list of all saved reports.
@@ -48,7 +51,7 @@ class ReportController(private val reportService: ReportService, private val exc
      */
     @GetMapping("result")
     fun exportReport(): ResponseEntity<*> {
-        excelExporter.exportToFile("data/dataExport.xlsx")
+        excelReportGenerator.generateExcelFile("data/dataExport.xlsx")
         val file = File("data/dataExport.xlsx")
         val resource = InputStreamResource(FileInputStream(file))
 

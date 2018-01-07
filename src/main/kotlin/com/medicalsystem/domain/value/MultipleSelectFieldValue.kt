@@ -1,8 +1,12 @@
 package com.medicalsystem.domain.value
 
 import com.medicalsystem.domain.dto.FieldDTO
+import com.medicalsystem.domain.report.ConditionType
+import com.medicalsystem.domain.report.ReportField
 import com.medicalsystem.domain.template.Option
+import com.medicalsystem.util.logger
 import org.apache.poi.ss.usermodel.Cell
+import javax.naming.OperationNotSupportedException
 import javax.persistence.*
 
 @Entity
@@ -63,6 +67,36 @@ class MultipleSelectFieldValue(
 
     override fun updateValue(values: List<Any>) {
         this.value = values.map { getPossibleValueByValue(it as String) }.toMutableSet()
+    }
+
+    override fun meetsCriteria(reportField: ReportField): Boolean {
+        val condValues: List<String> = reportField.conditionValue
+
+        if (condValues.isEmpty()) {
+            throw IllegalArgumentException("Provided list is empty: $reportField")
+        }
+
+        val stringValues: List<String> = this.value.map { it.value }
+
+        when (reportField.conditionType) {
+            ConditionType.EQUAL -> {
+                return stringValues == condValues
+            }
+            ConditionType.BIGGER -> {
+                throw OperationNotSupportedException("Cannot apply BIGGER to a multiple select field")
+            }
+            ConditionType.SMALLER -> {
+                throw OperationNotSupportedException("Cannot apply SMALLER to a multiple select field")
+            }
+            ConditionType.BETWEEN -> {
+                throw OperationNotSupportedException("Cannot apply BETWEEN to a multiple select field")
+            }
+            ConditionType.CONTAINS -> {
+                val arg = condValues.first()
+                return stringValues.contains(arg)
+            }
+            null -> throw IllegalStateException("ConditionType is null")
+        }
     }
 
     private fun addByKey(key: String) {
