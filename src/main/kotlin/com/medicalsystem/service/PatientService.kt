@@ -65,7 +65,14 @@ class PatientService(
         // Get Form to which the patient is bound
         val form: Form = patient.form ?: throw RuntimeException(FORM_IS_NULL)
 
-        return valuesFormConverter.convert(form, patient)
+        // Convert Form to DTO and sort lists by elements' IDs
+        val filledForm = valuesFormConverter.convert(form, patient)
+        filledForm.sections = filledForm.sections.sortedBy { it.id }
+        filledForm.sections.forEach {
+            it.fields = it.fields.sortedBy { it.id }
+        }
+
+        return filledForm
     }
 
     /**

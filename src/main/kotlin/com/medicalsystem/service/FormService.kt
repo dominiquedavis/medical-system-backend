@@ -38,7 +38,16 @@ class FormService(
      */
     fun getTemplateForms(): List<FormDTO> {
         val allForms = findAll()
-        return templateToDtoConverter.convertAll(allForms)
+        val allDtoForms = templateToDtoConverter.convertAll(allForms)
+
+        allDtoForms.forEach {
+            it.sections = it.sections.sortedBy { it.id }
+            it.sections.forEach {
+                it.fields = it.fields.sortedBy { it.id }
+            }
+        }
+
+        return allDtoForms
     }
 
     /**

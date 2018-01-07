@@ -17,7 +17,6 @@ class Field(
         @ManyToOne(fetch = FetchType.LAZY)
         var section: Section? = null,
 
-        //@OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
         @OneToMany(fetch = FetchType.EAGER, cascade = [ CascadeType.ALL ])
         var possibleValues: MutableSet<Option> = mutableSetOf()
 
@@ -27,7 +26,6 @@ class Field(
         if (type != FieldType.SELECT && type != FieldType.MULTIPLE_SELECT) {
             throw NotSupportedException("Cannot add possible values to a non-select formField name")
         }
-
         possibleValues.add(option)
     }
 
