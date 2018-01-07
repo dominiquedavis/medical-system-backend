@@ -1,6 +1,7 @@
 package com.medicalsystem.controller
 
 import com.medicalsystem.excel.exporter.ExcelExporter
+import com.medicalsystem.excel.exporter.TemplateExporter
 import com.medicalsystem.excel.importer.ExcelImporter
 import com.medicalsystem.excel.importer.result.ImportError
 import com.medicalsystem.excel.importer.result.ImportResult
@@ -17,7 +18,8 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.*
 
 @RestController
-class ExcelController(private val excelImporter: ExcelImporter, private val excelExporter: ExcelExporter) {
+class ExcelController(private val excelImporter: ExcelImporter, private val excelExporter: ExcelExporter,
+                      private val templateExporter: TemplateExporter) {
 
     private val IMPORT_FILE_PATH = "data/dataImport.xlsx"
     private val EXPORT_FILE_PATH = "data/dataExport.xlsx"
@@ -42,6 +44,21 @@ class ExcelController(private val excelImporter: ExcelImporter, private val exce
     @GetMapping("api/export")
     fun exportToFile(): ResponseEntity<*> {
         excelExporter.exportToFile(EXPORT_FILE_PATH)
+        val file = File(EXPORT_FILE_PATH)
+        val resource = InputStreamResource(FileInputStream(file))
+
+        return ResponseEntity.ok()
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource)
+    }
+
+    /**
+     * Provides template excel file.
+     */
+    @GetMapping("api/template")
+    fun exportTemplate(): ResponseEntity<*> {
+        templateExporter.exportTemplate(EXPORT_FILE_PATH)
         val file = File(EXPORT_FILE_PATH)
         val resource = InputStreamResource(FileInputStream(file))
 

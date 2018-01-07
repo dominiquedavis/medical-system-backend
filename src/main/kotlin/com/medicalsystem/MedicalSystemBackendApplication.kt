@@ -29,7 +29,7 @@ class MedicalSystemBackendApplication : ApplicationRunner {
         excelImporter.importToDatabase("data/baza2_test.xlsx")
 
         userService.register(ApplicationUser(
-                fullName = "Administrator systemu", username = "admin", email = "administrator@medicalsystem.net",
+                fullName = "Administrator", username = "admin", email = "administrator@medicalsystem.net",
                 password = "admin", admin = true, status = "Aktywny"))
 
         userService.register(ApplicationUser(
