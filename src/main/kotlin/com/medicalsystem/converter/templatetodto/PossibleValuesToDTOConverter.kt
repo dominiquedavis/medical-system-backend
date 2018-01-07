@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component
 class PossibleValuesToDTOConverter : Converter<Option, PossibleValueDTO> {
 
     override fun convert(source: Option): PossibleValueDTO =
-            PossibleValueDTO(excelKey = source.key, value = source.value)
+            PossibleValueDTO(id = source.id, excelKey = source.key, value = source.value)
 }

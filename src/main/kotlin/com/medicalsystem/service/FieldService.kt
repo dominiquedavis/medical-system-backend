@@ -33,7 +33,10 @@ class FieldService(
         // Update properties
         currentField.name = newField.name
         currentField.type = newField.type
-        //currentField.possibleValues = newField.possibleValues
+        currentField.possibleValues = newField.possibleValues
+
+        // Update possible values
+
 
         // Persist updated object
         save(newField)
