@@ -5,9 +5,9 @@ import javax.persistence.*
 
 @Entity
 class Report(
-        var name: String = "",
+        var name: String? = "",
 
-        var description: String = "",
+        var description: String? = "",
 
         @ElementCollection
         var includedForms: List<String> = emptyList(),
